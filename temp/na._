@@ -1,0 +1,47 @@
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  db23:
+    hostname: ${DBHOST}
+    image: ${ORACLE_IMAGE}
+    environment:
+      - ORACLE_PDB=${ORACLE_PDB}
+      - ORACLE_PWD=${ORACLE_PWD}
+      - DBHOST=${DBHOST}
+    ports:
+      - "${DBPORT}:1521"
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "echo 'SELECT 1 FROM DUAL;' | sql -s sys/${ORACLE_PWD}@${DBHOST}:${DBPORT}/${ORACLE_PDB} as sysdba | grep -q 1"
+      ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - ./db_config:/opt/oracle/oradata
+  ords-node1:
+    hostname: ords-node
+    image: ${ORDS_IMAGE}
+    environment:
+      - DBSERVICENAME=${ORACLE_PDB}
+      - DBHOST=${DBHOST}
+      - DBPORT=${DBPORT}
+      - ORACLE_PWD=${ORACLE_PWD}
+      # - JDK_JAVA_OPTIONS=-Xms1024M -Xmx1024M
+    volumes:
+      - .ords_config:/etc/ords/config
+      # - ${APEX_FILE_PATH}:/opt/oracle/apex
+      - ./entrypoint.sh:/opt/ords/entrypoint.sh:ro  # ← Add this
+    entrypoint: ["/bin/bash", "/opt/ords/entrypoint.sh"]       # ← Add this
+    healthcheck:
+      test: curl --noproxy "localhost" -f -k http://localhost:8080/ords/ || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 150
+    depends_on:
+      db23:
+        condition: service_started  # condition: service_healthy is ignored by Podman
+volumes:
+  ./ords_config:
+  ./db_config:

@@ -1,0 +1,1 @@
+CONN_STRING=sys/Password12345@23ai:1521/freepdb1

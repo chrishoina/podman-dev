@@ -1,0 +1,846 @@
+
+    ID    DISCIPLINE_ID EVENT                                            
+______ ________________ ________________________________________________ 
+   468               51 beach volleyball                                 
+   469               52 volleyball                                       
+   470               53 8m class C                                       
+   471               53 class B up to 60 feet                            
+   472               53 open class A                                     
+   473               54 + 105kg                                          
+   474               54 + 108kg, total (super heavyweight)               
+   475               54 + 110kg, total (super heavyweight)               
+   476               54 + 75kg                                           
+   477               54 + 82.5kg, one-two hand 3 events (heavyweight)    
+
+    ID    DISCIPLINE_ID EVENT                                            
+______ ________________ ________________________________________________ 
+   478               54 + 82.5kg, one-two hand 5 events (heavyweight)    
+   479               54 + 82.5kg, total (heavyweight)                    
+   480               54 + 90kg, total (heavyweight)                      
+   481               54 - 52kg, total (flyweight)                        
+   482               54 - 54kg, total (flyweight)                        
+   483               54 - 56kg, total (bantamweight)                     
+   484               54 - 60kg, one-two hand 3 events (featherweight)    
+   485               54 - 60kg, one-two hand 5 events (featherweight)    
+   486               54 - 60kg, total (featherweight)                    
+   487               54 100 - 110kg, total (heavyweight)                 
+
+    ID    DISCIPLINE_ID EVENT                                               
+______ ________________ ___________________________________________________ 
+   488               54 105kg                                               
+   489               54 48kg                                                
+   490               54 52 - 56kg, total (bantamweight)                     
+   491               54 53kg                                                
+   492               54 54 - 59kg, total (bantamweight)                     
+   493               54 56 - 60kg, total (featherweight)                    
+   494               54 56kg                                                
+   495               54 58kg                                                
+   496               54 59 - 64kg, total (featherweight)                    
+   497               54 60 - 67.5kg, one-two hand 3 events (lightweight)    
+
+    ID    DISCIPLINE_ID EVENT                                                
+______ ________________ ____________________________________________________ 
+   498               54 60 - 67.5kg, one-two hand 5 events (lightweight)     
+   499               54 60 - 67.5kg, total (lightweight)                     
+   500               54 62kg                                                 
+   501               54 63kg                                                 
+   502               54 64 - 70kg, total (lightweight)                       
+   503               54 67.5 - 75kg, one-two hand 3 events (middleweight)    
+   504               54 67.5 - 75kg, one-two hand 5 events (middleweight)    
+   505               54 67.5 - 75kg, total (middleweight)                    
+   506               54 69kg                                                 
+   507               54 70 - 76kg, total (middleweight)                      
+
+    ID    DISCIPLINE_ID EVENT                                                 
+______ ________________ _____________________________________________________ 
+   508               54 75 - 82.5kg, one-two hand 3 e. (light-heavyweight)    
+   509               54 75 - 82.5kg, one-two hand 5 e. (light-heavyweight)    
+   510               54 75 - 82.5kg, total (light-heavyweight)                
+   511               54 75kg                                                  
+   512               54 76 - 83kg, total (light-heavyweight)                  
+   513               54 77kg                                                  
+   514               54 82.5 - 90kg, total (middle-heavyweight)               
+   515               54 83 - 91kg, total (middle-heavyweight)                 
+   516               54 85kg                                                  
+   517               54 90 - 100kg, total (first-heavyweight)                 
+
+    ID    DISCIPLINE_ID EVENT                                   
+______ ________________ _______________________________________ 
+   518               54 91 - 110kg, total (heavyweight)         
+   519               54 91 - 99kg, total (first-heavyweight)    
+   520               54 94kg                                    
+   521               54 99 - 108kg, total (heavyweight)         
+   522               54 all-around Dumbbell contest             
+   523               54 heavyweight - one hand lift             
+   524               54 heavyweight - two hand lift             
+   525               55 + 100kg (super heavyweight)             
+   526               55 + 71.67kg (heavyweight)                 
+   527               55 + 73kg (heavyweight)                    
+
+    ID    DISCIPLINE_ID EVENT                         
+______ ________________ _____________________________ 
+   528               55 + 80kg (heavyweight)          
+   529               55 + 87kg (heavyweight)          
+   530               55 + 97kg (heavyweight)          
+   531               55 - 47.6kg (light-flyweight)    
+   532               55 - 48kg                        
+   533               55 - 48kg (light-flyweight)      
+   534               55 - 52kg (flyweight)            
+   535               55 - 54kg (bantamweight)         
+   536               55 - 55kg                        
+   537               55 - 56kg (bantamweight)         
+
+    ID    DISCIPLINE_ID EVENT                              
+______ ________________ __________________________________ 
+   538               55 - 60kg (featherweight)             
+   539               55 100 - 130kg (super heavyweight)    
+   540               55 47.6 - 52.16kg (flyweight)         
+   541               55 48 - 52kg (flyweight)              
+   542               55 48 - 54kg                          
+   543               55 48 - 55kg                          
+   544               55 52 - 57kg (bantamweight)           
+   545               55 52.16 - 56.7kg (bantamweight)      
+   546               55 54 - 58kg                          
+   547               55 54 - 60.3kg (featherweight)        
+
+    ID    DISCIPLINE_ID EVENT                             
+______ ________________ _________________________________ 
+   548               55 55 - 60kg                         
+   549               55 55 - 63kg                         
+   550               55 56 - 61kg (featherweight)         
+   551               55 56.7 - 61.23kg (featherweight)    
+   552               55 57 - 62kg (featherweight)         
+   553               55 57 - 63kg (featherweight)         
+   554               55 58 - 63kg                         
+   555               55 60 - 66kg                         
+   556               55 60 - 67.5kg (lightweight)         
+   557               55 60.3 - 66.6kg (lightweight)       
+
+    ID    DISCIPLINE_ID EVENT                             
+______ ________________ _________________________________ 
+   558               55 61 - 66kg (lightweight)           
+   559               55 61.23 - 65.77kg (lightweight)     
+   560               55 62 - 68kg (lightweight)           
+   561               55 63 - 67kg (lightweight)           
+   562               55 63 - 69kg                         
+   563               55 63 - 70kg (lightweight)           
+   564               55 63 - 72kg                         
+   565               55 65.77 - 71.67kg (welterweight)    
+   566               55 66 - 72kg (welterweight)          
+   567               55 66 - 74kg                         
+
+    ID    DISCIPLINE_ID EVENT                         
+______ ________________ _____________________________ 
+   568               55 66.6 - 73kg (middleweight)    
+   569               55 67 - 73kg (welterweight)      
+   570               55 67.5 - 75kg (middleweight)    
+   571               55 68 - 74kg (welterweight)      
+   572               55 69 - 76kg                     
+   573               55 70 - 78kg (welterweight)      
+   574               55 72 - 79kg (middleweight)      
+   575               55 73 - 79kg (middleweight)      
+   576               55 74 - 82kg (middleweight)      
+   577               55 74 - 84kg                     
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   578               55 75 - 80kg (light-heavyweight)    
+   579               55 76 - 85kg                        
+   580               55 78 - 87kg (middleweight)         
+   581               55 79 - 87kg (light-heavyweight)    
+   582               55 82 - 90kg (light-heavyweight)    
+   583               55 84 - 96kg                        
+   584               55 85 - 97kg                        
+   585               55 87 - 97kg (light-heavyweight)    
+   586               55 90 - 100kg (heavyweight)         
+   587               55 96 - 120kg                       
+
+    ID    DISCIPLINE_ID EVENT                           
+______ ________________ _______________________________ 
+   588               55 97 - 130kg                      
+   589               56 + 100kg (super heavyweight)     
+   590               56 + 82.5kg (super heavyweight)    
+   591               56 + 82kg (super heavyweight)      
+   592               56 + 87kg (super heavyweight)      
+   593               56 + 93kg (super heavyweight)      
+   594               56 + 97kg (super heavyweight)      
+   595               56 - 48kg (light-flyweight)        
+   596               56 - 52kg (flyweight)              
+   597               56 - 55kg                          
+
+    ID    DISCIPLINE_ID EVENT                              
+______ ________________ __________________________________ 
+   598               56 - 56kg (bantamweight)              
+   599               56 - 58kg (bantamweight)              
+   600               56 - 60kg (featherweight)             
+   601               56 - 66.6kg (lightweight)             
+   602               56 100 - 130kg (super heavyweight)    
+   603               56 48 - 52kg (flyweight)              
+   604               56 48 - 54kg                          
+   605               56 52 - 57kg (bantamweight)           
+   606               56 54 - 58kg                          
+   607               56 55 - 60kg                          
+
+    ID    DISCIPLINE_ID EVENT                        
+______ ________________ ____________________________ 
+   608               56 56 - 61kg (featherweight)    
+   609               56 57 - 61kg (featherweight)    
+   610               56 57 - 62kg (featherweight)    
+   611               56 57 - 63kg (featherweight)    
+   612               56 58 - 60kg (featherweight)    
+   613               56 58 - 62kg (featherweight)    
+   614               56 58 - 63kg                    
+   615               56 60 - 66kg                    
+   616               56 60 - 67.5kg (lightweight)    
+   617               56 61 - 66kg (lightweight)      
+
+    ID    DISCIPLINE_ID EVENT                         
+______ ________________ _____________________________ 
+   618               56 61 - 67kg (lightweight)       
+   619               56 62 - 67.5kg (lightweight)     
+   620               56 62 - 68kg (lightweight)       
+   621               56 63 - 69kg                     
+   622               56 63 - 70kg (lightweight)       
+   623               56 66 - 72kg (welterweight)      
+   624               56 66 - 74kg                     
+   625               56 66.6 - 73kg (middleweight)    
+   626               56 67 - 73kg (welterweight)      
+   627               56 67.5 - 75kg (middleweight)    
+
+    ID    DISCIPLINE_ID EVENT                              
+______ ________________ __________________________________ 
+   628               56 68 - 74kg (welterweight)           
+   629               56 69 - 76kg                          
+   630               56 70 - 78kg (welterweight)           
+   631               56 72 - 79kg (middleweight)           
+   632               56 73 - 79kg (middleweight)           
+   633               56 73 - 93kg (light-heavyweight)      
+   634               56 74 - 82kg (middleweight)           
+   635               56 74 - 84kg                          
+   636               56 75 - 82.5kg (light-heavyweight)    
+   637               56 75 - 82kg (light-heavyweight)      
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   638               56 76 - 85kg                        
+   639               56 78 - 87kg (middleweight)         
+   640               56 79 - 87kg (light-heavyweight)    
+   641               56 82 - 90kg (light-heavyweight)    
+   642               56 84 - 96kg                        
+   643               56 85 - 97kg                        
+   644               56 87 - 97kg (light-heavyweight)    
+   645               56 90 - 100kg (heavyweight)         
+   646               56 96 - 120kg                       
+   647               56 97 - 130kg                       
+
+    ID    DISCIPLINE_ID EVENT                                 
+______ ________________ _____________________________________ 
+   648               56 open event                            
+     1                1 10m platform                          
+     2                1 3m springboard                        
+     3                1 plain high diving                     
+     4                1 plunge for distance                   
+     5                1 synchronized diving 10m platform      
+     6                1 synchronized diving 3m springboard    
+     7                2 100m backstroke                       
+     8                2 100m breaststroke                     
+     9                2 100m butterfly                        
+
+   ID    DISCIPLINE_ID EVENT                         
+_____ ________________ _____________________________ 
+   10                2 100m freestyle                
+   11                2 100m freestyle for sailors    
+   12                2 1200m freestyle               
+   13                2 1500m freestyle               
+   14                2 200m backstroke               
+   15                2 200m breaststroke             
+   16                2 200m butterfly                
+   17                2 200m freestyle                
+   18                2 200m individual medley        
+   19                2 200m obstacle event           
+
+   ID    DISCIPLINE_ID EVENT                     
+_____ ________________ _________________________ 
+   20                2 200m team swimming        
+   21                2 4000m freestyle           
+   22                2 400m breaststroke         
+   23                2 400m freestyle            
+   24                2 400m individual medley    
+   25                2 4x100m freestyle relay    
+   26                2 4x100m medley relay       
+   27                2 4x200m freestyle relay    
+   28                2 4x50y freestyle relay     
+   29                2 50m freestyle             
+
+   ID    DISCIPLINE_ID EVENT                       
+_____ ________________ ___________________________ 
+   30                2 50y freestyle (45.72m)      
+   31                2 800m freestyle              
+   32                2 880y freestyle (804.66m)    
+   33                2 marathon 10km               
+   34                2 underwater swimming         
+   35                3 duet                        
+   36                3 solo                        
+   37                3 team                        
+   38                4 water polo                  
+   39                5 au chapelet, 33m            
+
+   ID    DISCIPLINE_ID EVENT                                      
+_____ ________________ __________________________________________ 
+   40                5 au chapelet, 50m                           
+   41                5 au cordon dor�, 33m                        
+   42                5 au cordon dor�, 50m                        
+   43                5 continental style 50m                      
+   44                5 double american round (60y - 50y - 40y)    
+   45                5 double columbia round (50y - 40y - 30y)    
+   46                5 double national round (60y - 50y)          
+   47                5 double york round (100y - 80y - 60y)       
+   48                5 fixed bird target large birds              
+   49                5 fixed bird target large birds teams        
+
+   ID    DISCIPLINE_ID EVENT                                    
+_____ ________________ ________________________________________ 
+   50                5 fixed bird target small bird, teams      
+   51                5 fixed bird target small birds            
+   52                5 individual (FITA Olympic round - 70m)    
+   53                5 individual FITA round                    
+   54                5 moving bird target 28m teams             
+   55                5 moving bird target 33m teams             
+   56                5 moving bird target 50m teams             
+   57                5 moving bird target, 28m                  
+   58                5 moving bird target, 33m                  
+   59                5 moving bird target, 50m                  
+
+   ID    DISCIPLINE_ID EVENT                              
+_____ ________________ __________________________________ 
+   60                5 national round (60y - 50y)         
+   61                5 sur la perche � la herse           
+   62                5 sur la perche � la pyramide        
+   63                5 team (FITA Olympic round - 70m)    
+   64                5 team round 60y                     
+   65                5 teams FITA round                   
+   66                5 york round (100y - 80y - 60y)      
+   67                6 10000m                             
+   68                6 10000m walk                        
+   69                6 100m                               
+
+   ID    DISCIPLINE_ID EVENT                    
+_____ ________________ ________________________ 
+   70                6 100m hurdles             
+   71                6 10miles walk (16093m)    
+   72                6 110m hurdles             
+   73                6 1500m                    
+   74                6 200m                     
+   75                6 200m hurdles             
+   76                6 20km race walk           
+   77                6 20km walk                
+   78                6 3000m                    
+   79                6 3000m steeplechase       
+
+   ID    DISCIPLINE_ID EVENT                  
+_____ ________________ ______________________ 
+   80                6 3000m team             
+   81                6 3000m walk             
+   82                6 3200m steeplechase     
+   83                6 3500m walk             
+   84                6 3miles team (4828m)    
+   85                6 4000m steeplechase     
+   86                6 400m                   
+   87                6 400m hurdles           
+   88                6 4miles team            
+   89                6 4x100m relay           
+
+   ID    DISCIPLINE_ID EVENT                         
+_____ ________________ _____________________________ 
+   90                6 4x400m relay                  
+   91                6 5 miles (8047m)               
+   92                6 5000m                         
+   93                6 5000m team                    
+   94                6 50km walk                     
+   95                6 56lb weight throw (25.4kg)    
+   96                6 60m                           
+   97                6 800m                          
+   98                6 80m hurdles                   
+   99                6 cross country individual      
+
+    ID    DISCIPLINE_ID EVENT                         
+______ ________________ _____________________________ 
+   100                6 cross country team            
+   101                6 decathlon                     
+   102                6 discus throw                  
+   103                6 discus throw ancient style    
+   104                6 discus throw, both hands      
+   105                6 hammer throw                  
+   106                6 heptathlon                    
+   107                6 high jump                     
+   108                6 high jump, standing           
+   109                6 javelin throw                 
+
+    ID    DISCIPLINE_ID EVENT                                           
+______ ________________ _______________________________________________ 
+   110                6 javelin throw freestyle                         
+   111                6 javelin throw, both hands                       
+   112                6 long jump                                       
+   113                6 long jump, standing                             
+   114                6 marathon                                        
+   115                6 pentathlon                                      
+   116                6 pole vault                                      
+   117                6 shot put                                        
+   118                6 shot put, both hands                            
+   119                6 triathlon (long jump / shot put / 100 yards)    
+
+    ID    DISCIPLINE_ID EVENT                      
+______ ________________ __________________________ 
+   120                6 triple jump                
+   121                6 triple jump, standing      
+   122                7 doubles                    
+   123                7 singles                    
+   124                8 baseball                   
+   125                9 basketball                 
+   126               10 cesta punta                
+   127               11 + 71.67kg (heavyweight)    
+   128               11 + 79.38kg (heavyweight)    
+   129               11 + 80kg (heavyweight)       
+
+    ID    DISCIPLINE_ID EVENT                             
+______ ________________ _________________________________ 
+   130               11 + 81kg (heavyweight)              
+   131               11 + 91kg (super heavyweight)        
+   132               11 - 47.63kg (flyweight)             
+   133               11 - 48kg (light-flyweight)          
+   134               11 - 50.8kg (flyweight)              
+   135               11 - 51kg (flyweight)                
+   136               11 - 52.62kg (bantamweight)          
+   137               11 47.63 - 52.16kg (bantamweight)    
+   138               11 48 - 51kg (flyweight)             
+   139               11 48kg (light flywieght)            
+
+    ID    DISCIPLINE_ID EVENT                              
+______ ________________ __________________________________ 
+   140               11 50.8 - 53.52kg (bantamweight)      
+   141               11 50.8 - 54kg (bantamweight)         
+   142               11 51 - 54kg (bantamweight)           
+   143               11 52.16 - 56.7kg (featherweight)     
+   144               11 52.62 - 57.15kg (featherweight)    
+   145               11 53.52 - 57.15kg (featherweight)    
+   146               11 54 - 57.15kg (featherweight)       
+   147               11 54 - 57kg (featherweight)          
+   148               11 54 - 58kg (featherweight)          
+   149               11 56.7 - 61.24kg (lightweight)       
+
+    ID    DISCIPLINE_ID EVENT                               
+______ ________________ ___________________________________ 
+   150               11 57 - 60kg (lightweight)             
+   151               11 57.15 - 61.24kg (lightweight)       
+   152               11 57.15 - 63.5kg (lightweight)        
+   153               11 58 - 62kg (lightweight)             
+   154               11 60 - 63.5kg (light-welterweight)    
+   155               11 60 - 64 kg                          
+   156               11 61.24 - 65.77kg (welterweight)      
+   157               11 61.24 - 66.68kg (welterweight)      
+   158               11 62 - 67kg (welterweight)            
+   159               11 63.5 - 67kg (welterweight)          
+
+    ID    DISCIPLINE_ID EVENT                                  
+______ ________________ ______________________________________ 
+   160               11 63.5 - 71.67kg (middleweight)          
+   161               11 64 - 69 kg                             
+   162               11 65.77 - 71.67kg (middleweight)         
+   163               11 66.68 - 72.57kg (middleweight)         
+   164               11 67 - 71kg (light-middleweight)         
+   165               11 67 - 73kg (middleweight)               
+   166               11 69 - 75 kg                             
+   167               11 71-75kg                                
+   168               11 72.57 - 79.38kg (light-heavyweight)    
+   169               11 73 - 80kg (light-heavyweight)          
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   170               11 75 - 81kg (light-heavyweight)    
+   171               11 81 - 91kg (heavyweight)          
+   172               12 C-1 10000m                       
+   173               12 C-1 1000m (canoe single)         
+   174               12 C-1 500m (canoe single)          
+   175               12 C-2 10000m                       
+   176               12 C-2 1000m (canoe double)         
+   177               12 C-2 500m (canoe double)          
+   178               12 K-1 10000m                       
+   179               12 K-1 1000m (kayak single)         
+
+    ID    DISCIPLINE_ID EVENT                       
+______ ________________ ___________________________ 
+   180               12 K-1 4x500m                  
+   181               12 K-1 500m (kayak single)     
+   182               12 K-2 10000m                  
+   183               12 K-2 1000m (kayak double)    
+   184               12 K-2 500m (kayak double)     
+   185               12 K-4 1000m (kayak four)      
+   186               12 K-4 500m (kayak four)       
+   187               12 folding K-1 10000m          
+   188               12 folding K-2 10000m          
+   189               13 C-1 (canoe single)          
+
+    ID    DISCIPLINE_ID EVENT                    
+______ ________________ ________________________ 
+   190               13 C-2 (canoe double)       
+   191               13 K-1 (kayak single)       
+   192               14 cricket                  
+   193               15 double                   
+   194               15 individual 1 ball        
+   195               15 individual 2 balls       
+   196               16 Individual               
+   197               16 individual               
+   198               17 individual road race     
+   199               17 individual time trial    
+
+    ID    DISCIPLINE_ID EVENT                       
+______ ________________ ___________________________ 
+   200               17 team time trial             
+   201               18 1 mile (1609.3m)            
+   202               18 1/2 mile (804.7m)           
+   203               18 1/3 mile (536.5m)           
+   204               18 1/4 mile (402.3m)           
+   205               18 100km                       
+   206               18 10km                        
+   207               18 12-hour race                
+   208               18 1980 yards Pursuit, Team    
+   209               18 1km Pursuit                 
+
+    ID    DISCIPLINE_ID EVENT                  
+______ ________________ ______________________ 
+   210               18 1km time trial         
+   211               18 2 miles (3.218km)      
+   212               18 2000m tandem           
+   213               18 20km                   
+   214               18 25 kilometres          
+   215               18 25 miles (40.232km)    
+   216               18 5 miles (8.046km)      
+   217               18 5000m                  
+   218               18 500m time trial        
+   219               18 50km                   
+
+    ID    DISCIPLINE_ID EVENT                    
+______ ________________ ________________________ 
+   220               18 Individual Pursuit       
+   221               18 Keirin                   
+   222               18 Madison                  
+   223               18 Olympic Sprint           
+   224               18 One lap (660y) sprint    
+   225               18 Points Race              
+   226               18 Sprint indivual          
+   227               18 Team Pursuit (4000m)     
+   228               18 Team Sprint              
+   229               18 individual pursuit       
+
+    ID    DISCIPLINE_ID EVENT                   
+______ ________________ _______________________ 
+   230               18 points race             
+   231               18 sprint                  
+   232               19 cross-country           
+   233               20 individual              
+   234               20 team                    
+   235               21 individual              
+   236               21 team                    
+   237               22 high jump               
+   238               22 individual              
+   239               22 long jump individual    
+
+    ID    DISCIPLINE_ID EVENT                       
+______ ________________ ___________________________ 
+   240               22 team                        
+   241               23 figure riding individual    
+   242               23 figure riding team          
+   243               24 foil individual             
+   244               24 foil team                   
+   245               24 foil, masters               
+   246               24 sabre individual            
+   247               24 sabre team                  
+   248               24 sabre, masters              
+   249               24 stick, single               
+
+    ID    DISCIPLINE_ID EVENT                         
+______ ________________ _____________________________ 
+   250               24 �p�e individual               
+   251               24 �p�e team                     
+   252               24 �p�e, amateurs and masters    
+   253               24 �p�e, masters                 
+   254               25 football                      
+   255               26 individual                    
+   256               26 team                          
+   257               27 Sidehorse vault               
+   258               27 balance beam                  
+   259               27 club swinging                 
+
+    ID    DISCIPLINE_ID EVENT                   
+______ ________________ _______________________ 
+   260               27 combined 3 events       
+   261               27 combined 4 events       
+   262               27 floor exercises         
+   263               27 horizontal bar          
+   264               27 indian clubs            
+   265               27 individual all-round    
+   266               27 parallel bars           
+   267               27 pommel horse            
+   268               27 rings                   
+   269               27 rope climbing           
+
+    ID    DISCIPLINE_ID EVENT                       
+______ ________________ ___________________________ 
+   270               27 team competition            
+   271               27 team, Swedish system        
+   272               27 team, free system           
+   273               27 team, horizontal bar        
+   274               27 team, parallel bars         
+   275               27 team, portable apparatus    
+   276               27 tumbling                    
+   277               27 uneven bars                 
+   278               27 vault                       
+   279               28 group competition           
+
+    ID    DISCIPLINE_ID EVENT                    
+______ ________________ ________________________ 
+   280               28 individual all-round     
+   281               29 individual               
+   282               30 handball                 
+   283               31 hockey                   
+   284               32 ice hockey               
+   285               33 individual               
+   286               34 + 100kg (heavyweight)    
+   287               34 + 72kg (heavyweight)     
+   288               34 + 78kg (heavyweight)     
+   289               34 + 80kg (heavyweight)     
+
+    ID    DISCIPLINE_ID EVENT                           
+______ ________________ _______________________________ 
+   290               34 + 93kg (heavyweight)            
+   291               34 + 95kg (heavyweight)            
+   292               34 - 48 kg                         
+   293               34 - 48kg (extra-lightweight)      
+   294               34 - 60 kg                         
+   295               34 - 63kg (lightweight)            
+   296               34 - 68kg (lightweight)            
+   297               34 48 - 52kg (half-lightweight)    
+   298               34 52 - 56kg (lightweight)         
+   299               34 52 - 57kg (lightweight)         
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   300               34 56 - 61kg (half-middleweight)    
+   301               34 57 - 63kg (half-middleweight)    
+   302               34 60 - 65kg (half-lightweight)     
+   303               34 60 - 66kg (half-lightweight)     
+   304               34 61 - 66kg (middleweight)         
+   305               34 63 - 70kg (half-middleweight)    
+   306               34 63 - 70kg (middleweight)         
+   307               34 65 - 71kg (lightweight)          
+   308               34 66 - 72kg (half-heavyweight)     
+   309               34 66 - 73kg (lightweight)          
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   310               34 68 - 80kg (middleweight)         
+   311               34 70 - 78kg (half-heavyweight)     
+   312               34 70 - 80kg (middleweight)         
+   313               34 71 - 78kg (half-middleweight)    
+   314               34 73 - 81kg (half-middleweight)    
+   315               34 78 - 86kg (middleweight)         
+   316               34 80 - 93kg (half-heavyweight)     
+   317               34 81 - 90kg (middleweight)         
+   318               34 86 - 95kg (half-heavyweight)     
+   319               34 90 - 100kg (half-heavyweight)    
+
+    ID    DISCIPLINE_ID EVENT                     
+______ ________________ _________________________ 
+   320               34 open category             
+   321               35 lacrosse                  
+   322               36 Individual competition    
+   323               36 Team competition          
+   324               37 polo                      
+   325               38 double                    
+   326               38 individual                
+   327               39 individual                
+   328               40 coxed fours Jugriggers    
+   329               40 coxless four (4-)         
+
+    ID    DISCIPLINE_ID EVENT                                  
+______ ________________ ______________________________________ 
+   330               40 coxless pair (2-)                      
+   331               40 double sculls (2x)                     
+   332               40 eight with coxswain (8+)               
+   333               40 four without coxswain (4-)             
+   334               40 four-oared shell with coxswain (4-)    
+   335               40 lightweight coxless four (4-)          
+   336               40 lightweight double sculls (2x)         
+   337               40 pair without coxswain (2-)             
+   338               40 pair-oared shell with coxswain (2+)    
+   339               40 quadruple sculls with coxswain (4x)    
+
+    ID    DISCIPLINE_ID EVENT                                     
+______ ________________ _________________________________________ 
+   340               40 quadruple sculls without coxswain (4x)    
+   341               40 single sculls (1x)                        
+   342               41 rugby                                     
+   343               42 0.5-1t                                    
+   344               42 10-20t                                    
+   345               42 10m                                       
+   346               42 10m (rating 1907)                         
+   347               42 10m (rating 1919)                         
+   348               42 12 foot dinghy                            
+   349               42 12 foot dinghy individual                 
+
+    ID    DISCIPLINE_ID EVENT                      
+______ ________________ __________________________ 
+   350               42 12m                        
+   351               42 12m (rating 1907)          
+   352               42 12m (rating 1919)          
+   353               42 18 foot dinghy             
+   354               42 3-10t                      
+   355               42 30m sq                     
+   356               42 40m sq                     
+   357               42 470 - Two Person Dinghy    
+   358               42 49er - Skiff               
+   359               42 5.5m                       
+
+    ID    DISCIPLINE_ID EVENT                        
+______ ________________ ____________________________ 
+   360               42 6.5m (rating 1919)           
+   361               42 6m                           
+   362               42 6m (rating 1907)             
+   363               42 6m (rating 1919)             
+   364               42 7m                           
+   365               42 8m                           
+   366               42 8m (rating 1907)             
+   367               42 8m (rating 1919)             
+   368               42 Finn - Heavyweight Dinghy    
+   369               42 Laser - One Person Dinghy    
+
+    ID    DISCIPLINE_ID EVENT                               
+______ ________________ ___________________________________ 
+   370               42 Laser Radial - One Person Dinghy    
+   371               42 RS:X - Windsurfer                   
+   372               42 Star - Keelboat                     
+   373               42 Tornado - Multihull                 
+   374               42 Yngling - Keelboat                  
+   375               42 board (Mistral)                     
+   376               42 board (division II)                 
+   377               42 board (lechner)                     
+   378               42 board (windglider)                  
+   379               42 dragon                              
+
+    ID    DISCIPLINE_ID EVENT                                      
+______ ________________ __________________________________________ 
+   380               42 firefly class                              
+   381               42 fleet/match race keelboat open (Soling)    
+   382               42 flying dutchman                            
+   383               42 olympic class monotype                     
+   384               42 open class                                 
+   385               42 sharpie 12m2                               
+   386               42 single-handed dinghy (Europe)              
+   387               42 single-handed dinghy (Finn)                
+   388               42 single-handed dinghy open (Laser)          
+   389               42 swallow (golondrina)                       
+
+    ID    DISCIPLINE_ID EVENT                                     
+______ ________________ _________________________________________ 
+   390               42 tempest                                   
+   391               42 two-person keelboat open (Star)           
+   392               43 1000y free rifle, prone                   
+   393               43 100m running deer, double shots           
+   394               43 100m running deer, double shots, team     
+   395               43 100m running deer, single shots           
+   396               43 100m running deer, single shots, team     
+   397               43 100m running deer, single/double shots    
+   398               43 10m air pistol (40 shots)                 
+   399               43 10m air pistol (60 shots)                 
+
+    ID    DISCIPLINE_ID EVENT                                        
+______ ________________ ____________________________________________ 
+   400               43 10m air rifle (40 shots)                     
+   401               43 10m air rifle (60 shots)                     
+   402               43 10m running target (30+30 shots)             
+   403               43 25m army pistol                              
+   404               43 25m pistol (30+30 shots)                     
+   405               43 25m rapid fire pistol (60 shots)             
+   406               43 25m small bore rifle, team                   
+   407               43 25m small rifle                              
+   408               43 25y small bore rifle, disappearing target    
+   409               43 25y small bore rifle, moving target          
+
+    ID    DISCIPLINE_ID EVENT                                       
+______ ________________ ___________________________________________ 
+   410               43 300+600m free rifle, team, prone            
+   411               43 300m free rifle 3 positions (3x40 shots)    
+   412               43 300m free rifle, prone, team                
+   413               43 300m free rifle, standing, team             
+   414               43 30m army pistol, team                       
+   415               43 400, 600, 800m free rifle, team             
+   416               43 50+100y small bore rifle, team              
+   417               43 50m army pistol, team                       
+   418               43 50m pistol (60 shots)                       
+   419               43 50m rifle 3 positions (3x20 shots)          
+
+    ID    DISCIPLINE_ID EVENT                                         
+______ ________________ _____________________________________________ 
+   420               43 50m rifle 3 positions (3x40 shots)            
+   421               43 50m rifle prone (60 shots)                    
+   422               43 50m running target (30+30 shots)              
+   423               43 50m small bore rifle, standing, individual    
+   424               43 50m small bore rifle, team                    
+   425               43 50y army pistol, team                         
+   426               43 600m free rifle                               
+   427               43 600m free rifle, individual                   
+   428               43 600m free rifle, prone                        
+   429               43 600m free rifle, team                         
+
+    ID    DISCIPLINE_ID EVENT                            
+______ ________________ ________________________________ 
+   430               43 army rifle, 200m                 
+   431               43 army rifle, 300m                 
+   432               43 army rifle, 300m, 3 positions    
+   433               43 army rifle, 300m, kneeling       
+   434               43 army rifle, 300m, prone          
+   435               43 army rifle, 300m, standing       
+   436               43 clay pigeons, team               
+   437               43 double trap (120 targets)        
+   438               43 double trap (150 targets)        
+   439               43 free rifle, team                 
+
+    ID    DISCIPLINE_ID EVENT                  
+______ ________________ ______________________ 
+   440               43 rifle, team            
+   441               43 skeet (125 targets)    
+   442               43 skeet (75 targets)     
+   443               43 trap (125 targets)     
+   444               43 trap (75 targets)      
+   445               44 individual             
+   446               44 pairs                  
+   447               44 special figures        
+   448               45 softball               
+   449               46 doubles                
+
+    ID    DISCIPLINE_ID EVENT         
+______ ________________ _____________ 
+   450               46 singles       
+   451               46 team          
+   452               47 + 67 kg       
+   453               47 + 80 kg       
+   454               47 - 49 kg       
+   455               47 - 58 kg       
+   456               47 49 - 57 kg    
+   457               47 57 - 67 kg    
+   458               47 58 - 68 kg    
+   459               47 68 - 80 kg    
+
+    ID    DISCIPLINE_ID EVENT                   
+______ ________________ _______________________ 
+   460               48 doubles                 
+   461               48 doubles indoor          
+   462               48 mixed doubles           
+   463               48 mixed doubles indoor    
+   464               48 singles                 
+   465               48 singles indoor          
+   466               49 Individual              
+   467               50 tug of war              
+
+648 rows selected. 
+

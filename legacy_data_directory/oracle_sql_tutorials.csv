@@ -1,0 +1,3034 @@
+"ID","AREA_ID","TUTORIAL_NAME","PUBLISHED","TUTORIAL_OVERVIEW","SETUP_SQL","SETUP_DESCRIPTION","TAGS","CREATED","CREATED_BY","UPDATED","UPDATED_BY","FEATURED"
+234738183173691734382399251082742733633,1,"SQL Macros - Creating parameterised views","Y","This tutorial explains how to create a parameterized view using SQL Macros. The examples use the built-in sales history schema so there are no setup steps.","","","19c, macros, sql",01-OCT-20 08.41.43.186792000 AM,"KEITH.LAKER@ORACLE.COM",01-OCT-20 03.21.35.096351000 PM,"SHARON.KENNEDY@ORACLE.COM","Y"
+149075222712493902096666428584818910723,1,"Read Phenomena & Isolation Levels: Databases for Developers","Y","An introduction to the read consistency model in Oracle Database","create table toys (
+  toy_name varchar2(30),
+  price    number(10, 2)
+);
+
+insert into toys values ( 'Miss Snuggles', 9.99 );
+
+commit;","","read committed, serializable, set transaction, read only",04-JUL-18 08.45.07.022789000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.22.09.848203000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+151382938526402044313447081869310725033,1,"Joining Tables: Databases for Developers","Y","An introduction to the join types available in Oracle Database.","create table toys (
+  toy_id     integer,
+  toy_name   varchar2(20),
+  toy_colour varchar2(10)
+);
+
+create table bricks (
+  brick_id     integer,
+  brick_colour varchar2(10),
+  brick_shape  varchar2(10)
+);
+
+insert into toys values ( 1, 'Miss Snuggles', 'pink' ) ;
+insert into toys values ( 2, 'Cuteasaurus', 'blue' ) ;
+insert into toys values ( 3, 'Baby Turtle', 'green' ) ;
+
+insert into bricks values ( 2, 'blue', 'cube' );
+insert into bricks values ( 3, 'green', 'cube' );
+insert into bricks values ( 4, 'blue', 'pyramid' );
+
+commit;","","join, inner join, outer join, cross join",26-JUL-18 08.33.11.514273000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.21.11.679302000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+151905700197614044459391659202713528382,45094643699732520487257538121880468026,"Aggregating Rows: Databases for Developers","Y","An introduction to how to summarise data using aggregate functions and group by.","create table bricks (
+  colour varchar2(10),
+  shape  varchar2(10),
+  weight integer
+);
+
+insert into bricks values ( 'red', 'cube', 1 );
+insert into bricks values ( 'red', 'pyramid', 2 );
+insert into bricks values ( 'red', 'cuboid', 1 );
+
+insert into bricks values ( 'blue', 'cube', 1 );
+insert into bricks values ( 'blue', 'pyramid', 2 );
+
+insert into bricks values ( 'green', 'cube', 3 );
+
+commit;","","group by, rollup, cube, count, sum",31-JUL-18 08.47.55.332749000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.20.44.817919000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+152139165451368994310308665430312259683,1,"Adding and Saving Rows: Databases for Developers","Y","An introduction to adding rows to tables with insert. And saving or undoing these changes with commit and rollback.","create table toys (
+  toy_id   integer,
+  toy_name varchar2(100),
+  colour   varchar2(10)
+);
+
+create table bricks (
+  brick_id integer,
+  colour   varchar2(10),
+  shape    varchar2(10)
+);","","insert, insert all, commit, rollback, savepoint",02-AUG-18 01.47.19.856498000 PM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.20.26.789714000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+152639219300562793212764580165351953605,1,"Update & Transactions: Databases for Developers","Y","An introduction to how to change row values with update. Also an overview of how to manage transactions.","create table bricks (
+  colour      varchar2(10),
+  shape       varchar2(10),
+  quantity    integer,
+  unit_weight integer
+);
+
+insert into bricks values ( 'red', 'cylinder', 1, 13 );
+insert into bricks values ( 'blue', 'cube', 51, 8 );
+insert into bricks values ( 'green', 'cube', 600, 8 );
+
+commit;","","update, deadlock, select for update",07-AUG-18 08.44.51.750178000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.19.04.542401000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+152769908351014758555746151630340122318,92046253613466239499853282050038200150,"Using FILTER FACT to Extend Analytic View Aggregation in SELECT","Y","When SELECTing data from an analytic view the FILTER FACT keywords can be used to filter data prior to aggregation in the analytic view.  This allows the analytic view to provide the same 'filter, then aggregate, capabilities as a typical SELECT statement accessing data from tables.
+
+This tutorial explains the behavior of FILTER FACT using a variety of examples.","-- Time attibute dimension.
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id,
+  year_name,
+  --year_end_date
+  quarter_id,
+  quarter_name,
+  -- quarter_end_date,
+  month_id,
+  month_name,
+  month_long_name,
+  month_end_date)
+LEVEL MONTH
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (quarter_id, month_end_date)
+LEVEL QUARTER
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY MAX month_end_date
+  DETERMINES (year_id)
+LEVEL YEAR
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY MAX month_end_date;
+
+  
+-- Time hierarchy.
+
+CREATE OR REPLACE HIERARCHY time_hier
+USING time_attr_dim
+ (month  CHILD OF
+ quarter CHILD OF
+ year);
+ 
+-- Product attribute dimension. 
+ 
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id,
+  department_name,
+  category_id,
+  category_name)
+LEVEL DEPARTMENT
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+-- Product hierarchy.
+
+CREATE OR REPLACE HIERARCHY product_hier
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+-- Geography attribute dimension.
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id,
+  region_name,
+  country_id,
+  country_name,
+  state_province_id,
+  state_province_name)
+LEVEL REGION
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+-- Geography hierarchy.
+
+CREATE OR REPLACE HIERARCHY geography_hier
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);
+  
+--  Analytic view.
+
+CREATE OR REPLACE ANALYTIC VIEW sales_av
+USING av.sales_fact
+DIMENSION BY
+  (time_attr_dim
+    KEY month_id REFERENCES month_id
+    HIERARCHIES (
+      time_hier DEFAULT),
+   product_attr_dim
+    KEY category_id REFERENCES category_id
+    HIERARCHIES (
+      product_hier DEFAULT),
+   geography_attr_dim
+    KEY state_province_id 
+    REFERENCES state_province_id
+    HIERARCHIES (
+      geography_hier DEFAULT)
+   )
+MEASURES
+ (sales FACT sales,
+  units FACT units
+  )
+DEFAULT MEASURE SALES;","","analytic view, filter fact, aggregation",08-AUG-18 02.35.14.498064000 PM,"WILLIAM.ENDRESS@ORACLE.COM",06-JUL-20 02.21.57.451336000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+152848903946926018441986284250590889613,1,"Table Design: Databases for Developers","Y","An introduction to designing database tables.","","","",09-AUG-18 08.48.59.617378000 AM,"CHRIS.SAXON@ORACLE.COM",14-SEP-18 03.07.03.386387000 PM,"CHRIS.SAXON@ORACLE.COM",""
+160204041387679825048250629187623908505,12,"Oracle XML DB : Storing and Processing XML Documents ","Y","Oracle XML DB is a set of Oracle Database technologies related to high-performance handling of XML data: storing, generating, accessing, searching, validating, transforming, evolving, and indexing. It provides native XML support by encompassing both the SQL and XML data models in an interoperable way. It supports all major XML, SQL, Java, and Internet standards. It brings database features such as transaction control, data integrity, replication, reliability, availability, security, and scalability to the world of XML. 
+
+In this tutorial, we will go through some basic stuffs of XML DB.
+
+
+Explain plan statement is not working temporarily in livesql. If you want to check the plan please click the link: https://livesql.oracle.com/apex/livesql/file/content_GYQXQAW9B580L40ZT4OUYIRG.html and follow the steps.","","","",18-OCT-18 06.49.57.714427000 PM,"HARICHANDAN.ROY@ORACLE.COM",22-OCT-18 05.24.11.205238000 AM,"HARICHANDAN.ROY@ORACLE.COM",""
+153496376830076594111863106943541076337,92046253613466239499853282050038200150,"Aggregating Data using Weighted Averages in Analytic Views","Y","Weighted averages are often needed to correctly aggregate average in aggregate levels of a hierarchy.  For example, demographic statistics are typically aggregated with averages weighted by population.  This tutorial explains how to easily create a calculated measure that aggregates using a weighted average.","CREATE TABLE sales_fact AS
+SELECT
+  month_id,
+  category_id,
+  state_province_id,
+  units,
+  sales
+FROM av.sales_fact;
+
+ALTER TABLE sales_fact ADD percent_margin number;
+ 
+UPDATE sales_fact SET percent_margin = .21 WHERE category_id = -530;
+UPDATE sales_fact SET percent_margin = .29 WHERE category_id = -534;
+UPDATE sales_fact SET percent_margin = .31 WHERE category_id = -533;
+UPDATE sales_fact SET percent_margin = .18 WHERE category_id = -535;
+UPDATE sales_fact SET percent_margin = .07 WHERE category_id = -529;
+UPDATE sales_fact SET percent_margin = .36 WHERE category_id = -532;
+UPDATE sales_fact SET percent_margin = .15 WHERE category_id = -531;
+UPDATE sales_fact SET percent_margin = .12 WHERE category_id = -536;
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id
+   CLASSIFICATION caption VALUE 'YEAR_ID'
+   CLASSIFICATION description VALUE 'YEAR ID',
+  year_name
+    CLASSIFICATION caption VALUE 'YEAR_NAME'
+    CLASSIFICATION description VALUE 'Year',
+  year_end_date
+    CLASSIFICATION caption VALUE 'YEAR_END_DATE'
+    CLASSIFICATION description VALUE 'Year End Date',
+  quarter_id
+    CLASSIFICATION caption VALUE 'QUARTER_ID'
+    CLASSIFICATION description VALUE 'QUARTER ID',
+  quarter_name
+    CLASSIFICATION caption VALUE 'QUARTER_NAME'
+    CLASSIFICATION description VALUE 'Quarter',
+  quarter_end_date
+    CLASSIFICATION caption VALUE 'QUARTER_END_DATE'
+    CLASSIFICATION description VALUE 'Quarter End Date',
+  month_id
+    CLASSIFICATION caption VALUE 'MONTH_ID'
+    CLASSIFICATION description VALUE 'MONTH ID',
+  month_name
+    CLASSIFICATION caption VALUE 'MONTH_NAME'
+    CLASSIFICATION description VALUE 'Month',
+  month_long_name
+    CLASSIFICATION caption VALUE 'MONTH_LONG_NAME'
+    CLASSIFICATION description VALUE 'Month Long Name',
+  month_end_date
+    CLASSIFICATION caption VALUE 'MONTH_END_DATE'
+    CLASSIFICATION description VALUE 'Month End Date')
+LEVEL month
+  CLASSIFICATION caption VALUE 'MONTH'
+  CLASSIFICATION description VALUE 'Month'
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  CLASSIFICATION caption VALUE 'QUARTER'
+  CLASSIFICATION description VALUE 'Quarter'
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  CLASSIFICATION caption VALUE 'YEAR'
+  CLASSIFICATION description VALUE 'Year'
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'ALL TIMES';
+
+CREATE OR REPLACE HIERARCHY time_hier
+  CLASSIFICATION caption VALUE 'CALENDAR'
+  CLASSIFICATION description VALUE 'CALENDAR'
+USING time_attr_dim
+ (month CHILD OF
+ quarter CHILD OF
+ year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id
+    CLASSIFICATION caption VALUE 'DEPARTMENT_ID'
+    CLASSIFICATION description VALUE 'DEPARTMENT ID',
+  department_name
+    CLASSIFICATION caption VALUE 'DEPARTMENT_NAME'
+    CLASSIFICATION description VALUE 'Department',
+  category_id
+    CLASSIFICATION caption VALUE 'CATEGORY_ID'
+    CLASSIFICATION description VALUE 'CATEGORY ID',
+  category_name
+    CLASSIFICATION caption VALUE 'CATEGORY_NAME'
+    CLASSIFICATION description VALUE 'Category')
+LEVEL DEPARTMENT
+  CLASSIFICATION caption VALUE 'DEPARTMENT'
+  CLASSIFICATION description VALUE 'Department'
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  CLASSIFICATION caption VALUE 'CATEGORY'
+  CLASSIFICATION description VALUE 'Category'
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+  CLASSIFICATION caption VALUE 'PRODUCT'
+  CLASSIFICATION description VALUE 'Product'
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id
+    CLASSIFICATION caption VALUE 'REGION_ID'
+    CLASSIFICATION description VALUE 'REGION ID',
+  region_name
+    CLASSIFICATION caption VALUE 'REGION_NAME'
+    CLASSIFICATION description VALUE 'Region',
+  country_id
+    CLASSIFICATION caption VALUE 'COUNTRY_ID'
+    CLASSIFICATION description VALUE 'COUNTRY ID',
+  country_name
+    CLASSIFICATION caption VALUE 'COUNTRY_NAME'
+    CLASSIFICATION description VALUE 'Country',
+  state_province_id
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_ID'
+    CLASSIFICATION description VALUE 'STATE-PROVINCE ID',
+  state_province_name
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_NAME'
+    CLASSIFICATION description VALUE 'State-Province')
+LEVEL REGION
+  CLASSIFICATION caption VALUE 'REGION'
+  CLASSIFICATION description VALUE 'Region'
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  CLASSIFICATION caption VALUE 'COUNTRY'
+  CLASSIFICATION description VALUE 'Country'
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  CLASSIFICATION caption VALUE 'STATE_PROVINCE'
+  CLASSIFICATION description VALUE 'State-Province'
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+  CLASSIFICATION caption VALUE 'GEOGRAPHY'
+  CLASSIFICATION description VALUE 'Geography'
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);","","analytic view, aggregation, weighted average",15-AUG-18 01.47.33.452528000 PM,"WILLIAM.ENDRESS@ORACLE.COM",06-JUL-20 02.21.01.182782000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+155044276401612634730144596161551172634,45094612808877964163464134194291729594,"Removing Rows: Databases for Developers","Y","An introduction to how to remove rows from a table using delete and truncate.","create table toys (
+  toy_name varchar2(30),
+  price    number(4, 2)
+);
+
+insert into toys values ('Baby Turtle', 0.01);
+insert into toys values ('Miss Snuggles', 0.51);
+insert into toys values ('Cuteasaurus', 10.01);
+insert into toys values ('Sir Stripypants', 14.03);
+insert into toys values ('Purple Ninja', 14.22);
+
+commit;","","delete, truncate",30-AUG-18 09.45.27.282877000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.18.52.892779000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+147831487722688091314985883531165316592,45094612808877964163464134194291729594,"Merge: Databases for Developers","Y","An introduction to how to use merge to do insert-or-update logic.","create table bricks_for_sale (
+  colour   varchar2(10),
+  shape    varchar2(10),
+  price    number(10, 2),
+  primary key ( colour, shape )
+);
+
+create table purchased_bricks (
+  colour   varchar2(10),
+  shape    varchar2(10),
+  price    number(10, 2),
+  primary key ( colour, shape )
+);
+
+insert into bricks_for_sale values ( 'red', 'cube', 4.95 );
+insert into bricks_for_sale values ( 'blue', 'cube', 7.75 );
+insert into bricks_for_sale values ( 'blue', 'pyramid', 9.99 );
+
+commit;","","merge, upsert",22-JUN-18 08.19.43.965119000 AM,"CHRIS.SAXON@ORACLE.COM",26-JUN-18 01.50.40.512466000 PM,"CHRIS.SAXON@ORACLE.COM",""
+182241645422959190146194127811898911783,4,"Bulk Processing with PL/SQL","Y","Learn how to make the most of the bulk processing features of PL/SQL: BULK COLLECT and FORALL. Be sure to run the setup code before trying to execute code in the modules. And you can re-run that setup code at any time if you'd like to reset the employees table to its ""original"" state.","create table employees as select * from hr.employees
+/","","bulk,forall,performance",17-MAY-19 07.58.00.609054000 PM,"STEVEN.FEUERSTEIN@GMAIL.COM",08-NOV-22 04.02.05.570012000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+66403703756642340425947956952870068,1,"Introduction to SQL","Y","This tutorial provides an introduction to the Structured Query Language (SQL), learn how to create tables with primary keys, columns, constraints, indexes, and foreign keys.","","","create table, create, select, insert, update, delete, drop, drop table, recycle bin, purge",12-OCT-15 08.52.17.426765000 PM,"MICHAEL.HICHWA@ORACLE.COM",28-AUG-18 03.29.00.907611000 AM,"SHARON.KENNEDY@ORACLE.COM","Y"
+92094449129961689585393288404949059,1,"Introduction to Sequences","Y","Learn how to create database sequences and how they can be referenced from triggers and within PL/SQL.","","","create sequence",12-OCT-15 08.52.17.426765000 PM,"MICHAEL.HICHWA@ORACLE.COM",12-OCT-15 08.52.17.430174000 PM,"JOELD",""
+182256270813904945690820316135841845,4,"PL/SQL Anonymous Blocks","Y","Define blocks of procedural code using PL/SQL.","","","",12-OCT-15 08.52.17.426765000 PM,"MICHAEL.HICHWA@ORACLE.COM",15-SEP-22 05.16.21.234878000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+35011252049457208546674439406966472602,45094612808877964163464134194291729594,"Updating table data","Y","This tutorial demonstrates different variations of the UPDATE statement. It includes examples of basic UPDATE statements, correlated updates, and updating a query.","","","",12-OCT-15 08.52.17.426765000 PM,"PADMAJA.POTINENI@ORACLE.COM",12-OCT-15 08.52.17.430417000 PM,"JOELD",""
+83205148911047716319241478701553687837,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - Empty Matches and Unmatched Rows","Y","The aim of this tutorial is to explain the difference between the various row output options within MATC_RECOGNIZE, specifically the EMPTY MATCHES and UNMATCHED ROWS keywords within the ALL ROWS PER MATCH syntax. ","","","PATTERN MATCHING, MATCH_RECOGNIZE,",11-OCT-16 02.51.36.294806000 PM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.11.53.046657000 PM,"KEITH.LAKER@ORACLE.COM",""
+83392487823947840787102120821717075963,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - importance of PARTITION BY and ORDER BY","Y","The aim of this tutorial is to explain the importance of using PARTITION BY and ORDER BY to ensure the correct results are returned and explores how and when predicates are applied.","","","PATTERN MATCHING, MATCH_RECOGNIZE,",13-OCT-16 09.46.28.855551000 AM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.11.36.187000000 PM,"KEITH.LAKER@ORACLE.COM",""
+97399059242426665206102153060921522170,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - What to include in the MEASURES clause ","Y","This tutorial will help you understand why you might get errors such as ORA-904 ""%s: invalid identifier"" or ORA-918 ""column ambiguously defined"" when you try to run a MATCH_RECOGNIZE query.
+","","","",24-FEB-17 12.07.59.476992000 PM,"KEITH.LAKER@ORACLE.COM",01-MAR-17 03.43.58.774914000 PM,"KEITH.LAKER@ORACLE.COM",""
+117123875509271941312470520788803021948,45094643699731311561437923492705761850,"Creating Tables: Databases for Developers","Y","An introduction to creating tables and the types of these available in Oracle Database.","","","create table",01-SEP-17 08.17.31.192007000 AM,"CHRIS.SAXON@ORACLE.COM",10-AUG-18 03.15.19.934874000 PM,"CHRIS.SAXON@ORACLE.COM",""
+117463246204528657365867867361809943103,45094643699731311561437923492705761850,"Columns and Data Types: Databases for Developers","Y","An introduction to the various data types available in Oracle Database. ","","","create table, alter table",04-SEP-17 02.38.30.829079000 PM,"CHRIS.SAXON@ORACLE.COM",10-AUG-18 03.23.48.266291000 PM,"CHRIS.SAXON@ORACLE.COM",""
+117675390209390608523249818520886328918,3,"Querying and Filtering Rows: Databases for Developers","Y","An introduction to returning data from tables with select and filtering the results using where. 
+
+Part of the Databases for Developers course on the Oracle Dev Gym.","create table toys (
+  toy_name varchar2(100),
+  colour   varchar2(10),
+  price    number(10, 2)
+);
+
+insert into toys values ( 'Sir Stripypants', 'red', 0.01 );
+insert into toys values ( 'Miss Smelly_bottom', 'blue', 6.00 );
+insert into toys values ( 'Cuteasaurus', 'blue', 17.22 );
+insert into toys values ( 'Mr Bunnykins', 'red', 14.22 );
+insert into toys values ( 'Baby Turtle', 'green', null );
+
+commit;","","select, where",06-SEP-17 03.16.49.903488000 PM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.21.23.759163000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+85402068267675499952938542872037871601,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - SKIP TO where exactly?","Y","We use the AFTER MATCH SKIP clause to determine the precise point to resume row pattern matching after a non-empty match is found. If you don’t supply an AFTER MATCH SKIP clause then the default is AFTER MATCH SKIP PAST LAST ROW.
+
+Of course there are quite a few options available:","CREATE TABLE ticker (SYMBOL VARCHAR2(10), tstamp DATE, price NUMBER);
+BEGIN
+INSERT INTO ticker VALUES('ACME', '01-Apr-11', 12);
+INSERT INTO ticker VALUES('ACME', '02-Apr-11', 17);
+INSERT INTO ticker VALUES('ACME', '03-Apr-11', 19);
+INSERT INTO ticker VALUES('ACME', '04-Apr-11', 21);
+INSERT INTO ticker VALUES('ACME', '05-Apr-11', 25);
+INSERT INTO ticker VALUES('ACME', '06-Apr-11', 12);
+INSERT INTO ticker VALUES('ACME', '07-Apr-11', 15);
+INSERT INTO ticker VALUES('ACME', '08-Apr-11', 20);
+INSERT INTO ticker VALUES('ACME', '09-Apr-11', 24);
+INSERT INTO ticker VALUES('ACME', '10-Apr-11', 25);
+INSERT INTO ticker VALUES('ACME', '11-Apr-11', 19);
+INSERT INTO ticker VALUES('ACME', '12-Apr-11', 15);
+INSERT INTO ticker VALUES('ACME', '13-Apr-11', 25);
+INSERT INTO ticker VALUES('ACME', '14-Apr-11', 25);
+INSERT INTO ticker VALUES('ACME', '15-Apr-11', 14);
+INSERT INTO ticker VALUES('ACME', '16-Apr-11', 12);
+INSERT INTO ticker VALUES('ACME', '17-Apr-11', 14);
+INSERT INTO ticker VALUES('ACME', '18-Apr-11', 24);
+INSERT INTO ticker VALUES('ACME', '19-Apr-11', 23);
+INSERT INTO ticker VALUES('ACME', '20-Apr-11', 22);
+
+INSERT INTO ticker VALUES('GLOBEX', '01-Apr-11', 11);
+INSERT INTO ticker VALUES('GLOBEX', '02-Apr-11', 12);
+INSERT INTO ticker VALUES('GLOBEX', '03-Apr-11', 13);
+INSERT INTO ticker VALUES('GLOBEX', '04-Apr-11', 12);
+INSERT INTO ticker VALUES('GLOBEX', '05-Apr-11', 11);
+INSERT INTO ticker VALUES('GLOBEX', '06-Apr-11', 10);
+INSERT INTO ticker VALUES('GLOBEX', '07-Apr-11', 9);
+INSERT INTO ticker VALUES('GLOBEX', '08-Apr-11', 8);
+INSERT INTO ticker VALUES('GLOBEX', '09-Apr-11', 9);
+INSERT INTO ticker VALUES('GLOBEX', '10-Apr-11', 9);
+INSERT INTO ticker VALUES('GLOBEX', '11-Apr-11', 9);
+INSERT INTO ticker VALUES('GLOBEX', '12-Apr-11', 9);
+INSERT INTO ticker VALUES('GLOBEX', '13-Apr-11', 10);
+INSERT INTO ticker VALUES('GLOBEX', '14-Apr-11', 11);
+INSERT INTO ticker VALUES('GLOBEX', '15-Apr-11', 12);
+INSERT INTO ticker VALUES('GLOBEX', '16-Apr-11', 11);
+INSERT INTO ticker VALUES('GLOBEX', '17-Apr-11', 8);
+INSERT INTO ticker VALUES('GLOBEX', '18-Apr-11', 7);
+INSERT INTO ticker VALUES('GLOBEX', '19-Apr-11', 5);
+INSERT INTO ticker VALUES('GLOBEX', '20-Apr-11', 3);
+
+INSERT INTO ticker VALUES('OSCORP', '01-Apr-11', 22);
+INSERT INTO ticker VALUES('OSCORP', '02-Apr-11', 22);
+INSERT INTO ticker VALUES('OSCORP', '03-Apr-11', 19);
+INSERT INTO ticker VALUES('OSCORP', '04-Apr-11', 18);
+INSERT INTO ticker VALUES('OSCORP', '05-Apr-11', 17);
+INSERT INTO ticker VALUES('OSCORP', '06-Apr-11', 20);
+INSERT INTO ticker VALUES('OSCORP', '07-Apr-11', 17);
+INSERT INTO ticker VALUES('OSCORP', '08-Apr-11', 20);
+INSERT INTO ticker VALUES('OSCORP', '09-Apr-11', 16);
+INSERT INTO ticker VALUES('OSCORP', '10-Apr-11', 15);
+INSERT INTO ticker VALUES('OSCORP', '11-Apr-11', 15);
+INSERT INTO ticker VALUES('OSCORP', '12-Apr-11', 12);
+INSERT INTO ticker VALUES('OSCORP', '13-Apr-11', 11);
+INSERT INTO ticker VALUES('OSCORP', '14-Apr-11', 15);
+INSERT INTO ticker VALUES('OSCORP', '15-Apr-11', 12);
+INSERT INTO ticker VALUES('OSCORP', '16-Apr-11', 16);
+INSERT INTO ticker VALUES('OSCORP', '17-Apr-11', 14);
+INSERT INTO ticker VALUES('OSCORP', '18-Apr-11', 12);
+INSERT INTO ticker VALUES('OSCORP', '19-Apr-11', 11);
+INSERT INTO ticker VALUES('OSCORP', '20-Apr-11', 9);
+
+commit;
+
+END;
+","","PATTERN MATCHING, MATCH_RECOGNIZE,",01-NOV-16 03.30.13.598249000 PM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.12.09.729451000 PM,"KEITH.LAKER@ORACLE.COM",""
+98773055494155843597266512030175220751,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - Fraud demo for OracleCODE events","Y","This is a simple demo showing how to use SQL pattern matching for fraud analysis. It is part of a presentation for the OracleCODE events program for developers.","","","PATTERN MATCHING, MATCH_RECOGNIZE,",09-MAR-17 03.58.58.536950000 PM,"KEITH.LAKER@ORACLE.COM",10-MAR-17 02.03.51.601017000 PM,"KEITH.LAKER@ORACLE.COM",""
+103567330442136148468768570832363109098,92046253613466239499853282050038200150,"Managing strings with MATCH_RECOGNIZE","Y","This tutorial is linked to one of my blog posts""Managing overflows in LISTAGG"" - https://oracle-big-data.blogspot.co.uk/2015/03/managing-overflows-in-listagg.html","","","",24-APR-17 01.48.33.604731000 PM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.07.20.429840000 PM,"KEITH.LAKER@ORACLE.COM",""
+119767479666755979335390994148897767438,92046253613466239499853282050038200150,"JavaOne - Simplified and Fast Fraud Detection using SQL Pattern Matching ","Y","This session demonstrates how, using SQL pattern matching techniques, you can speed up searching for fraudulent events within unstructured data, such as JSON files, compared to using other programming languages. As part of the presentation, a live demo reviews a specific business use case from financial services and provides conceptual simplified SQL to solve an evolving set of business requirements. You’ll see a simple five-step framework for constructing pattern-matching queries, and a live demonstration shows how easy it is to write and amend SQL-based pattern queries, compared to other programming languages.","","","pattern, sql",26-SEP-17 04.14.51.074892000 PM,"KEITH.LAKER@ORACLE.COM",02-OCT-17 03.12.28.802521000 PM,"KEITH.LAKER@ORACLE.COM",""
+83301768980930787340849483629290212021,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - Using Built-In Measures","Y","In this tutorial we will review the two built-in measures that are part of MATCH_RECOGNIZE. These measures are designed to help you understand how your data set is mapped to the pattern that you have defined.
+","","","MATCH_RECOGNZE, pattern matching",12-OCT-16 12.56.34.008119000 PM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.12.24.159745000 PM,"KEITH.LAKER@ORACLE.COM",""
+92046253613390077173217560412031711062,8,"Enhanced Partitioning techniques in Oracle Database [Tutorial]","Y","Tutorial introducing somewhat more enhanced Partitioning functionality in Oracle Database.","","","database, partitioning, performance, manageability, Oracle Database",04-JAN-17 05.57.45.034936000 AM,"HERMANN.BAER@ORACLE.COM",23-JAN-24 01.14.57.309580000 PM,"HERMANN.BAER@ORACLE.COM",""
+92046253613399748579774477445429360470,13,"SQL/JSON Features in Oracle Database","Y","Many new features have been added to support JSON development in recent releases.
+
+This Tutorial introduces the new JSON-related extensions to SQL and PL/SQL that have been added since Oracle Database 12c Release 1. These releases add significant new functionality for working with JSON documents stored in the database. There are five major areas of new JSON related functionality in recent releases.
+
+1. Integration with Oracle Database In-Memory. Customers who are licensed for the Oracle Database 
+   In-Memory option will be able to use its capabilities to accelerate SQL queries over JSON 
+   content.
+
+2. JSON Dataguide. The dataguide allows developers to generate and query metadata that describes 
+   the JSON documents they have stored in Oracle Database. The JSON Dataguide can also be used to 
+   generate JSON schema documents and relational views that reflect the structure of the JSON 
+   content that has been stored in the database.
+
+3. PL/SQL Integration. Oracle Database includes a new PL/SQL document API that makes it easy to 
+   use JSON path expressions to access and update the contents of a JSON document.
+
+4. JSON Generation. Oracle Database includes new SQL operators that allow the result of a SQL 
+   query to be transformed into one or more JSON documents.
+
+5. Spatial Integration. Oracle Database includes support for using Oracle Spatial to index and 
+   query GeoJSON content. GeoJSON is a popular way of embedding spatial information, such as 
+   locations, into JSON documents.
+
+The tutorial focuses on items 2 thru 5.","","","JSON appdev",04-JAN-17 05.57.47.099983000 AM,"ROGER.FORD@ORACLE.COM",02-FEB-23 01.49.19.499573000 PM,"ROGER.FORD@ORACLE.COM","N"
+92046253613416673541249082253875246934,1,"Querying Analytic Views - Deep Dive","Y","This tutorial provides an introduction to querying hierarchies and analytic views.  This is a good starting point for anyone who is new to analytic views.","CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id
+   CLASSIFICATION caption VALUE 'YEAR_ID'
+   CLASSIFICATION description VALUE 'YEAR ID',
+  year_name
+    CLASSIFICATION caption VALUE 'YEAR_NAME'
+    CLASSIFICATION description VALUE 'Year',
+  year_end_date
+    CLASSIFICATION caption VALUE 'YEAR_END_DATE'
+    CLASSIFICATION description VALUE 'Year End Date',
+  quarter_id
+    CLASSIFICATION caption VALUE 'QUARTER_ID'
+    CLASSIFICATION description VALUE 'QUARTER ID',
+  quarter_name
+    CLASSIFICATION caption VALUE 'QUARTER_NAME'
+    CLASSIFICATION description VALUE 'Quarter',
+  quarter_end_date
+    CLASSIFICATION caption VALUE 'QUARTER_END_DATE'
+    CLASSIFICATION description VALUE 'Quarter End Date',
+  month_id
+    CLASSIFICATION caption VALUE 'MONTH_ID'
+    CLASSIFICATION description VALUE 'MONTH ID',
+  month_name
+    CLASSIFICATION caption VALUE 'MONTH_NAME'
+    CLASSIFICATION description VALUE 'Month',
+  month_long_name
+    CLASSIFICATION caption VALUE 'MONTH_LONG_NAME'
+    CLASSIFICATION description VALUE 'Month Long Name',
+  month_end_date
+    CLASSIFICATION caption VALUE 'MONTH_END_DATE'
+    CLASSIFICATION description VALUE 'Month End Date')
+LEVEL month
+  CLASSIFICATION caption VALUE 'MONTH'
+  CLASSIFICATION description VALUE 'Month'
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  CLASSIFICATION caption VALUE 'QUARTER'
+  CLASSIFICATION description VALUE 'Quarter'
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  CLASSIFICATION caption VALUE 'YEAR'
+  CLASSIFICATION description VALUE 'Year'
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'ALL TIMES';
+
+CREATE OR REPLACE HIERARCHY time_hier
+  CLASSIFICATION caption VALUE 'CALENDAR'
+  CLASSIFICATION description VALUE 'CALENDAR'
+USING time_attr_dim
+ (month CHILD OF
+ quarter CHILD OF
+ year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id
+    CLASSIFICATION caption VALUE 'DEPARTMENT_ID'
+    CLASSIFICATION description VALUE 'DEPARTMENT ID',
+  department_name
+    CLASSIFICATION caption VALUE 'DEPARTMENT_NAME'
+    CLASSIFICATION description VALUE 'Department',
+  category_id
+    CLASSIFICATION caption VALUE 'CATEGORY_ID'
+    CLASSIFICATION description VALUE 'CATEGORY ID',
+  category_name
+    CLASSIFICATION caption VALUE 'CATEGORY_NAME'
+    CLASSIFICATION description VALUE 'Category')
+LEVEL DEPARTMENT
+  CLASSIFICATION caption VALUE 'DEPARTMENT'
+  CLASSIFICATION description VALUE 'Department'
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  CLASSIFICATION caption VALUE 'CATEGORY'
+  CLASSIFICATION description VALUE 'Category'
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+  CLASSIFICATION caption VALUE 'PRODUCT'
+  CLASSIFICATION description VALUE 'Product'
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id
+    CLASSIFICATION caption VALUE 'REGION_ID'
+    CLASSIFICATION description VALUE 'REGION ID',
+  region_name
+    CLASSIFICATION caption VALUE 'REGION_NAME'
+    CLASSIFICATION description VALUE 'Region',
+  country_id
+    CLASSIFICATION caption VALUE 'COUNTRY_ID'
+    CLASSIFICATION description VALUE 'COUNTRY ID',
+  country_name
+    CLASSIFICATION caption VALUE 'COUNTRY_NAME'
+    CLASSIFICATION description VALUE 'Country',
+  state_province_id
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_ID'
+    CLASSIFICATION description VALUE 'STATE-PROVINCE ID',
+  state_province_name
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_NAME'
+    CLASSIFICATION description VALUE 'State-Province')
+LEVEL REGION
+  CLASSIFICATION caption VALUE 'REGION'
+  CLASSIFICATION description VALUE 'Region'
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  CLASSIFICATION caption VALUE 'COUNTRY'
+  CLASSIFICATION description VALUE 'Country'
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  CLASSIFICATION caption VALUE 'STATE_PROVINCE'
+  CLASSIFICATION description VALUE 'State-Province'
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+  CLASSIFICATION caption VALUE 'GEOGRAPHY'
+  CLASSIFICATION description VALUE 'Geography'
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);
+
+CREATE OR REPLACE ANALYTIC VIEW sales_av
+  CLASSIFICATION caption VALUE 'Sales AV'
+  CLASSIFICATION description VALUE 'Sales Analytic View'
+  CLASSIFICATION created_by VALUE 'George Jones'
+USING av.sales_fact
+DIMENSION BY
+  (time_attr_dim
+    KEY month_id REFERENCES month_id
+    HIERARCHIES (
+      time_hier DEFAULT),
+   product_attr_dim
+    KEY category_id REFERENCES category_id
+    HIERARCHIES (
+      product_hier DEFAULT),
+   geography_attr_dim
+    KEY state_province_id 
+    REFERENCES state_province_id
+    HIERARCHIES (
+      geography_hier DEFAULT)
+   )
+MEASURES
+ (sales FACT sales
+    CLASSIFICATION caption VALUE 'Sales'
+    CLASSIFICATION description VALUE 'Sales'
+    CLASSIFICATION format_string VALUE '$999,999,999,999.99',
+  units FACT units
+    CLASSIFICATION caption VALUE 'Units'
+    CLASSIFICATION description VALUE 'Units Sold'
+    CLASSIFICATION format_string VALUE '999,999,999,999',
+  sales_prior_period AS
+    (LAG(SALES) OVER (HIERARCHY time_hier OFFSET 1))
+      CLASSIFICATION caption VALUE 'Sales Prior Period'
+      CLASSIFICATION description VALUE 'Sales Prior_Period'
+      CLASSIFICATION format_string VALUE '$999,999,999,999.99',
+  sales_share_prod_parent AS
+   (SHARE_OF(sales HIERARCHY product_hier PARENT))
+      CLASSIFICATION caption VALUE 'Sales Share of Product Parent'
+      CLASSIFICATION description VALUE 'Sales Share of Product Parent'
+      CLASSIFICATION format_string VALUE '999.99',
+  sales_share_geog_parent AS
+   (SHARE_OF(sales HIERARCHY geography_hier PARENT))
+      CLASSIFICATION caption VALUE 'Sales Share of Geography Parent'
+      CLASSIFICATION description VALUE 'Sales Share of Geography Parent'
+      CLASSIFICATION format_string VALUE '999.99'
+  )
+DEFAULT MEASURE SALES;","","analytic views, hierarchy, hierarchies",04-JAN-17 05.57.49.873007000 AM,"WILLIAM.ENDRESS@ORACLE.COM",28-SEP-23 04.01.26.173362000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+92046253613429971725264843174797014870,1,"Creating Time Series Calculations in Analytic Views","Y","This tutorial provides examples for creating time series calculations such as prior periods, year ago and period-to-dates.  These types of calculations can be used with any ordered list of hierarchy values (for example calendar or fiscal hierarchies, sequential tests or steps in a manufacturing process).","CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id,
+  year_name,
+  year_end_date,
+  quarter_id,
+  quarter_name,
+  quarter_end_date,
+  month_id,
+  month_name,
+  month_long_name,
+  month_end_date)
+LEVEL month
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'All';
+
+CREATE OR REPLACE HIERARCHY time_hier
+USING time_attr_dim
+ (month CHILD OF
+  quarter CHILD OF
+  year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id,
+  department_name,
+  category_id,
+  category_name)
+LEVEL DEPARTMENT
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id,
+  region_name,
+  country_id,
+  country_name, 
+  state_province_id,
+  state_province_name)
+LEVEL REGION
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);
+","","analytic view, time series, LEAD, LAG, SHARE_OF",04-JAN-17 05.57.51.317855000 AM,"WILLIAM.ENDRESS@ORACLE.COM",13-JAN-17 06.07.20.861441000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+92046253613454150241657135758291138390,1,"Managing very long lists in 12.2 with LISTAGG","Y","The tutorial will help explain the new 12.2 syntax for LISTAGG which provides developers with additional keywords for managing very long lists (i.e. those that exceed the current 4K characters). ","","","SQL, LISTAGG, 12.2",04-JAN-17 05.57.54.418341000 AM,"KEITH.LAKER@ORACLE.COM",17-MAR-17 09.05.07.023927000 AM,"KEITH.LAKER@ORACLE.COM",""
+92046253613467448425672896679212906326,92046253613466239499853282050038200150,"Approximate Query Processing - Getting Started","Y","Approximate Query Processing provides approximate result capabilities in SQL. The motivation behind this feature is to provide highly accurate results and order of magnitude faster than exact query equivalents.","","","sql analytics,approximate query processing",04-JAN-17 05.57.55.764921000 AM,"NIGEL.BAYLISS@ORACLE.COM",28-JUN-17 12.45.04.973436000 PM,"NIGEL.BAYLISS@ORACLE.COM",""
+92046253613491626942065189262707029846,1,"Creating Analytic Views - Deep Dive","Y","In this tutorial you will learn how to create an analytic view using data in the AV sample schema.  If you are new to analytic views this is a great place to start.","","","analytic view",04-JAN-17 05.57.58.823714000 AM,"WILLIAM.ENDRESS@ORACLE.COM",28-SEP-23 04.00.50.373855000 PM,"WILLIAM.ENDRESS@ORACLE.COM","N"
+92046253613504925126080950183628797782,1,"Creating an Analytic View for the Sales History (SH) Sample Schema","Y","This tutorial will create an analytic view and supporting objects using data in the Sales History (SH) sample schema.  It offers a quick overview of the process of creating an analytic view.","","","analytic view, SH, sales history",04-JAN-17 05.58.00.123516000 AM,"WILLIAM.ENDRESS@ORACLE.COM",13-JAN-17 06.18.59.439817000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+92046253613515805458457481846201153366,1,"Creating SHARE_OF (Hierarchical Ratio) Calculations in Analytic Views","Y","SHARE_OF expressions calculate the ratio of a hierarchy value to the value of a parent or an ancestor.  For example, the share (ratio) of sales for a store within a sales district or the share of sales for a month within a quarter or year.","CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id
+   CLASSIFICATION caption VALUE 'YEAR_ID'
+   CLASSIFICATION description VALUE 'YEAR ID',
+  year_name
+    CLASSIFICATION caption VALUE 'YEAR_NAME'
+    CLASSIFICATION description VALUE 'Year',
+  year_end_date
+    CLASSIFICATION caption VALUE 'YEAR_END_DATE'
+    CLASSIFICATION description VALUE 'Year End Date',
+  quarter_id
+    CLASSIFICATION caption VALUE 'QUARTER_ID'
+    CLASSIFICATION description VALUE 'QUARTER ID',
+  quarter_name
+    CLASSIFICATION caption VALUE 'QUARTER_NAME'
+    CLASSIFICATION description VALUE 'Quarter',
+  quarter_end_date
+    CLASSIFICATION caption VALUE 'QUARTER_END_DATE'
+    CLASSIFICATION description VALUE 'Quarter End Date',
+  month_id
+    CLASSIFICATION caption VALUE 'MONTH_ID'
+    CLASSIFICATION description VALUE 'MONTH ID',
+  month_name
+    CLASSIFICATION caption VALUE 'MONTH_NAME'
+    CLASSIFICATION description VALUE 'Month',
+  month_long_name
+    CLASSIFICATION caption VALUE 'MONTH_LONG_NAME'
+    CLASSIFICATION description VALUE 'Month Long Name',
+  month_end_date
+    CLASSIFICATION caption VALUE 'MONTH_END_DATE'
+    CLASSIFICATION description VALUE 'Month End Date')
+LEVEL month
+  CLASSIFICATION caption VALUE 'MONTH'
+  CLASSIFICATION description VALUE 'Month'
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  CLASSIFICATION caption VALUE 'QUARTER'
+  CLASSIFICATION description VALUE 'Quarter'
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  CLASSIFICATION caption VALUE 'YEAR'
+  CLASSIFICATION description VALUE 'Year'
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'All';
+
+CREATE OR REPLACE HIERARCHY time_hier
+  CLASSIFICATION caption VALUE 'CALENDAR'
+  CLASSIFICATION description VALUE 'CALENDAR'
+USING time_attr_dim
+ (month CHILD OF
+ quarter CHILD OF
+ year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id
+    CLASSIFICATION caption VALUE 'DEPARTMENT_ID'
+    CLASSIFICATION description VALUE 'DEPARTMENT ID',
+  department_name
+    CLASSIFICATION caption VALUE 'DEPARTMENT_NAME'
+    CLASSIFICATION description VALUE 'Department',
+  category_id
+    CLASSIFICATION caption VALUE 'CATEGORY_ID'
+    CLASSIFICATION description VALUE 'CATEGORY ID',
+  category_name
+    CLASSIFICATION caption VALUE 'CATEGORY_NAME'
+    CLASSIFICATION description VALUE 'Category')
+LEVEL DEPARTMENT
+  CLASSIFICATION caption VALUE 'DEPARTMENT'
+  CLASSIFICATION description VALUE 'Department'
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  CLASSIFICATION caption VALUE 'CATEGORY'
+  CLASSIFICATION description VALUE 'Category'
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+  CLASSIFICATION caption VALUE 'PRODUCT'
+  CLASSIFICATION description VALUE 'Product'
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id
+    CLASSIFICATION caption VALUE 'REGION_ID'
+    CLASSIFICATION description VALUE 'REGION ID',
+  region_name
+    CLASSIFICATION caption VALUE 'REGION_NAME'
+    CLASSIFICATION description VALUE 'Region',
+  country_id
+    CLASSIFICATION caption VALUE 'COUNTRY_ID'
+    CLASSIFICATION description VALUE 'COUNTRY ID',
+  country_name
+    CLASSIFICATION caption VALUE 'COUNTRY_NAME'
+    CLASSIFICATION description VALUE 'Country',
+  state_province_id
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_ID'
+    CLASSIFICATION description VALUE 'STATE-PROVINCE ID',
+  state_province_name
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_NAME'
+    CLASSIFICATION description VALUE 'State-Province')
+LEVEL REGION
+  CLASSIFICATION caption VALUE 'REGION'
+  CLASSIFICATION description VALUE 'Region'
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  CLASSIFICATION caption VALUE 'COUNTRY'
+  CLASSIFICATION description VALUE 'Country'
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  CLASSIFICATION caption VALUE 'STATE_PROVINCE'
+  CLASSIFICATION description VALUE 'State-Province'
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+  CLASSIFICATION caption VALUE 'GEOGRAPHY'
+  CLASSIFICATION description VALUE 'Geography'
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);","","analytic view, SHARE_OF, ratio, QUALIFY",04-JAN-17 05.58.01.170346000 AM,"WILLIAM.ENDRESS@ORACLE.COM",13-JAN-17 06.14.01.096390000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+92046253613524267939194784250424096598,1,"New 12.2 Data Validation Features - CAST and VALIDATE_CONVERSION","Y","The enhanced  CAST function (along with TO_NUMBER, TO_BINARY_FLOAT, TO_BINARY_DOUBLE, TO_DATE, TO_TIMESTAMP, TO_TIMESTAMP_TZ, TO_DSINTERVAL, and TO_YMINTERVAL functions) can help you deal with data conversion errors without having to resort to complicated PL/SQL code or writing data validation routines within your application code.
+The new VALIDATE_CONVERSION() function can be used to help you identify column values that cannot be converted to the required data type.
+
+Hope these two features are useful. Enjoy!","","","SQL",04-JAN-17 05.58.02.113349000 AM,"KEITH.LAKER@ORACLE.COM",02-MAR-17 11.58.43.355050000 AM,"KEITH.LAKER@ORACLE.COM",""
+92046253613535148271571315912996452182,92046253613466239499853282050038200150,"Using the Analytic View Materialized Aggregate Cache","Y","This tutorial shows how to use materialized views to accelerate queries that select from analytic views.","-- Copy table to current schema in order to allow ALTER MATERIALIZED VIEW ... ENABLE QUERY REWRITE without
+-- granting additional privileges.
+
+CREATE TABLE time_dim AS SELECT * FROM av.time_dim;
+CREATE TABLE product_dim AS SELECT * FROM av.product_dim;
+CREATE TABLE geography_dim AS SELECT * FROM av.geography_dim;
+CREATE TABLE sales_fact AS SELECT * FROM av.sales_fact;
+
+-- Create attribute dimensions and hierarchies that will be used by the SALES_AV analytic view.
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING time_dim
+ATTRIBUTES
+ (year_id
+   CLASSIFICATION caption VALUE 'YEAR_ID'
+   CLASSIFICATION description VALUE 'YEAR ID',
+  year_name
+    CLASSIFICATION caption VALUE 'YEAR_NAME'
+    CLASSIFICATION description VALUE 'Year',
+  year_end_date
+    CLASSIFICATION caption VALUE 'YEAR_END_DATE'
+    CLASSIFICATION description VALUE 'Year End Date',
+  quarter_id
+    CLASSIFICATION caption VALUE 'QUARTER_ID'
+    CLASSIFICATION description VALUE 'QUARTER ID',
+  quarter_name
+    CLASSIFICATION caption VALUE 'QUARTER_NAME'
+    CLASSIFICATION description VALUE 'Quarter',
+  quarter_end_date
+    CLASSIFICATION caption VALUE 'QUARTER_END_DATE'
+    CLASSIFICATION description VALUE 'Quarter End Date',
+  month_id
+    CLASSIFICATION caption VALUE 'MONTH_ID'
+    CLASSIFICATION description VALUE 'MONTH ID',
+  month_name
+    CLASSIFICATION caption VALUE 'MONTH_NAME'
+    CLASSIFICATION description VALUE 'Month',
+  month_long_name
+    CLASSIFICATION caption VALUE 'MONTH_LONG_NAME'
+    CLASSIFICATION description VALUE 'Month Long Name',
+  month_end_date
+    CLASSIFICATION caption VALUE 'MONTH_END_DATE'
+    CLASSIFICATION description VALUE 'Month End Date')
+LEVEL month
+  CLASSIFICATION caption VALUE 'MONTH'
+  CLASSIFICATION description VALUE 'Month'
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  CLASSIFICATION caption VALUE 'QUARTER'
+  CLASSIFICATION description VALUE 'Quarter'
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  CLASSIFICATION caption VALUE 'YEAR'
+  CLASSIFICATION description VALUE 'Year'
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'ALL TIMES';
+
+CREATE OR REPLACE HIERARCHY time_hier
+  CLASSIFICATION caption VALUE 'CALENDAR'
+  CLASSIFICATION description VALUE 'CALENDAR'
+USING time_attr_dim
+ (month CHILD OF
+ quarter CHILD OF
+ year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING product_dim 
+ATTRIBUTES
+ (department_id
+    CLASSIFICATION caption VALUE 'DEPARTMENT_ID'
+    CLASSIFICATION description VALUE 'DEPARTMENT ID',
+  department_name
+    CLASSIFICATION caption VALUE 'DEPARTMENT_NAME'
+    CLASSIFICATION description VALUE 'Department',
+  category_id
+    CLASSIFICATION caption VALUE 'CATEGORY_ID'
+    CLASSIFICATION description VALUE 'CATEGORY ID',
+  category_name
+    CLASSIFICATION caption VALUE 'CATEGORY_NAME'
+    CLASSIFICATION description VALUE 'Category')
+LEVEL DEPARTMENT
+  CLASSIFICATION caption VALUE 'DEPARTMENT'
+  CLASSIFICATION description VALUE 'Department'
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  CLASSIFICATION caption VALUE 'CATEGORY'
+  CLASSIFICATION description VALUE 'Category'
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+  CLASSIFICATION caption VALUE 'PRODUCT'
+  CLASSIFICATION description VALUE 'Product'
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING geography_dim
+ATTRIBUTES
+ (region_id
+    CLASSIFICATION caption VALUE 'REGION_ID'
+    CLASSIFICATION description VALUE 'REGION ID',
+  region_name
+    CLASSIFICATION caption VALUE 'REGION_NAME'
+    CLASSIFICATION description VALUE 'Region',
+  country_id
+    CLASSIFICATION caption VALUE 'COUNTRY_ID'
+    CLASSIFICATION description VALUE 'COUNTRY ID',
+  country_name
+    CLASSIFICATION caption VALUE 'COUNTRY_NAME'
+    CLASSIFICATION description VALUE 'Country',
+  state_province_id
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_ID'
+    CLASSIFICATION description VALUE 'STATE-PROVINCE ID',
+  state_province_name
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_NAME'
+    CLASSIFICATION description VALUE 'State-Province')
+LEVEL REGION
+  CLASSIFICATION caption VALUE 'REGION'
+  CLASSIFICATION description VALUE 'Region'
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  CLASSIFICATION caption VALUE 'COUNTRY'
+  CLASSIFICATION description VALUE 'Country'
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  CLASSIFICATION caption VALUE 'STATE_PROVINCE'
+  CLASSIFICATION description VALUE 'State-Province'
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+  CLASSIFICATION caption VALUE 'GEOGRAPHY'
+  CLASSIFICATION description VALUE 'Geography'
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);
+
+-- Plan table.
+
+CREATE TABLE PLAN_TABLE ( 
+        statement_id       varchar2(30), 
+        plan_id            number, 
+        timestamp          date, 
+        remarks            varchar2(4000), 
+        operation          varchar2(30), 
+        options            varchar2(255), 
+        object_node        varchar2(128), 
+        object_owner       varchar2(30), 
+        object_name        varchar2(30), 
+        object_alias       varchar2(65), 
+        object_instance    numeric, 
+        object_type        varchar2(30), 
+        optimizer          varchar2(255), 
+        search_columns     number, 
+        id                 numeric, 
+        parent_id          numeric, 
+        depth              numeric, 
+        position           numeric, 
+        cost               numeric, 
+        cardinality        numeric, 
+        bytes              numeric, 
+        other_tag          varchar2(255), 
+        partition_start    varchar2(255), 
+        partition_stop     varchar2(255), 
+        partition_id       numeric, 
+        other              long, 
+        distribution       varchar2(30), 
+        cpu_cost           numeric, 
+        io_cost            numeric, 
+        temp_space         numeric, 
+        access_predicates  varchar2(4000), 
+        filter_predicates  varchar2(4000), 
+        projection         varchar2(4000), 
+        time               numeric, 
+        qblock_name        varchar2(30), 
+        other_xml          clob); 
+","","analytic view, materialized view, aggregate, cache",04-JAN-17 05.58.03.364532000 AM,"WILLIAM.ENDRESS@ORACLE.COM",06-JUL-20 02.15.36.340522000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+66677775709556657797196623725084693197,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - Log file sessionization analysis","Y","How to use new 12c SQL pattern matching match_recognize feature for sessionization analysis on web log files","","","pattern matching, sessionization, MATCH_RECOGNIZE",06-MAY-16 09.24.58.470241000 AM,"KEITH.LAKER@ORACLE.COM",24-APR-17 12.53.06.016588000 PM,"KEITH.LAKER@ORACLE.COM",""
+94172526449499528049838069157934586509,92046253613466239499853282050038200150,"Introduction to MATCH_RECOGNIZE","Y","This is a simple example that introduces the main keywords used in MATCH_RECOGNIZE. During this tutorial you will explore how to search for V-shaped patterns in a stock-ticker data set.","","","SQL, PATTERN MATCHING",24-JAN-17 02.44.16.698246000 PM,"KEITH.LAKER@ORACLE.COM",24-JAN-17 04.26.31.060640000 PM,"KEITH.LAKER@ORACLE.COM",""
+83285133915637875197485609545670251773,92046253613466239499853282050038200150,"MATCH_RECOGNIZE - Greedy vs. Reluctant Quantifiers ","Y","In this tutorial we will review the concepts of greedy and reluctant quantifiers. Pattern quantifiers that attempt to match as many instances as possible of the token to which they are applied are referred to as greedy, i.e. they will gobble up as many rows as possible. This is the default mode of operation. The examples in this post use the built-in measures to help show the difference between greedy and reluctant matching. ","","","PATTERN MATCHING, MATCH_RECOGNIZE,",12-OCT-16 09.53.41.243027000 AM,"KEITH.LAKER@ORACLE.COM",24-APR-17 02.12.48.167545000 PM,"KEITH.LAKER@ORACLE.COM",""
+95114558141387237177774563848501259509,92046253613466239499853282050038200150,"Adding Multiple Language Support to Analytic Views","Y","This tutorial provides examples of adding multiple language support to analytic views.","-- This setup script:
+--
+-- * Copies dimension tables from the AV schema to the current schema so that they may be altered.
+-- * Adds new columns to dimension tables to support a second language.
+-- * Populates new columns with German language values.
+-- * Copies the SALES_FACT table from the AV schema to the current schema (just for convenience).
+--
+CREATE TABLE time_dim AS SELECT * FROM av.time_dim;
+--
+ALTER TABLE time_dim ADD month_name_de VARCHAR2(20);
+ALTER TABLE time_dim ADD month_long_name_de VARCHAR2(20);
+ALTER TABLE time_dim ADD season_de VARCHAR2(20);
+--
+UPDATE time_dim SET season_de = 'Winter' WHERE season = 'Winter';
+UPDATE time_dim SET season_de = 'Frühling' WHERE season = 'Spring';
+UPDATE time_dim SET season_de = 'Herbst' WHERE season = 'Fall';
+UPDATE time_dim SET season_de = 'Sommer' WHERE season = 'Summer';
+--
+UPDATE time_dim SET month_name_de = 'Apr-11', month_long_name_de = 'April 2011' WHERE month_name = 'Apr-11';
+UPDATE time_dim SET month_name_de = 'Apr-12', month_long_name_de = 'April 2012' WHERE month_name = 'Apr-12';
+UPDATE time_dim SET month_name_de = 'Apr-13', month_long_name_de = 'April 2013' WHERE month_name = 'Apr-13';
+UPDATE time_dim SET month_name_de = 'Apr-14', month_long_name_de = 'April 2014' WHERE month_name = 'Apr-14';
+UPDATE time_dim SET month_name_de = 'Apr-15', month_long_name_de = 'April 2015' WHERE month_name = 'Apr-15';
+UPDATE time_dim SET month_name_de = 'Aug-11', month_long_name_de = 'August 2011' WHERE month_name = 'Aug-11';
+UPDATE time_dim SET month_name_de = 'Aug-12', month_long_name_de = 'August 2012' WHERE month_name = 'Aug-12';
+UPDATE time_dim SET month_name_de = 'Aug-13', month_long_name_de = 'August 2013' WHERE month_name = 'Aug-13';
+UPDATE time_dim SET month_name_de = 'Aug-14', month_long_name_de = 'August 2014' WHERE month_name = 'Aug-14';
+UPDATE time_dim SET month_name_de = 'Aug-15', month_long_name_de = 'August 2015' WHERE month_name = 'Aug-15';
+UPDATE time_dim SET month_name_de = 'Dez-11', month_long_name_de = 'Dezember 2011' WHERE month_name = 'Dec-11';
+UPDATE time_dim SET month_name_de = 'Dez-12', month_long_name_de = 'Dezember 2012' WHERE month_name = 'Dec-12';
+UPDATE time_dim SET month_name_de = 'Dez-13', month_long_name_de = 'Dezember 2013' WHERE month_name = 'Dec-13';
+UPDATE time_dim SET month_name_de = 'Dez-14', month_long_name_de = 'Dezember 2014' WHERE month_name = 'Dec-14';
+UPDATE time_dim SET month_name_de = 'Dez-15', month_long_name_de = 'Dezember 2015' WHERE month_name = 'Dec-15';
+UPDATE time_dim SET month_name_de = 'Feb-11', month_long_name_de = 'Februar 2011' WHERE month_name = 'Feb-11';
+UPDATE time_dim SET month_name_de = 'Feb-12', month_long_name_de = 'Februar 2012' WHERE month_name = 'Feb-12';
+UPDATE time_dim SET month_name_de = 'Feb-13', month_long_name_de = 'Februar 2013' WHERE month_name = 'Feb-13';
+UPDATE time_dim SET month_name_de = 'Feb-14', month_long_name_de = 'Februar 2014' WHERE month_name = 'Feb-14';
+UPDATE time_dim SET month_name_de = 'Feb-15', month_long_name_de = 'Februar 2015' WHERE month_name = 'Feb-15';
+UPDATE time_dim SET month_name_de = 'Jän-11', month_long_name_de = 'Januar 2011' WHERE month_name = 'Jan-11';
+UPDATE time_dim SET month_name_de = 'Jän-12', month_long_name_de = 'Januar 2012' WHERE month_name = 'Jan-12';
+UPDATE time_dim SET month_name_de = 'Jän-13', month_long_name_de = 'Januar 2013' WHERE month_name = 'Jan-13';
+UPDATE time_dim SET month_name_de = 'Jän-14', month_long_name_de = 'Januar 2014' WHERE month_name = 'Jan-14';
+UPDATE time_dim SET month_name_de = 'Jän-15', month_long_name_de = 'Januar 2015' WHERE month_name = 'Jan-15';
+UPDATE time_dim SET month_name_de = 'Juli-11', month_long_name_de = 'Juli 2011' WHERE month_name = 'Jul-11';
+UPDATE time_dim SET month_name_de = 'Juli-12', month_long_name_de = 'Juli 2012' WHERE month_name = 'Jul-12';
+UPDATE time_dim SET month_name_de = 'Juli-13', month_long_name_de = 'Juli 2013' WHERE month_name = 'Jul-13';
+UPDATE time_dim SET month_name_de = 'Juli-14', month_long_name_de = 'Juli 2014' WHERE month_name = 'Jul-14';
+UPDATE time_dim SET month_name_de = 'Juli-15', month_long_name_de = 'Juli 2015' WHERE month_name = 'Jul-15';
+UPDATE time_dim SET month_name_de = 'Juni-11', month_long_name_de = 'Juni 2011' WHERE month_name = 'Jun-11';
+UPDATE time_dim SET month_name_de = 'Juni-12', month_long_name_de = 'Juni 2012' WHERE month_name = 'Jun-12';
+UPDATE time_dim SET month_name_de = 'Juni-13', month_long_name_de = 'Juni 2013' WHERE month_name = 'Jun-13';
+UPDATE time_dim SET month_name_de = 'Juni-14', month_long_name_de = 'Juni 2014' WHERE month_name = 'Jun-14';
+UPDATE time_dim SET month_name_de = 'Juni-15', month_long_name_de = 'Juni 2015' WHERE month_name = 'Jun-15';
+UPDATE time_dim SET month_name_de = 'März-11', month_long_name_de = 'März 2011' WHERE month_name = 'Mar-11';
+UPDATE time_dim SET month_name_de = 'März-12', month_long_name_de = 'März 2012' WHERE month_name = 'Mar-12';
+UPDATE time_dim SET month_name_de = 'März-13', month_long_name_de = 'März 2013' WHERE month_name = 'Mar-13';
+UPDATE time_dim SET month_name_de = 'März-14', month_long_name_de = 'März 2014' WHERE month_name = 'Mar-14';
+UPDATE time_dim SET month_name_de = 'März-15', month_long_name_de = 'März 2015' WHERE month_name = 'Mar-15';
+UPDATE time_dim SET month_name_de = 'Mai-11', month_long_name_de = 'Mai 2011' WHERE month_name = 'May-11';
+UPDATE time_dim SET month_name_de = 'Mai-12', month_long_name_de = 'Mai 2012' WHERE month_name = 'May-12';
+UPDATE time_dim SET month_name_de = 'Mai-13', month_long_name_de = 'Mai 2013' WHERE month_name = 'May-13';
+UPDATE time_dim SET month_name_de = 'Mai-14', month_long_name_de = 'Mai 2014' WHERE month_name = 'May-14';
+UPDATE time_dim SET month_name_de = 'Mai-15', month_long_name_de = 'Mai 2015' WHERE month_name = 'May-15';
+UPDATE time_dim SET month_name_de = 'Nov-11', month_long_name_de = 'November 2011' WHERE month_name = 'Nov-11';
+UPDATE time_dim SET month_name_de = 'Nov-12', month_long_name_de = 'November 2012' WHERE month_name = 'Nov-12';
+UPDATE time_dim SET month_name_de = 'Nov-13', month_long_name_de = 'November 2013' WHERE month_name = 'Nov-13';
+UPDATE time_dim SET month_name_de = 'Nov-14', month_long_name_de = 'November 2014' WHERE month_name = 'Nov-14';
+UPDATE time_dim SET month_name_de = 'Nov-15', month_long_name_de = 'November 2015' WHERE month_name = 'Nov-15';
+UPDATE time_dim SET month_name_de = 'Okt-11', month_long_name_de = 'Oktober 2011' WHERE month_name = 'Oct-11';
+UPDATE time_dim SET month_name_de = 'Okt-12', month_long_name_de = 'Oktober 2012' WHERE month_name = 'Oct-12';
+UPDATE time_dim SET month_name_de = 'Okt-13', month_long_name_de = 'Oktober 2013' WHERE month_name = 'Oct-13';
+UPDATE time_dim SET month_name_de = 'Okt-14', month_long_name_de = 'Oktober 2014' WHERE month_name = 'Oct-14';
+UPDATE time_dim SET month_name_de = 'Okt-15', month_long_name_de = 'Oktober 2015' WHERE month_name = 'Oct-15';
+UPDATE time_dim SET month_name_de = 'Sept-11', month_long_name_de = 'September 2011' WHERE month_name = 'Sep-11';
+UPDATE time_dim SET month_name_de = 'Sept-12', month_long_name_de = 'September 2012' WHERE month_name = 'Sep-12';
+UPDATE time_dim SET month_name_de = 'Sept-13', month_long_name_de = 'September 2013' WHERE month_name = 'Sep-13';
+UPDATE time_dim SET month_name_de = 'Sept-14', month_long_name_de = 'September 2014' WHERE month_name = 'Sep-14';
+UPDATE time_dim SET month_name_de = 'Sept-15', month_long_name_de = 'September 2015' WHERE month_name = 'Sep-15';
+--
+CREATE TABLE product_dim AS SELECT * FROM av.product_dim;
+--
+ALTER TABLE product_dim ADD department_name_de VARCHAR2(50);
+ALTER TABLE product_dim ADD category_name_de VARCHAR2(50);
+--
+UPDATE product_dim SET category_name_de = 'Gesamte iPlayer-Familie', department_name_de = 'Tragbare Musik und Video' WHERE category_name = 'Total iPlayer Family';
+UPDATE product_dim SET category_name_de = 'Camcorder und Zubehör', department_name_de = 'Gesamtserver-Computer' WHERE category_name = 'Camcorders and Accessories';
+UPDATE product_dim SET category_name_de = 'Alle Computer-Möbel', department_name_de = 'Computer' WHERE category_name = 'All Computer Furniture';
+UPDATE product_dim SET category_name_de = 'Computer Drucker und Zubehör', department_name_de = 'Computer' WHERE category_name = 'Computer Printers and Supplies';
+UPDATE product_dim SET category_name_de = 'Insgesamt Personal Computer', department_name_de = 'Computer' WHERE category_name = 'Total Personal Computers';
+UPDATE product_dim SET category_name_de = 'Kameras und Zubehör', department_name_de = 'Gesamtserver-Computer' WHERE category_name = 'Cameras and Accessories';
+UPDATE product_dim SET category_name_de = 'PDAs', department_name_de = 'Computer' WHERE category_name = 'PDAs';
+UPDATE product_dim SET category_name_de = 'Gesamtserver-Computer', department_name_de = 'Computer' WHERE category_name = 'Total Server Computers';
+UPDATE product_dim SET category_name_de = 'Gesamte iPlayer-Familie', department_name_de = 'Tragbare Musik und Video' WHERE category_name = 'Total iPlayer Family';
+UPDATE product_dim SET category_name_de = 'Camcorder und Zubehör', department_name_de = 'Gesamtserver-Computer' WHERE category_name = 'Camcorders and Accessories';
+UPDATE product_dim SET category_name_de = 'Alle Computer-Möbel', department_name_de = 'Computer' WHERE category_name = 'All Computer Furniture';
+UPDATE product_dim SET category_name_de = 'Computer Drucker und Zubehör', department_name_de = 'Computer' WHERE category_name = 'Computer Printers and Supplies';
+UPDATE product_dim SET category_name_de = 'Insgesamt Personal Computer', department_name_de = 'Computer' WHERE category_name = 'Total Personal Computers';
+UPDATE product_dim SET category_name_de = 'Kameras und Zubehör', department_name_de = 'Gesamtserver-Computer' WHERE category_name = 'Cameras and Accessories';
+UPDATE product_dim SET category_name_de = 'PDAs', department_name_de = 'Computer' WHERE category_name = 'PDAs';
+UPDATE product_dim SET category_name_de = 'Gesamtserver-Computer', department_name_de = 'Computer' WHERE category_name = 'Total Server Computers';
+--
+CREATE TABLE geography_dim AS SELECT * FROM av.geography_dim;
+--
+ALTER TABLE geography_dim ADD region_name_de VARCHAR2(20);
+ALTER TABLE geography_dim ADD country_name_de VARCHAR2(30);
+--
+UPDATE geography_dim SET country_name_de = 'Afghanistan', region_name_de = 'Asien' WHERE country_name = 'Afghanistan';
+UPDATE geography_dim SET country_name_de = 'Angola', region_name_de = 'Afrika' WHERE country_name = 'Angola';
+UPDATE geography_dim SET country_name_de = 'Argentinien', region_name_de = 'Südamerika' WHERE country_name = 'Argentina';
+UPDATE geography_dim SET country_name_de = 'Armenien', region_name_de = 'Asien' WHERE country_name = 'Armenia';
+UPDATE geography_dim SET country_name_de = 'Australien', region_name_de = 'Europa' WHERE country_name = 'Austria';
+UPDATE geography_dim SET country_name_de = 'Bangladesch', region_name_de = 'Asien' WHERE country_name = 'Bangladesh';
+UPDATE geography_dim SET country_name_de = 'Weißrussland', region_name_de = 'Asien' WHERE country_name = 'Belarus';
+UPDATE geography_dim SET country_name_de = 'Brasilien', region_name_de = 'Südamerika' WHERE country_name = 'Brazil';
+UPDATE geography_dim SET country_name_de = 'Kamerun', region_name_de = 'Afrika' WHERE country_name = 'Cameroon';
+UPDATE geography_dim SET country_name_de = 'Kanada', region_name_de = 'Nordamerika' WHERE country_name = 'Canada';
+UPDATE geography_dim SET country_name_de = 'Chile', region_name_de = 'Südamerika' WHERE country_name = 'Chile';
+UPDATE geography_dim SET country_name_de = 'China', region_name_de = 'Asien' WHERE country_name = 'China';
+UPDATE geography_dim SET country_name_de = 'Kolumbien', region_name_de = 'Südamerika' WHERE country_name = 'Colombia';
+UPDATE geography_dim SET country_name_de = 'Kongo', region_name_de = 'Afrika' WHERE country_name = 'Congo';
+UPDATE geography_dim SET country_name_de = 'Kuba', region_name_de = 'Nordamerika' WHERE country_name = 'Cuba';
+UPDATE geography_dim SET country_name_de = 'Ecuador', region_name_de = 'Südamerika' WHERE country_name = 'Ecuador';
+UPDATE geography_dim SET country_name_de = 'Ägypten', region_name_de = 'Afrika' WHERE country_name = 'Egypt';
+UPDATE geography_dim SET country_name_de = 'El Salavor', region_name_de = 'Südamerika' WHERE country_name = 'El Salvador';
+UPDATE geography_dim SET country_name_de = 'Äthiopien', region_name_de = 'Afrika' WHERE country_name = 'Ethiopia';
+UPDATE geography_dim SET country_name_de = 'Finnland', region_name_de = 'Europa' WHERE country_name = 'Finland';
+UPDATE geography_dim SET country_name_de = 'Frankreich', region_name_de = 'Europa' WHERE country_name = 'France';
+UPDATE geography_dim SET country_name_de = 'Deutchland', region_name_de = 'Europa' WHERE country_name = 'Germany';
+UPDATE geography_dim SET country_name_de = 'Ghana', region_name_de = 'Afrika' WHERE country_name = 'Ghana';
+UPDATE geography_dim SET country_name_de = 'Griechenland', region_name_de = 'Europa' WHERE country_name = 'Greece';
+UPDATE geography_dim SET country_name_de = 'Honduras', region_name_de = 'Südamerika' WHERE country_name = 'Honduras';
+UPDATE geography_dim SET country_name_de = 'Ungarn', region_name_de = 'Europa' WHERE country_name = 'Hungary';
+UPDATE geography_dim SET country_name_de = 'Indien', region_name_de = 'Asien' WHERE country_name = 'India';
+UPDATE geography_dim SET country_name_de = 'Indonesien', region_name_de = 'Asien' WHERE country_name = 'Indonesia';
+UPDATE geography_dim SET country_name_de = 'Israel', region_name_de = 'Asien' WHERE country_name = 'Isreal';
+UPDATE geography_dim SET country_name_de = 'Italien', region_name_de = 'Europa' WHERE country_name = 'Italy';
+UPDATE geography_dim SET country_name_de = 'Japan', region_name_de = 'Asien' WHERE country_name = 'Japan';
+UPDATE geography_dim SET country_name_de = 'Jordan', region_name_de = 'Asien' WHERE country_name = 'Jordan';
+UPDATE geography_dim SET country_name_de = 'Kasachstan', region_name_de = 'Asien' WHERE country_name = 'Kazakhstan';
+UPDATE geography_dim SET country_name_de = 'Kenia', region_name_de = 'Afrika' WHERE country_name = 'Kenya';
+UPDATE geography_dim SET country_name_de = 'Madagaskar', region_name_de = 'Afrika' WHERE country_name = 'Madagascar';
+UPDATE geography_dim SET country_name_de = 'Malaysia', region_name_de = 'Asien' WHERE country_name = 'Malaysia';
+UPDATE geography_dim SET country_name_de = 'Mali', region_name_de = 'Afrika' WHERE country_name = 'Mali';
+UPDATE geography_dim SET country_name_de = 'Mexiko', region_name_de = 'Nordamerika' WHERE country_name = 'Mexico';
+UPDATE geography_dim SET country_name_de = 'Mosambik', region_name_de = 'Afrika' WHERE country_name = 'Mozambique';
+UPDATE geography_dim SET country_name_de = 'Niederlande', region_name_de = 'Europa' WHERE country_name = 'Netherlands';
+UPDATE geography_dim SET country_name_de = 'Neuseeland', region_name_de = 'Australien' WHERE country_name = 'New Zealand';
+UPDATE geography_dim SET country_name_de = 'Nigeria', region_name_de = 'Afrika' WHERE country_name = 'Nigeria';
+UPDATE geography_dim SET country_name_de = 'Pakistan', region_name_de = 'Asien' WHERE country_name = 'Pakistan';
+UPDATE geography_dim SET country_name_de = 'Paraguay', region_name_de = 'Südamerika' WHERE country_name = 'Paraguay';
+UPDATE geography_dim SET country_name_de = 'Peru', region_name_de = 'Südamerika' WHERE country_name = 'Peru';
+UPDATE geography_dim SET country_name_de = 'Polen', region_name_de = 'Europa' WHERE country_name = 'Poland';
+UPDATE geography_dim SET country_name_de = 'Portugal', region_name_de = 'Europa' WHERE country_name = 'Portugal';
+UPDATE geography_dim SET country_name_de = 'Rumänien', region_name_de = 'Europa' WHERE country_name = 'Romania';
+UPDATE geography_dim SET country_name_de = 'Russland', region_name_de = 'Asien' WHERE country_name = 'Russian Federation';
+UPDATE geography_dim SET country_name_de = 'Saudi-Arabien', region_name_de = 'Asien' WHERE country_name = 'Saudi Arabia';
+UPDATE geography_dim SET country_name_de = 'Senegal', region_name_de = 'Afrika' WHERE country_name = 'Senegal';
+UPDATE geography_dim SET country_name_de = 'Serbien', region_name_de = 'Europa' WHERE country_name = 'Serbia';
+UPDATE geography_dim SET country_name_de = 'Singapur', region_name_de = 'Asien' WHERE country_name = 'Singapore';
+UPDATE geography_dim SET country_name_de = 'Somalia', region_name_de = 'Afrika' WHERE country_name = 'Somalia';
+UPDATE geography_dim SET country_name_de = 'Südkorea', region_name_de = 'Asien' WHERE country_name = 'South Korea';
+UPDATE geography_dim SET country_name_de = 'Thailand', region_name_de = 'Asien' WHERE country_name = 'Thailand';
+UPDATE geography_dim SET country_name_de = 'Türkei', region_name_de = 'Asien' WHERE country_name = 'Turkey';
+UPDATE geography_dim SET country_name_de = 'Ukraine', region_name_de = 'Asien' WHERE country_name = 'Ukraine';
+UPDATE geography_dim SET country_name_de = 'Vereinigtes Königreich', region_name_de = 'Europa' WHERE country_name = 'United Kingdom';
+UPDATE geography_dim SET country_name_de = 'Vereinigte Staaten', region_name_de = 'Nordamerika' WHERE country_name = 'United States';
+UPDATE geography_dim SET country_name_de = 'Uruguay', region_name_de = 'Südamerika' WHERE country_name = 'Uruguay';
+UPDATE geography_dim SET country_name_de = 'Usbekistan', region_name_de = 'Asien' WHERE country_name = 'Uzbekistan';
+UPDATE geography_dim SET country_name_de = 'Venezuela', region_name_de = 'Südamerika' WHERE country_name = 'Venezuela';
+UPDATE geography_dim SET country_name_de = 'Sambia', region_name_de = 'Afrika' WHERE country_name = 'Zambia';
+--
+COMMIT;
+--
+CREATE TABLE sales_fact AS SELECT * FROM av.sales_fact;","","analytic views, nls",02-FEB-17 03.50.22.724246000 PM,"WILLIAM.ENDRESS@ORACLE.COM",06-FEB-17 02.16.51.200590000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+97371311146062087736707699233039984534,92046253613466239499853282050038200150,"HOL Analytic Functions","Y","Hands-On-Lab for ODTUG Kscope.
+
+The modules give examples of analytic functions in increasing complexity. If you're new to analytic functions, start at module 1 and 2 and go from there. If you know the basics already, you can jump in at module 3 or 4 if you wish.","/* Module 1 */
+
+create table dept(
+   deptno number(2) constraint pk_dept primary key
+ ,	dname varchar2(14)
+ ,	loc varchar2(13)
+);
+
+create table emp(
+   empno number(4) constraint pk_emp primary key
+ ,	ename varchar2(10)
+ , job varchar2(9)
+ , mgr number(4)
+ , hiredate date
+ , sal number(7,2)
+ , comm number(7,2)
+ , deptno number(2) constraint fk_deptno references dept
+);
+
+insert into dept values	(10,'ACCOUNTING','NEW YORK');
+insert into dept values (20,'RESEARCH','DALLAS');
+insert into dept values	(30,'SALES','CHICAGO');
+insert into dept values	(40,'OPERATIONS','BOSTON');
+
+insert into emp values (7369,'SMITH','CLERK',7902,to_date('17-12-1980','dd-mm-yyyy'),800,null,20);
+insert into emp values (7499,'ALLEN','SALESMAN',7698,to_date('20-2-1981','dd-mm-yyyy'),1600,300,30);
+insert into emp values (7521,'WARD','SALESMAN',7698,to_date('22-2-1981','dd-mm-yyyy'),1250,500,30);
+insert into emp values (7566,'JONES','MANAGER',7839,to_date('2-4-1981','dd-mm-yyyy'),2975,null,20);
+insert into emp values (7654,'MARTIN','SALESMAN',7698,to_date('28-9-1981','dd-mm-yyyy'),1250,1400,30);
+insert into emp values (7698,'BLAKE','MANAGER',7839,to_date('1-5-1981','dd-mm-yyyy'),2850,null,30);
+insert into emp values (7782,'CLARK','MANAGER',7839,to_date('9-6-1981','dd-mm-yyyy'),2450,null,10);
+insert into emp values (7788,'SCOTT','ANALYST',7566,to_date('19-04-1987','dd-mm-yyyy'),3000,null,20);
+insert into emp values (7839,'KING','PRESIDENT',null,to_date('17-11-1981','dd-mm-yyyy'),5000,null,10);
+insert into emp values (7844,'TURNER','SALESMAN',7698,to_date('8-9-1981','dd-mm-yyyy'),1500,0,30);
+insert into emp values (7876,'ADAMS','CLERK',7788,to_date('23-05-1987', 'dd-mm-yyyy'),1100,null,20);
+insert into emp values (7900,'JAMES','CLERK',7698,to_date('3-12-1981','dd-mm-yyyy'),950,null,30);
+insert into emp values (7902,'FORD','ANALYST',7566,to_date('3-12-1981','dd-mm-yyyy'),3000,null,20);
+insert into emp values (7934,'MILLER','CLERK',7782,to_date('23-1-1982','dd-mm-yyyy'),1300,null,10);
+
+commit;
+
+/* Module 2 */
+
+create table items(
+   item  varchar2(10) primary key
+ , grp   varchar2(10)
+ , name  varchar2(20)
+);
+
+create table sales (
+   item  varchar2(10) references items (item)
+ , mth   date
+ , qty   number
+);
+
+insert into items values ('101010','AUTO','Brake disc');
+insert into items values ('102020','AUTO','Snow chain');
+insert into items values ('103030','AUTO','Sparc plug');
+insert into items values ('104040','AUTO','Oil filter');
+insert into items values ('105050','AUTO','Light bulb');
+
+insert into items values ('201010','MOBILE','Handsfree');
+insert into items values ('202020','MOBILE','Charger');
+insert into items values ('203030','MOBILE','iGloves');
+insert into items values ('204040','MOBILE','Headset');
+insert into items values ('205050','MOBILE','Cover');
+  
+insert into sales values ('101010',date '2014-04-01',10);
+insert into sales values ('101010',date '2014-05-01',11);
+insert into sales values ('101010',date '2014-06-01',12);
+insert into sales values ('102020',date '2014-03-01', 7);
+insert into sales values ('102020',date '2014-07-01', 8);
+insert into sales values ('103030',date '2014-01-01', 6);
+insert into sales values ('103030',date '2014-02-01', 9);
+insert into sales values ('103030',date '2014-11-01', 4);
+insert into sales values ('103030',date '2014-12-01',14);
+insert into sales values ('104040',date '2014-08-01',22);
+insert into sales values ('105050',date '2014-09-01',13);
+insert into sales values ('105050',date '2014-10-01',15);
+
+insert into sales values ('201010',date '2014-04-01', 5);
+insert into sales values ('201010',date '2014-05-01', 6);
+insert into sales values ('201010',date '2014-06-01', 7);
+insert into sales values ('202020',date '2014-03-01',21);
+insert into sales values ('202020',date '2014-07-01',23);
+insert into sales values ('203030',date '2014-01-01', 7);
+insert into sales values ('203030',date '2014-02-01', 7);
+insert into sales values ('203030',date '2014-11-01', 6);
+insert into sales values ('203030',date '2014-12-01', 8);
+insert into sales values ('204040',date '2014-08-01',35);
+insert into sales values ('205050',date '2014-09-01',13);
+insert into sales values ('205050',date '2014-10-01',15);
+  
+commit;
+
+/* Module 3 */
+
+create table numbers (numval)
+as
+select  1 from dual union all
+select  2 from dual union all
+select  3 from dual union all
+select  5 from dual union all
+select  6 from dual union all
+select  7 from dual union all
+select 10 from dual union all
+select 11 from dual union all
+select 12 from dual union all
+select 20 from dual;
+
+create table dates (dateval)
+as
+select date '2017-06-01' from dual union all
+select date '2017-06-02' from dual union all
+select date '2017-06-03' from dual union all
+select date '2017-06-05' from dual union all
+select date '2017-06-06' from dual union all
+select date '2017-06-07' from dual union all
+select date '2017-06-10' from dual union all
+select date '2017-06-11' from dual union all
+select date '2017-06-12' from dual union all
+select date '2017-06-20' from dual;
+
+create table gas_price_log (
+   logged_date    date     unique
+ , logged_price   number   not null
+);
+
+insert into gas_price_log values (date '2014-09-01', 7.50);
+insert into gas_price_log values (date '2014-09-02', 7.61);
+insert into gas_price_log values (date '2014-09-03', 7.72);
+insert into gas_price_log values (date '2014-09-04', 7.89);
+insert into gas_price_log values (date '2014-09-05', 7.89);
+insert into gas_price_log values (date '2014-09-06', 7.83);
+insert into gas_price_log values (date '2014-09-07', 7.55);
+insert into gas_price_log values (date '2014-09-08', 7.55);
+insert into gas_price_log values (date '2014-09-09', 7.72);
+insert into gas_price_log values (date '2014-09-10', 7.89);
+insert into gas_price_log values (date '2014-09-11', 7.61);
+insert into gas_price_log values (date '2014-09-12', 7.61);
+insert into gas_price_log values (date '2014-09-13', 7.61);
+insert into gas_price_log values (date '2014-09-14', 7.72);
+
+commit;
+
+/* Module 4+5 */
+
+create table inventory (
+   item  varchar2(10)   -- identification of the item
+ , loc   varchar2(10)   -- identification of the location
+ , qty   number         -- quantity present at that location
+ , purch date           -- date that quantity was purchased
+);
+
+create table orderline (
+   ordno number         -- id-number of the order
+ , item  varchar2(10)   -- identification of the item
+ , qty   number         -- quantity ordered
+);
+
+insert into inventory values('Ale' , '1-A-20', 18, DATE '2014-02-01');
+insert into inventory values('Ale' , '1-A-31', 12, DATE '2014-02-05');
+insert into inventory values('Ale' , '1-C-05', 18, DATE '2014-02-03');
+insert into inventory values('Ale' , '2-A-02', 24, DATE '2014-02-02');
+insert into inventory values('Ale' , '2-D-07',  9, DATE '2014-02-04');
+insert into inventory values('Bock', '1-A-02', 18, DATE '2014-02-06');
+insert into inventory values('Bock', '1-B-11',  4, DATE '2014-02-05');
+insert into inventory values('Bock', '1-C-04', 12, DATE '2014-02-03');
+insert into inventory values('Bock', '1-B-15',  2, DATE '2014-02-02');
+insert into inventory values('Bock', '2-D-23',  1, DATE '2014-02-04');
+
+insert into orderline values (42, 'Ale' , 24);
+insert into orderline values (42, 'Bock', 18);
+insert into orderline values (51, 'Ale' , 24);
+insert into orderline values (51, 'Bock', 18);
+insert into orderline values (62, 'Ale' ,  8);
+insert into orderline values (73, 'Ale' , 16);
+insert into orderline values (73, 'Bock',  6);
+
+commit;
+
+/* Module 6 */
+
+create table monthly_sales (
+   item varchar2(10)
+ , mth  date
+ , qty  number
+);
+
+insert into monthly_sales values ('Snowchain', date '2011-01-01',   79);
+insert into monthly_sales values ('Snowchain', date '2011-02-01',  133);
+insert into monthly_sales values ('Snowchain', date '2011-03-01',   24);
+insert into monthly_sales values ('Snowchain', date '2011-04-01',    1);
+insert into monthly_sales values ('Snowchain', date '2011-05-01',    0);
+insert into monthly_sales values ('Snowchain', date '2011-06-01',    0);
+insert into monthly_sales values ('Snowchain', date '2011-07-01',    0);
+insert into monthly_sales values ('Snowchain', date '2011-08-01',    0);
+insert into monthly_sales values ('Snowchain', date '2011-09-01',    1);
+insert into monthly_sales values ('Snowchain', date '2011-10-01',    4);
+insert into monthly_sales values ('Snowchain', date '2011-11-01',   15);
+insert into monthly_sales values ('Snowchain', date '2011-12-01',   74);
+insert into monthly_sales values ('Snowchain', date '2012-01-01',  148);
+insert into monthly_sales values ('Snowchain', date '2012-02-01',  209);
+insert into monthly_sales values ('Snowchain', date '2012-03-01',   30);
+insert into monthly_sales values ('Snowchain', date '2012-04-01',    2);
+insert into monthly_sales values ('Snowchain', date '2012-05-01',    0);
+insert into monthly_sales values ('Snowchain', date '2012-06-01',    0);
+insert into monthly_sales values ('Snowchain', date '2012-07-01',    0);
+insert into monthly_sales values ('Snowchain', date '2012-08-01',    1);
+insert into monthly_sales values ('Snowchain', date '2012-09-01',    0);
+insert into monthly_sales values ('Snowchain', date '2012-10-01',    3);
+insert into monthly_sales values ('Snowchain', date '2012-11-01',   17);
+insert into monthly_sales values ('Snowchain', date '2012-12-01',  172);
+insert into monthly_sales values ('Snowchain', date '2013-01-01',  167);
+insert into monthly_sales values ('Snowchain', date '2013-02-01',  247);
+insert into monthly_sales values ('Snowchain', date '2013-03-01',   42);
+insert into monthly_sales values ('Snowchain', date '2013-04-01',    0);
+insert into monthly_sales values ('Snowchain', date '2013-05-01',    0);
+insert into monthly_sales values ('Snowchain', date '2013-06-01',    0);
+insert into monthly_sales values ('Snowchain', date '2013-07-01',    0);
+insert into monthly_sales values ('Snowchain', date '2013-08-01',    1);
+insert into monthly_sales values ('Snowchain', date '2013-09-01',    0);
+insert into monthly_sales values ('Snowchain', date '2013-10-01',    1);
+insert into monthly_sales values ('Snowchain', date '2013-11-01',   73);
+insert into monthly_sales values ('Snowchain', date '2013-12-01',  160);
+insert into monthly_sales values ('Sunshade' , date '2011-01-01',    4);
+insert into monthly_sales values ('Sunshade' , date '2011-02-01',    6);
+insert into monthly_sales values ('Sunshade' , date '2011-03-01',   32);
+insert into monthly_sales values ('Sunshade' , date '2011-04-01',   45);
+insert into monthly_sales values ('Sunshade' , date '2011-05-01',   62);
+insert into monthly_sales values ('Sunshade' , date '2011-06-01',   58);
+insert into monthly_sales values ('Sunshade' , date '2011-07-01',   85);
+insert into monthly_sales values ('Sunshade' , date '2011-08-01',   28);
+insert into monthly_sales values ('Sunshade' , date '2011-09-01',   24);
+insert into monthly_sales values ('Sunshade' , date '2011-10-01',   19);
+insert into monthly_sales values ('Sunshade' , date '2011-11-01',    6);
+insert into monthly_sales values ('Sunshade' , date '2011-12-01',    8);
+insert into monthly_sales values ('Sunshade' , date '2012-01-01',    2);
+insert into monthly_sales values ('Sunshade' , date '2012-02-01',   13);
+insert into monthly_sales values ('Sunshade' , date '2012-03-01',   29);
+insert into monthly_sales values ('Sunshade' , date '2012-04-01',   60);
+insert into monthly_sales values ('Sunshade' , date '2012-05-01',   29);
+insert into monthly_sales values ('Sunshade' , date '2012-06-01',   78);
+insert into monthly_sales values ('Sunshade' , date '2012-07-01',   56);
+insert into monthly_sales values ('Sunshade' , date '2012-08-01',   22);
+insert into monthly_sales values ('Sunshade' , date '2012-09-01',   11);
+insert into monthly_sales values ('Sunshade' , date '2012-10-01',   13);
+insert into monthly_sales values ('Sunshade' , date '2012-11-01',    5);
+insert into monthly_sales values ('Sunshade' , date '2012-12-01',    3);
+insert into monthly_sales values ('Sunshade' , date '2013-01-01',    2);
+insert into monthly_sales values ('Sunshade' , date '2013-02-01',    8);
+insert into monthly_sales values ('Sunshade' , date '2013-03-01',   28);
+insert into monthly_sales values ('Sunshade' , date '2013-04-01',   26);
+insert into monthly_sales values ('Sunshade' , date '2013-05-01',   23);
+insert into monthly_sales values ('Sunshade' , date '2013-06-01',   46);
+insert into monthly_sales values ('Sunshade' , date '2013-07-01',   73);
+insert into monthly_sales values ('Sunshade' , date '2013-08-01',   25);
+insert into monthly_sales values ('Sunshade' , date '2013-09-01',   13);
+insert into monthly_sales values ('Sunshade' , date '2013-10-01',   11);
+insert into monthly_sales values ('Sunshade' , date '2013-11-01',    3);
+insert into monthly_sales values ('Sunshade' , date '2013-12-01',    5);
+
+commit;
+
+/* === */
+
+alter session set nls_date_format = 'YYYY-MM-DD';
+","","",24-FEB-17 07.49.58.853615000 AM,"KIBEHA@GMAIL.COM",04-MAY-21 07.29.22.414800000 AM,"KIBEHA@GMAIL.COM",""
+103563632879277014483527974609264228592,92046253613466239499853282050038200150,"Sessionization with MATCH_RECOGNIZE and JSON","Y","How to use new 12c SQL pattern matching match_recognize feature for sessionization analysis based on JSON web log files
+","","","pattern matching, sessionization, MATCH_RECOGNIZE, JSON",24-APR-17 12.52.57.541856000 PM,"KEITH.LAKER@ORACLE.COM",24-APR-17 01.14.54.349972000 PM,"KEITH.LAKER@ORACLE.COM",""
+108572075684787330976836028944125402228,3,"HOL Row Pattern Matching","Y","Hands-On-Lab for ODTUG Kscope.
+
+The modules give examples of row pattern matching (MATCH_RECOGNIZE) queries, starting with a coverage of the basics using stock ticker examples in module 1, then in the following modules giving a varied set of use cases for row pattern matching. If you know the basics, you can skip module 1 and pick what you find interesting of the other modules.","/* Module 1 */
+
+create table ticker (
+   symbol varchar2(10)
+ , day    date
+ , price  number
+);
+ 
+insert into ticker values('PLCH', DATE '2011-04-01', 12);
+insert into ticker values('PLCH', DATE '2011-04-02', 17);
+insert into ticker values('PLCH', DATE '2011-04-03', 19);
+insert into ticker values('PLCH', DATE '2011-04-04', 21);
+insert into ticker values('PLCH', DATE '2011-04-05', 25);
+insert into ticker values('PLCH', DATE '2011-04-06', 12);
+insert into ticker values('PLCH', DATE '2011-04-07', 15);
+insert into ticker values('PLCH', DATE '2011-04-08', 20);
+insert into ticker values('PLCH', DATE '2011-04-09', 24);
+insert into ticker values('PLCH', DATE '2011-04-10', 25);
+insert into ticker values('PLCH', DATE '2011-04-11', 19);
+insert into ticker values('PLCH', DATE '2011-04-12', 15);
+insert into ticker values('PLCH', DATE '2011-04-13', 25);
+insert into ticker values('PLCH', DATE '2011-04-14', 25);
+insert into ticker values('PLCH', DATE '2011-04-15', 14);
+insert into ticker values('PLCH', DATE '2011-04-16', 12);
+insert into ticker values('PLCH', DATE '2011-04-17', 14);
+insert into ticker values('PLCH', DATE '2011-04-18', 24);
+insert into ticker values('PLCH', DATE '2011-04-19', 23);
+insert into ticker values('PLCH', DATE '2011-04-20', 22);
+
+commit;
+
+/* Module 2 */
+
+create table numbers (numval)
+as
+select  1 from dual union all
+select  2 from dual union all
+select  3 from dual union all
+select  5 from dual union all
+select  6 from dual union all
+select  7 from dual union all
+select 10 from dual union all
+select 11 from dual union all
+select 12 from dual union all
+select 20 from dual;
+
+commit;
+
+/* Module 3 */
+
+create table emp_hire_periods (
+   emp_id         integer           not null
+ , name           varchar2(20 char) not null
+ , start_date     date              not null
+ , end_date       date
+ , title          varchar2(20 char) not null
+ , constraint emp_hire_periods_pk primary key (emp_id, start_date)
+ , period for employed_in (start_date, end_date)
+);
+
+insert into emp_hire_periods values (142, 'Harold King'  , date '2010-07-01', date '2012-04-01', 'Product Director' );
+insert into emp_hire_periods values (142, 'Harold King'  , date '2012-04-01', null             , 'Managing Director');
+insert into emp_hire_periods values (143, 'Mogens Juel'  , date '2010-07-01', date '2014-01-01', 'IT Technician'    );
+insert into emp_hire_periods values (143, 'Mogens Juel'  , date '2014-01-01', date '2016-06-01', 'Sys Admin'        );
+insert into emp_hire_periods values (143, 'Mogens Juel'  , date '2014-04-01', date '2015-10-01', 'Code Tester'      );
+insert into emp_hire_periods values (143, 'Mogens Juel'  , date '2016-06-01', null             , 'IT Manager'       );
+insert into emp_hire_periods values (144, 'Axel de Proef', date '2010-07-01', date '2013-07-01', 'Sales Manager'    );
+insert into emp_hire_periods values (144, 'Axel de Proef', date '2012-04-01', null             , 'Product Director' );
+insert into emp_hire_periods values (145, 'Zoe Thorston' , date '2014-02-01', null             , 'IT Developer'     );
+insert into emp_hire_periods values (145, 'Zoe Thorston' , date '2019-02-01', null             , 'Scrum Master'     );
+insert into emp_hire_periods values (146, 'Lim Tok Lo'   , date '2014-10-01', date '2016-02-01', 'Forklift Operator');
+insert into emp_hire_periods values (146, 'Lim Tok Lo'   , date '2017-03-01', null             , 'Warehouse Manager');
+insert into emp_hire_periods values (147, 'Ursula Mwbesi', date '2014-10-01', date '2015-05-01', 'Delivery Manager' );
+insert into emp_hire_periods values (147, 'Ursula Mwbesi', date '2016-05-01', date '2017-03-01', 'Warehouse Manager');
+insert into emp_hire_periods values (147, 'Ursula Mwbesi', date '2016-11-01', null             , 'Operations Chief' );
+
+commit;
+
+/* Module 4 */
+
+create table space (
+   tabspace    varchar2(30)
+ , sampledate  date
+ , gigabytes   number
+);
+
+insert into space values ('MYSPACE'  , date '2014-02-01', 100);
+insert into space values ('MYSPACE'  , date '2014-02-02', 103);
+insert into space values ('MYSPACE'  , date '2014-02-03', 116);
+insert into space values ('MYSPACE'  , date '2014-02-04', 129);
+insert into space values ('MYSPACE'  , date '2014-02-05', 142);
+insert into space values ('MYSPACE'  , date '2014-02-06', 160);
+insert into space values ('MYSPACE'  , date '2014-02-07', 165);
+insert into space values ('MYSPACE'  , date '2014-02-08', 210);
+insert into space values ('MYSPACE'  , date '2014-02-09', 230);
+insert into space values ('MYSPACE'  , date '2014-02-10', 239);
+insert into space values ('YOURSPACE', date '2014-02-06',  50);
+insert into space values ('YOURSPACE', date '2014-02-07',  53);
+insert into space values ('YOURSPACE', date '2014-02-08',  72);
+insert into space values ('YOURSPACE', date '2014-02-09',  97);
+insert into space values ('YOURSPACE', date '2014-02-10', 101);
+insert into space values ('HISSPACE',  date '2014-02-06', 100);
+insert into space values ('HISSPACE',  date '2014-02-07', 130);
+insert into space values ('HISSPACE',  date '2014-02-08', 145);
+insert into space values ('HISSPACE',  date '2014-02-09', 200);
+insert into space values ('HISSPACE',  date '2014-02-10', 225);
+insert into space values ('HISSPACE',  date '2014-02-11', 255);
+insert into space values ('HISSPACE',  date '2014-02-12', 285);
+insert into space values ('HISSPACE',  date '2014-02-13', 315);
+
+commit;
+
+/* Module 5 */
+
+create table dept(
+   deptno number(2) constraint pk_dept primary key
+ ,	dname varchar2(14)
+ ,	loc varchar2(13)
+);
+
+create table emp(
+   empno number(4) constraint pk_emp primary key
+ ,	ename varchar2(10)
+ , job varchar2(9)
+ , mgr number(4)
+ , hiredate date
+ , sal number(7,2)
+ , comm number(7,2)
+ , deptno number(2) constraint fk_deptno references dept
+);
+
+insert into dept values	(10,'ACCOUNTING','NEW YORK');
+insert into dept values (20,'RESEARCH','DALLAS');
+insert into dept values	(30,'SALES','CHICAGO');
+insert into dept values	(40,'OPERATIONS','BOSTON');
+
+insert into emp values (7369,'SMITH','CLERK',7902,to_date('17-12-1980','dd-mm-yyyy'),800,null,20);
+insert into emp values (7499,'ALLEN','SALESMAN',7698,to_date('20-2-1981','dd-mm-yyyy'),1600,300,30);
+insert into emp values (7521,'WARD','SALESMAN',7698,to_date('22-2-1981','dd-mm-yyyy'),1250,500,30);
+insert into emp values (7566,'JONES','MANAGER',7839,to_date('2-4-1981','dd-mm-yyyy'),2975,null,20);
+insert into emp values (7654,'MARTIN','SALESMAN',7698,to_date('28-9-1981','dd-mm-yyyy'),1250,1400,30);
+insert into emp values (7698,'BLAKE','MANAGER',7839,to_date('1-5-1981','dd-mm-yyyy'),2850,null,30);
+insert into emp values (7782,'CLARK','MANAGER',7839,to_date('9-6-1981','dd-mm-yyyy'),2450,null,10);
+insert into emp values (7788,'SCOTT','ANALYST',7566,to_date('19-04-1987','dd-mm-yyyy'),3000,null,20);
+insert into emp values (7839,'KING','PRESIDENT',null,to_date('17-11-1981','dd-mm-yyyy'),5000,null,10);
+insert into emp values (7844,'TURNER','SALESMAN',7698,to_date('8-9-1981','dd-mm-yyyy'),1500,0,30);
+insert into emp values (7876,'ADAMS','CLERK',7788,to_date('23-05-1987', 'dd-mm-yyyy'),1100,null,20);
+insert into emp values (7900,'JAMES','CLERK',7698,to_date('3-12-1981','dd-mm-yyyy'),950,null,30);
+insert into emp values (7902,'FORD','ANALYST',7566,to_date('3-12-1981','dd-mm-yyyy'),3000,null,20);
+insert into emp values (7934,'MILLER','CLERK',7782,to_date('23-1-1982','dd-mm-yyyy'),1300,null,10);
+
+commit;
+
+/* Module 6 */
+
+create table sites (study_site number, cnt number);
+
+insert into sites (study_site,cnt) values (1001,3407);
+insert into sites (study_site,cnt) values (1002,4323);
+insert into sites (study_site,cnt) values (1004,1623);
+insert into sites (study_site,cnt) values (1008,1991);
+insert into sites (study_site,cnt) values (1011,885);
+insert into sites (study_site,cnt) values (1012,11597);
+insert into sites (study_site,cnt) values (1014,1989);
+insert into sites (study_site,cnt) values (1015,5282);
+insert into sites (study_site,cnt) values (1017,2841);
+insert into sites (study_site,cnt) values (1018,5183);
+insert into sites (study_site,cnt) values (1020,6176);
+insert into sites (study_site,cnt) values (1022,2784);
+insert into sites (study_site,cnt) values (1023,25865);
+insert into sites (study_site,cnt) values (1024,3734);
+insert into sites (study_site,cnt) values (1026,137);
+insert into sites (study_site,cnt) values (1028,6005);
+insert into sites (study_site,cnt) values (1029,76);
+insert into sites (study_site,cnt) values (1031,4599);
+insert into sites (study_site,cnt) values (1032,1989);
+insert into sites (study_site,cnt) values (1034,3427);
+insert into sites (study_site,cnt) values (1036,879);
+insert into sites (study_site,cnt) values (1038,6485);
+insert into sites (study_site,cnt) values (1039,3);
+insert into sites (study_site,cnt) values (1040,1105);
+insert into sites (study_site,cnt) values (1041,6460);
+insert into sites (study_site,cnt) values (1042,968);
+insert into sites (study_site,cnt) values (1044,471);
+insert into sites (study_site,cnt) values (1045,3360);
+
+commit;
+
+/* Module 7 */
+
+create table items
+as
+select to_char(to_date(level,'J'),'Jsp') item_name
+     , level item_value 
+  from dual
+connect by level <= 10;
+
+/* === */
+
+alter session set nls_date_format = 'YYYY-MM-DD';
+","","",11-JUN-17 12.34.39.595795000 PM,"KIBEHA@GMAIL.COM",25-JUN-21 09.43.48.052211000 AM,"KIBEHA@GMAIL.COM",""
+139783754536471852897061839013948479671,1,"Querying Null-valued Rows: Databases for Developers","Y","An introduction to handling null, including three-valued logic and null related functions. Click ""Execute Prerequisite SQL"" to create the table you need for this tutorial.","create table toys (
+  toy_id               integer not null primary key,
+  toy_name             varchar2(100) not null,
+  weight               number(10, 2) not null,
+  quantity_of_stuffing integer,
+  volume_of_wood       integer,
+  times_lost           integer
+);
+
+insert into toys values (1, 'Mr. Penguin', 50, 100, null, 10);
+insert into toys values (2, 'Blue Brick', 10, null, 10, null);
+insert into toys values (3, 'Red Brick', 20, null, 20, 1);
+commit;","","nulls",06-APR-18 09.22.58.590902000 AM,"CHRIS.SAXON@ORACLE.COM",23-APR-18 08.44.10.086734000 AM,"CHRIS.SAXON@ORACLE.COM",""
+143127379594936522093884822782011566106,92046253613466239499853282050038200150,"Analytic Functions: Databases for Developers","Y","An introduction to analytic functions.","create table bricks (
+  brick_id integer,
+  colour   varchar2(10),
+  shape    varchar2(10),
+  weight   integer
+);
+
+insert into bricks values ( 1, 'blue', 'cube', 1 );
+insert into bricks values ( 2, 'blue', 'pyramid', 2 );
+insert into bricks values ( 3, 'red', 'cube', 1 );
+insert into bricks values ( 4, 'red', 'cube', 2 );
+insert into bricks values ( 5, 'red', 'pyramid', 3 );
+insert into bricks values ( 6, 'green', 'pyramid', 1 );
+
+commit;","","analytics",08-MAY-18 07.58.59.710525000 AM,"CHRIS.SAXON@ORACLE.COM",10-MAY-18 10.31.34.627085000 AM,"CHRIS.SAXON@ORACLE.COM",""
+144380801214805970838977892947497636818,1,"Union, Minus, and Intersect: Databases for Developers","Y","An introduction to the set operators, union, minus, and intersect","create table my_brick_collection (
+  colour varchar2(10),
+  shape  varchar2(10),
+  weight integer
+);
+
+create table your_brick_collection (
+  height integer,
+  width  integer,
+  depth  integer,
+  colour varchar2(10),
+  shape  varchar2(10)
+);
+
+insert into my_brick_collection values ( 'red', 'cube', 10 );
+insert into my_brick_collection values ( 'blue', 'cuboid', 8 );
+insert into my_brick_collection values ( 'green', 'pyramid', 20 );
+insert into my_brick_collection values ( 'green', 'pyramid', 20 );
+insert into my_brick_collection values ( null, 'cuboid', 20 );
+
+insert into your_brick_collection values ( 2, 2, 2, 'red', 'cube' );
+insert into your_brick_collection values ( 2, 2, 2, 'blue', 'cube' );
+insert into your_brick_collection values ( 2, 2, 8, null, 'cuboid' );
+
+commit;","","union, minus, intersect",20-MAY-18 12.39.45.295536000 PM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.22.22.356433000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+144905567362239111111827484063426187048,1,"Hierarchical Queries: Databases for Developers","Y","An introduction to using connect by and recursive with to traverse trees.","create table employees as
+  select * from hr.employees
+  where  department_id in ( 90, 100, 60 );","","connect by, recursive with",25-MAY-18 08.11.13.873561000 AM,"CHRIS.SAXON@ORACLE.COM",06-JUL-20 02.22.33.930046000 AM,"SHARON.KENNEDY@ORACLE.COM","N"
+146191602965377274749803460241482600523,6,"Get Started with Table Functions 1: Overview","Y","This tutorial is part of the Oracle Dev Gym class ""Get Started with Table Functions"". This module offers an overview of table functions: what they are, how they work, and a simple example of a table function that returns a collection of scalar values. You can take this tutorial independent of the class, but then you miss out on the videos and quizzes! So we encourage you to click on the link at the bottom of this tutorial, and register for the class!","","","table function",06-JUN-18 03.27.09.866447000 PM,"STEVEN.FEUERSTEIN@GMAIL.COM",08-NOV-22 04.04.59.744384000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+146218766402242523928587654762999856560,6,"Get Started with Table Functions 3: Streaming Table Functions ","Y","This tutorial is part of the Oracle Dev Gym class ""Get Started with Table Functions"". This module shows you how to implement a streaming table function. Sure, you can take this tutorial independent of the class, but then you miss out on the videos and quizzes. So we encourage you to click on the link at the bottom of this tutorial and register for the class! ","","","",06-JUN-18 09.51.11.205039000 PM,"STEVEN.FEUERSTEIN@GMAIL.COM",08-NOV-22 04.05.51.214743000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+146417473425260160697587333524378916539,6,"Get Started with Table Functions 4: Pipelined Table Functions","Y","This tutorial is part of the Oracle Dev Gym class ""Get Started with Table Functions"". Pipelined table functions are table functions that avoid two of the biggest drawbacks of ""regular"" table functions: (1) the return collection must be completely filled before the invoking SELECT can use it (i.e., SQL processing is blocked until the function returns control and collection; (2) the table function consumes Process Global Area (PGA) memory so if the collection being constructed is large, that can cause performance problems and even errors. With pipelined table functions, in contrast, rows are returned or ""piped"" back to the calling query before the function has completed, avoiding the blocking behavior and PGA consumption. You can take this tutorial independent of the class, but then you miss out on the videos and quizzes. So we encourage you to click on the link at the bottom of this tutorial and register for the class! ","","","pipelined table function",08-JUN-18 08.00.11.528374000 PM,"STEVEN.FEUERSTEIN@GMAIL.COM",08-NOV-22 04.06.23.199580000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+142399856232522825415084831548294078164,1,"Subqueries: Databases for Developers","Y","An introduction to using subqueries in Oracle Database","create table bricks (
+  brick_id integer,
+  colour   varchar2(10)
+);
+
+create table colours (
+  colour_name           varchar2(10),
+  minimum_bricks_needed integer
+);
+
+insert into colours values ( 'blue', 2 );
+insert into colours values ( 'green', 3 );
+insert into colours values ( 'red', 2 );
+insert into colours values ( 'orange', 1);
+insert into colours values ( 'yellow', 1 );
+insert into colours values ( 'purple', 1 );
+
+insert into bricks values ( 1, 'blue' );
+insert into bricks values ( 2, 'blue' );
+insert into bricks values ( 3, 'blue' );
+insert into bricks values ( 4, 'green' );
+insert into bricks values ( 5, 'green' );
+insert into bricks values ( 6, 'red' );
+insert into bricks values ( 7, 'red' );
+insert into bricks values ( 8, 'red' );
+insert into bricks values ( 9, null );
+
+commit;","","with clause, in, exists",01-MAY-18 09.13.20.458787000 AM,"CHRIS.SAXON@ORACLE.COM",04-MAY-18 03.15.55.190736000 PM,"CHRIS.SAXON@ORACLE.COM",""
+142628083376372792586797880077330433823,1,"Sorting and Limiting Rows: Databases for Developers","Y","An introduction to sorting data with order by and restricting rows to the top N.","create table toys (
+  toy_name       varchar2(30),
+  weight         integer,
+  price          number(5,2),
+  purchased_date date,
+  last_lost_date date
+);
+
+insert into toys values ('Miss Snuggles', 4,  9.99,  date'2018-02-01', date'2018-06-01');
+insert into toys values ('Baby Turtle',   1,  5.00,  date'2016-09-01', date'2017-03-03');
+insert into toys values ('Kangaroo',      10, 29.99, date'2017-03-01', date'2018-06-01');
+insert into toys values ('Blue Dinosaur', 8,  9.99,  date'2013-07-01', date'2016-11-01');
+insert into toys values ('Purple Ninja',  8,  29.99, date'2018-02-01', null);
+
+commit;","","order by, fetch first",03-MAY-18 01.15.05.312781000 PM,"CHRIS.SAXON@ORACLE.COM",04-MAY-18 05.49.10.549142000 AM,"CHRIS.SAXON@ORACLE.COM",""
+143268521600193170436610330993365925097,1,"Converting Rows to Columns and Back Again: Databases for Developers","Y","An introduction to how to use pivot & unpivot to convert rows to columns and back.","create table match_results (
+  match_date       date,
+  location         varchar2(20),
+  home_team_name   varchar2(20),
+  away_team_name   varchar2(20),
+  home_team_points integer,
+  away_team_points integer
+);
+
+insert into match_results values ( date'2018-01-01', 'Snowley', 'Underrated United', 'Terrible Town', 2, 0 );
+insert into match_results values ( date'2018-01-01', 'Coldgate', 'Average Athletic', 'Champions City', 1, 4 );
+insert into match_results values ( date'2018-02-01', 'Dorwall', 'Terrible Town', 'Average Athletic', 0, 1 );
+insert into match_results values ( date'2018-03-01', 'Coldgate', 'Average Athletic', 'Underrated United', 3, 3 );
+insert into match_results values ( date'2018-03-02', 'Newdell', 'Champions City', 'Terrible Town', 8, 0 );
+
+commit;","","pivot, unpivot",09-MAY-18 04.08.31.730110000 PM,"CHRIS.SAXON@ORACLE.COM",18-MAY-18 02.36.51.930188000 PM,"CHRIS.SAXON@ORACLE.COM",""
+146206374662252057210273830044561075244,6,"Get Started with Table Functions 2: Returning Multiple Columns ","Y","This tutorial is part of the Oracle Dev Gym class ""Get Started with Table Functions"". This module shows you how to implement a table function whose collection is not a collection of scalar values. Suppose you want your table function to return multiple columns, just like most relational tables. Then what do you do? Well, you create an object type, an array of those object types, and construct data as needed to populate that array. Sound complicated? Not really! This tutorial shows you how. Sure, you can take this tutorial independent of the class, but then you miss out on the videos and quizzes. So we encourage you to click on the link at the bottom of this tutorial and register for the class! 
+","","","table function",06-JUN-18 07.01.58.254123000 PM,"STEVEN.FEUERSTEIN@GMAIL.COM",08-NOV-22 04.05.16.746024000 PM,"SHARON.KENNEDY@ORACLE.COM","N"
+14810007204900148430867509211759172961,7,"Query Analytic Views with Relational GROUP BY Pattern SELECT Statements (Power BI, Tableau)","Y","Oracle Analytic Views can be queried using hierarchical or 'standard' relational style SELECT statements. This tutorial focuses on relational style SELECT statements using the familiar SELECT .. SUM ... FROM ... GROUP BY pattern. Tools such as Power BI and Tableau can use this style of SQL to query analytic views.","","","analytic view, group by, aggregation, aggregate, materialized cache",27-NOV-23 02.42.17.270990000 PM,"WILLIAM.ENDRESS@ORACLE.COM",09-JAN-24 02.45.30.495912000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+29836425107181974316375148569777144134,7,"Using HIER_ORDER to Sort Hierarchy Members","Y","The HIER_ORDER column of a hierarchy can be used to sort members of a hierarchy.  HIER_ORDER sorts members hierarchically, with children nested within parents, making it perfect for many reports, pivot tables, and tree controls.","-- Create a view with 25 years to days
+CREATE OR REPLACE VIEW time_dim AS
+    SELECT
+        currdate                                                                                                             AS day_id,
+        INITCAP(RTRIM(TO_CHAR(currdate,'MONTH'))) ||' ' || TO_CHAR(currdate,'DD') || ', ' || RTRIM(TO_CHAR(currdate,'YYYY')) AS day,
+        initcap(TO_CHAR(currdate,'Mon') || '-' || TO_CHAR(currdate,'YY'))                                                    AS month,
+        'Q' || upper(TO_CHAR(currdate,'Q') || '-' || TO_CHAR(currdate,'YYYY'))                                               AS quarter,
+        TO_CHAR(currdate,'YYYY')                                                                                             AS year
+    FROM
+        (
+            SELECT
+                level n,
+                -- Calendar starts at the day after this date.
+                TO_DATE('31/12/2000','DD/MM/YYYY') + numtodsinterval(level,'DAY') currdate
+            FROM
+                dual
+             -- Change for the number of days to be added to the table.
+            CONNECT BY
+                level <= 9131);","","analytic view, hierarchy, HIER_ORDER, pivot table",19-APR-24 11.27.46.561529000 AM,"WILLIAM.ENDRESS@ORACLE.COM",19-APR-24 01.20.12.701360000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+29025679842449363857149979830310169176,92046253613466239499853282050038200150,"Creating Attribute Dimensions and Hierarchies Using Multiple Tables (Snowflake Design)","Y","Analytic view attribute dimensions can be created from a single star-style dimension table or multiple snowflake-style dimension tables. This tutorial provides an example of creating an attribute dimension using multiple snowflake-style tables.  The resulting hierarchy view is the same regardless of whether star or snowflake-style dimension tables are used.","CREATE OR REPLACE VIEW time_month_dim AS 
+SELECT DISTINCT
+  month_id
+, month_name
+, month_end_date
+, quarter_id
+FROM
+  av.time_dim;
+
+CREATE OR REPLACE VIEW time_quarter_dim AS 
+SELECT DISTINCT
+  quarter_id
+, quarter_name
+, quarter_end_date
+, quarter_of_year
+, year_id
+FROM
+  av.time_dim;
+  
+  
+CREATE OR REPLACE VIEW time_year_dim AS 
+SELECT DISTINCT
+  year_id
+, year_name
+, year_end_date
+FROM
+  av.time_dim;","","analytic view, snowflake",11-APR-24 05.04.34.062635000 PM,"WILLIAM.ENDRESS@ORACLE.COM",11-APR-24 06.39.07.166119000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+328974142671334092196222097220687633361,92046253613466239499853282050038200150,"Analytic View Quick Start Part 2 - Simple Query Templates for Developers","Y","Analytic views can simplify SQL generation in custom applications, including Oracle Application Express (APEX).   This tutorial will compare queries written against tables the same query written against analytic views.","CREATE SYNONYM time_dim FOR av.time_dim;
+CREATE SYNONYM product_dim FOR av.product_dim;
+CREATE SYNONYM geography_dim FOR av.geography_dim;
+CREATE SYNONYM sales_fact FOR av.sales_fact;
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING time_dim
+ATTRIBUTES (
+    year_name
+    , quarter_name
+    , month_name
+    , month_end_date)
+LEVEL year
+    KEY year_name
+LEVEL quarter
+    KEY quarter_name
+    DETERMINES (year_name)
+LEVEL month
+    KEY month_name
+    ORDER BY month_end_date
+    DETERMINES (month_end_date,quarter_name);
+
+CREATE OR REPLACE HIERARCHY time_hier
+USING time_attr_dim (
+    month CHILD OF
+    quarter CHILD OF
+    year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING product_dim
+ATTRIBUTES (
+    department_name
+    , category_name
+    , category_id)
+LEVEL department
+    KEY department_name
+LEVEL category
+    KEY category_id
+    MEMBER NAME category_name
+    DETERMINES (department_name);
+
+CREATE OR REPLACE HIERARCHY product_hier
+USING product_attr_dim (
+    category CHILD OF
+    department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING geography_dim
+ATTRIBUTES (
+    region_name
+    , country_name
+    , state_province_name
+    , state_province_id)
+LEVEL region
+    KEY region_name
+LEVEL country
+    KEY country_name
+    DETERMINES (region_name)
+LEVEL state_province
+    KEY state_province_id
+    MEMBER NAME state_province_name
+    DETERMINES (country_name);
+
+CREATE OR REPLACE HIERARCHY geography_hier
+USING geography_attr_dim (
+    state_province CHILD OF
+    country CHILD OF
+    region );
+
+CREATE OR REPLACE ANALYTIC VIEW sales_av
+USING sales_fact
+DIMENSION BY (
+    time_attr_dim
+        KEY month_id REFERENCES month_name
+        HIERARCHIES (time_hier DEFAULT )
+    , product_attr_dim
+        KEY category_id REFERENCES category_id
+        HIERARCHIES (product_hier DEFAULT)
+    , geography_attr_dim
+        KEY state_province_id REFERENCES state_province_id
+        HIERARCHIES (geography_hier DEFAULT)
+    )
+MEASURES (
+    sales FACT sales
+    , units FACT units
+    , sales_prior_period AS (LAG(sales) OVER (HIERARCHY time_hier OFFSET 1)));","","analytic views, calculations, apex, time series",22-MAR-23 02.14.41.562613000 PM,"WILLIAM.ENDRESS@ORACLE.COM",19-APR-23 08.15.53.265157000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+325337177180857205374378153253835695768,92046253613466239499853282050038200150,"Creating Analytic View Calculated Measures Dynamically in SQL Queries (Great for APEX!)","Y","Calculated measures can be defined in the analytic view, where they are accessible to any application by selecting the calculation as a column.  Calculations can also be defined on-the-fly in a SQL query using the ADD MEASURES clause. This tutorial provides examples for using the ADD MEASURES clause, tips, and a link to a live APEX application that uses ADD_MEASURES.","CREATE OR REPLACE ATTRIBUTE DIMENSION time_attr_dim
+USING av.time_dim
+ATTRIBUTES
+ (year_id
+   CLASSIFICATION caption VALUE 'YEAR_ID'
+   CLASSIFICATION description VALUE 'YEAR ID',
+  year_name
+    CLASSIFICATION caption VALUE 'YEAR_NAME'
+    CLASSIFICATION description VALUE 'Year',
+  year_end_date
+    CLASSIFICATION caption VALUE 'YEAR_END_DATE'
+    CLASSIFICATION description VALUE 'Year End Date',
+  quarter_id
+    CLASSIFICATION caption VALUE 'QUARTER_ID'
+    CLASSIFICATION description VALUE 'QUARTER ID',
+  quarter_name
+    CLASSIFICATION caption VALUE 'QUARTER_NAME'
+    CLASSIFICATION description VALUE 'Quarter',
+  quarter_end_date
+    CLASSIFICATION caption VALUE 'QUARTER_END_DATE'
+    CLASSIFICATION description VALUE 'Quarter End Date',
+  month_id
+    CLASSIFICATION caption VALUE 'MONTH_ID'
+    CLASSIFICATION description VALUE 'MONTH ID',
+  month_name
+    CLASSIFICATION caption VALUE 'MONTH_NAME'
+    CLASSIFICATION description VALUE 'Month',
+  month_long_name
+    CLASSIFICATION caption VALUE 'MONTH_LONG_NAME'
+    CLASSIFICATION description VALUE 'Month Long Name',
+  month_end_date
+    CLASSIFICATION caption VALUE 'MONTH_END_DATE'
+    CLASSIFICATION description VALUE 'Month End Date')
+LEVEL month
+  CLASSIFICATION caption VALUE 'MONTH'
+  CLASSIFICATION description VALUE 'Month'
+  KEY month_id
+  MEMBER NAME month_name
+  MEMBER CAPTION month_name
+  MEMBER DESCRIPTION month_long_name
+  ORDER BY month_end_date
+  DETERMINES (month_end_date,
+    quarter_id)
+LEVEL quarter
+  CLASSIFICATION caption VALUE 'QUARTER'
+  CLASSIFICATION description VALUE 'Quarter'
+  KEY quarter_id
+  MEMBER NAME quarter_name
+  MEMBER CAPTION quarter_name
+  MEMBER DESCRIPTION quarter_name
+  ORDER BY quarter_end_date
+  DETERMINES (quarter_end_date,
+    year_id)
+LEVEL year
+  CLASSIFICATION caption VALUE 'YEAR'
+  CLASSIFICATION description VALUE 'Year'
+  KEY year_id
+  MEMBER NAME year_name
+  MEMBER CAPTION year_name
+  MEMBER DESCRIPTION year_name
+  ORDER BY year_end_date
+  DETERMINES (year_end_date)
+ALL MEMBER NAME 'ALL TIMES';
+
+CREATE OR REPLACE HIERARCHY time_hier
+  CLASSIFICATION caption VALUE 'CALENDAR'
+  CLASSIFICATION description VALUE 'CALENDAR'
+USING time_attr_dim
+ (month CHILD OF
+ quarter CHILD OF
+ year);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION product_attr_dim
+USING av.product_dim 
+ATTRIBUTES
+ (department_id
+    CLASSIFICATION caption VALUE 'DEPARTMENT_ID'
+    CLASSIFICATION description VALUE 'DEPARTMENT ID',
+  department_name
+    CLASSIFICATION caption VALUE 'DEPARTMENT_NAME'
+    CLASSIFICATION description VALUE 'Department',
+  category_id
+    CLASSIFICATION caption VALUE 'CATEGORY_ID'
+    CLASSIFICATION description VALUE 'CATEGORY ID',
+  category_name
+    CLASSIFICATION caption VALUE 'CATEGORY_NAME'
+    CLASSIFICATION description VALUE 'Category')
+LEVEL DEPARTMENT
+  CLASSIFICATION caption VALUE 'DEPARTMENT'
+  CLASSIFICATION description VALUE 'Department'
+  KEY department_id
+  MEMBER NAME department_name
+  MEMBER CAPTION department_name
+  ORDER BY department_name
+LEVEL CATEGORY
+  CLASSIFICATION caption VALUE 'CATEGORY'
+  CLASSIFICATION description VALUE 'Category'
+  KEY category_id
+  MEMBER NAME category_name
+  MEMBER CAPTION category_name
+  ORDER BY category_name
+  DETERMINES(department_id)
+ALL MEMBER NAME 'ALL PRODUCTS';
+
+CREATE OR REPLACE HIERARCHY product_hier
+  CLASSIFICATION caption VALUE 'PRODUCT'
+  CLASSIFICATION description VALUE 'Product'
+USING product_attr_dim
+ (CATEGORY
+  CHILD OF department);
+
+CREATE OR REPLACE ATTRIBUTE DIMENSION geography_attr_dim
+USING av.geography_dim
+ATTRIBUTES
+ (region_id
+    CLASSIFICATION caption VALUE 'REGION_ID'
+    CLASSIFICATION description VALUE 'REGION ID',
+  region_name
+    CLASSIFICATION caption VALUE 'REGION_NAME'
+    CLASSIFICATION description VALUE 'Region',
+  country_id
+    CLASSIFICATION caption VALUE 'COUNTRY_ID'
+    CLASSIFICATION description VALUE 'COUNTRY ID',
+  country_name
+    CLASSIFICATION caption VALUE 'COUNTRY_NAME'
+    CLASSIFICATION description VALUE 'Country',
+  state_province_id
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_ID'
+    CLASSIFICATION description VALUE 'STATE-PROVINCE ID',
+  state_province_name
+    CLASSIFICATION caption VALUE 'STATE_PROVINCE_NAME'
+    CLASSIFICATION description VALUE 'State-Province')
+LEVEL REGION
+  CLASSIFICATION caption VALUE 'REGION'
+  CLASSIFICATION description VALUE 'Region'
+  KEY region_id
+  MEMBER NAME region_name
+  MEMBER CAPTION region_name
+  ORDER BY region_name
+LEVEL COUNTRY
+  CLASSIFICATION caption VALUE 'COUNTRY'
+  CLASSIFICATION description VALUE 'Country'
+  KEY country_id
+  MEMBER NAME country_name
+  MEMBER CAPTION country_name
+  ORDER BY country_name
+  DETERMINES(region_id)
+LEVEL STATE_PROVINCE
+  CLASSIFICATION caption VALUE 'STATE_PROVINCE'
+  CLASSIFICATION description VALUE 'State-Province'
+  KEY state_province_id
+  MEMBER NAME state_province_name
+  MEMBER CAPTION state_province_name
+  ORDER BY state_province_name
+  DETERMINES(country_id)
+ALL MEMBER NAME 'ALL CUSTOMERS';
+
+CREATE OR REPLACE HIERARCHY geography_hier
+  CLASSIFICATION caption VALUE 'GEOGRAPHY'
+  CLASSIFICATION description VALUE 'Geography'
+USING geography_attr_dim
+ (state_province
+  CHILD OF country
+  CHILD OF region);
+
+CREATE OR REPLACE ANALYTIC VIEW sales_av
+  CLASSIFICATION caption VALUE 'Sales AV'
+  CLASSIFICATION description VALUE 'Sales Analytic View'
+  CLASSIFICATION created_by VALUE 'George Jones'
+USING av.sales_fact
+DIMENSION BY
+  (time_attr_dim
+    KEY month_id REFERENCES month_id
+    HIERARCHIES (
+      time_hier DEFAULT),
+   product_attr_dim
+    KEY category_id REFERENCES category_id
+    HIERARCHIES (
+      product_hier DEFAULT),
+   geography_attr_dim
+    KEY state_province_id 
+    REFERENCES state_province_id
+    HIERARCHIES (
+      geography_hier DEFAULT)
+   )
+MEASURES
+ (sales FACT sales
+    CLASSIFICATION caption VALUE 'Sales'
+    CLASSIFICATION description VALUE 'Sales'
+    CLASSIFICATION format_string VALUE '$999,999,999,999.99',
+  units FACT units
+    CLASSIFICATION caption VALUE 'Units'
+    CLASSIFICATION description VALUE 'Units Sold'
+    CLASSIFICATION format_string VALUE '999,999,999,999',
+  sales_prior_period AS
+    (LAG(SALES) OVER (HIERARCHY time_hier OFFSET 1))
+      CLASSIFICATION caption VALUE 'Sales Prior Period'
+      CLASSIFICATION description VALUE 'Sales Prior_Period'
+      CLASSIFICATION format_string VALUE '$999,999,999,999.99',
+  sales_share_prod_parent AS
+   (SHARE_OF(sales HIERARCHY product_hier PARENT))
+      CLASSIFICATION caption VALUE 'Sales Share of Product Parent'
+      CLASSIFICATION description VALUE 'Sales Share of Product Parent'
+      CLASSIFICATION format_string VALUE '999.99',
+  sales_share_geog_parent AS
+   (SHARE_OF(sales HIERARCHY geography_hier PARENT))
+      CLASSIFICATION caption VALUE 'Sales Share of Geography Parent'
+      CLASSIFICATION description VALUE 'Sales Share of Geography Parent'
+      CLASSIFICATION format_string VALUE '999.99'
+  )
+DEFAULT MEASURE SALES;","","analytic views, calculated measures, apex",15-FEB-23 05.47.56.132143000 PM,"WILLIAM.ENDRESS@ORACLE.COM",27-NOV-23 04.10.53.539037000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+328774488191673081606718197428836641462,92046253613466239499853282050038200150,"Analytic View Quick Start Part 1 - Create AVs using Simple DDL","Y","Do you want to get off a quick start creating analytic views using simple DDL statements?  If so, this is the tutorial for you.   You will create an analytic view with everything needed to add analytical calculations and simplify SQL generation in custom applications like Oracle APEX.","","","analytic views, calculated measures, apex",20-MAR-23 03.42.30.187715000 PM,"WILLIAM.ENDRESS@ORACLE.COM",06-APR-23 05.27.33.231334000 PM,"WILLIAM.ENDRESS@ORACLE.COM",""
+210640540520278905448644863263597314383,15,"How to Create Materialized Views: Databases for Developers: Performance #6","Y","An introduction to materialized views. These can make queries aggregating millions or billions of rows down to a handful lightning quick.
+
+Complete this tutorial to learn how to create materialized views, keep them up-to-date, and enable existing queries to use them.","exec dbms_random.seed ( 0 );
+create table bricks ( 
+  brick_id not null constraint bricks_pk primary key,
+  colour   not null,
+  shape    not null,
+  weight   not null,
+  insert_date not null,
+  junk     default lpad ( 'x', 50, 'x' ) not null 
+) as
+  with rws as (
+    select level x from dual
+    connect by level <= 10000
+  )
+    select rownum brick_id, 
+           case ceil ( rownum / 2500 )
+             when 4 then 'red'
+             when 1 then 'blue'
+             when 2 then 'green'
+             when 3 then 'yellow'
+           end colour, 
+           case mod ( rownum, 4 )
+             when 0 then 'cube'
+             when 1 then 'cylinder'
+             when 2 then 'pyramid'
+             when 3 then 'prism'
+           end shape,
+           round ( dbms_random.value ( 1, 10 ) ),
+           date'2020-01-01' + ( rownum/24 ) + ( mod ( rownum, 24 ) / 36 ) insert_date,
+           lpad ( 'x', 50, 'x' )
+    from   rws;","","materialized views",13-FEB-20 03.47.58.525546000 PM,"CHRIS.SAXON@ORACLE.COM",17-JUL-20 05.26.14.340428000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639799513641285543570732327153347316,15,"Table Statistics: Databases for Developers: Performance #2","Y","When choosing an execution plan, the optimizer uses the table statistics to decide how to access tables and in which order. 
+
+This tutorial shows you how to view database statistics, spot when they are out-of-date, and how to update them.","alter session set statistics_level = all;
+
+create table bricks (
+  brick_id         integer not null primary key,
+  colour_rgb_value varchar2(10) not null,
+  shape            varchar2(10) not null,
+  weight           integer not null
+);
+
+create table colours (
+  colour_rgb_value varchar2(10) not null,
+  colour_name      varchar2(10) not null
+);
+
+insert into colours values ( 'FF0000', 'red' );
+insert into colours values ( '00FF00', 'green' );
+insert into colours values ( '0000FF', 'blue' );
+
+insert into bricks
+  select rownum,
+         case mod ( level, 3 )
+           when 0 then 'FF0000'
+           when 1 then '00FF00'
+           when 2 then '0000FF'
+         end,
+         case mod ( level, 3 )
+           when 0 then 'cylinder'
+           when 1 then 'cube'
+           when 2 then 'pyramid'
+         end,
+         floor ( 100 / rownum )
+  from   dual
+  connect by level <= 100;
+  
+insert into bricks
+  select rownum + 1000,
+         case mod ( level, 3 )
+           when 0 then 'FF0000'
+           when 1 then '00FF00'
+           when 2 then '0000FF'
+         end,
+         case mod ( level, 3 )
+           when 0 then 'cylinder'
+           when 1 then 'cube'
+           when 2 then 'pyramid'
+         end,
+         floor ( 200 / rownum )
+  from   dual
+  connect by level <= 200;
+
+commit;
+
+declare
+  stats dbms_stats.statrec;
+  distcnt  number; 
+  density  number;
+  nullcnt  number; 
+  avgclen  number;
+begin
+
+  dbms_stats.gather_table_stats ( null, 'colours' );
+  dbms_stats.gather_table_stats ( null, 'bricks' );
+  dbms_stats.set_table_stats ( null, 'bricks', numrows => 30 );
+  dbms_stats.set_table_stats ( null, 'colours', numrows => 3000 );
+  dbms_stats.get_column_stats ( null, 'colours', 'colour_rgb_value', 
+    distcnt => distcnt, 
+    density => density,
+    nullcnt => nullcnt, 
+    avgclen => avgclen,
+    srec => stats
+  );
+  stats.minval := utl_raw.cast_to_raw ( '0000FF' );
+  stats.maxval := utl_raw.cast_to_raw ( 'FF0000' );
+  dbms_stats.set_column_stats ( null, 'colours', 'colour_rgb_value', distcnt => 10, srec => stats );
+  dbms_stats.set_column_stats ( null, 'bricks', 'colour_rgb_value', distcnt => 10, srec => stats );
+
+end;
+/","","performance, dbms_stats",13-FEB-20 03.42.41.689694000 PM,"CHRIS.SAXON@ORACLE.COM",15-JUL-20 03.40.13.555364000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639799513782729864465643940593969908,15,"How to Create Indexes: Databases for Developers: Performance #4","Y","An introduction to creating indexes in Oracle Database. This teaches you how to create an index and the main types available.","create table bricks (
+  brick_id integer not null,
+  colour   varchar2(10) not null,
+  shape    varchar2(10) not null,
+  weight   integer not null,
+  colour_mixed_case varchar2(10) not null,
+  insert_datetime date not null,
+  junk     varchar2(1000) not null
+);
+exec dbms_random.seed ( 0 );
+
+insert into bricks
+  with rws as (
+    select level x, 
+           case ceil ( level / 250 )
+             when 4 then 'red'
+             when 1 then 'blue'
+             when 2 then 'green'
+             when 3 then 'yellow'
+           end colour
+    from   dual
+    connect by level <= 1000
+  )
+    select rownum,
+           colour,
+           case mod ( rownum, 4 )
+             when 0 then 'cube'
+             when 1 then 'cylinder'
+             when 2 then 'pyramid'
+             when 3 then 'prism'
+           end shape,
+           round ( dbms_random.value ( 1, 10 ) ),
+           case mod ( rownum, 3 )
+             when 0 then upper ( colour ) 
+             when 1 then lower ( colour ) 
+             when 2 then initcap ( colour ) 
+           end mixed_case,
+           date'2020-01-01' + ( rownum / 12 ),
+           rpad ( chr ( mod ( rownum, 26 ) + 65 ), 1000, 'x' ) 
+    from   rws;
+    
+commit;
+
+exec dbms_stats.gather_table_stats ( null, 'bricks' ) ;","","index, performance",13-FEB-20 03.47.13.995239000 PM,"CHRIS.SAXON@ORACLE.COM",17-JUL-20 03.55.07.294889000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639799513881861781674043532919876340,15,"How to Find Slow SQL: Databases for Developers: Performance #9","Y","An overview of the profiling tools SQL trace and the PL/SQL hierarchical profiler","create table schools (
+  school_id integer not null primary key,
+  school_name varchar2(30) not null
+);
+
+create table students (
+  student_id integer not null primary key,
+  parent_id  integer not null, 
+  school_id  integer not null
+);
+
+create table school_attendance (
+  school_id  
+    references schools ( school_id ) not null,
+  student_id 
+    references students ( student_id ) not null,
+  primary key (
+    school_id, student_id
+  )
+);
+
+create or replace procedure init as
+  num_students constant pls_integer := 5000;
+begin
+  delete school_attendance;
+  delete schools;
+  delete students;
+  
+  insert into students 
+    with rws as (
+      select level student_id,
+             mod ( level, ( num_students / 2 ) ) + 1 parent_id,
+             mod ( level, 5 ) + 1 school_id 
+      from   dual
+      connect by level <= num_students
+    )
+      select * from rws;
+      
+  insert into schools values ( 1, 'Java Junior' );
+  insert into schools values ( 2, 'Haskell High' );
+  insert into schools values ( 3, 'SQL School' );
+  insert into schools values ( 4, 'C College' );
+  insert into schools values ( 5, 'Ada Academy' );
+      
+  commit;
+   
+end init;
+/
+
+exec init();","","performance",13-FEB-20 03.49.39.669466000 PM,"CHRIS.SAXON@ORACLE.COM",21-JUL-20 04.09.19.801621000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210638425667855918502469137992560342521,15,"Tuning Inserts, Updates, and Deletes: Databases for Developers: Performance #8","Y","While most tuning efforts relate to making queries faster, often you need to make writes faster too. This tutorial introduces extra things you need to consider when tuning inserts, updates, and deletes.","create or replace package timing_pkg as  
+ 
+  start_time pls_integer; 
+  time_taken pls_integer; 
+   
+  procedure set_start_time; 
+  procedure calc_runtime (  
+    operation varchar2 
+  ); 
+   
+end; 
+/
+
+create or replace package body timing_pkg as  
+   
+  procedure set_start_time as 
+  begin 
+    start_time := dbms_utility.get_time; 
+  end; 
+   
+  procedure calc_runtime (  
+    operation varchar2 
+  ) as 
+  begin 
+    time_taken :=  
+      ( dbms_utility.get_time - start_time ); 
+    dbms_output.put_line ( operation || ' ' || time_taken || ' hundredths of a second' ); 
+  end; 
+   
+end; 
+/
+
+create table bricks ( 
+  brick_id integer  
+    not null  
+    primary key, 
+  colour   varchar2(10),  
+  shape    varchar2(10), 
+  weight   integer 
+)
+;
+
+begin 
+  insert into bricks values ( 1, 'red', 'cylinder', 1 );  
+  insert into bricks values ( 2, 'blue', 'cube', 1 );  
+  insert into bricks values ( 3, 'green', 'cube', 1 );  
+  delete bricks; 
+  commit; 
+end; 
+/
+truncate table bricks;
+
+create or replace procedure ins_rows ( num_rows int ) as
+begin
+  execute immediate 'truncate table bricks';
+  dbms_random.seed ( 0 );
+  insert into bricks  
+  with rws as ( 
+    select level x from dual 
+    connect by level <= num_rows 
+  ) 
+    select rownum, 
+           case mod ( rownum, 3 )  
+             when 0 then 'red' 
+             when 1 then 'blue' 
+             when 2 then 'green' 
+           end, 
+           case mod ( rownum, 2 )  
+             when 0 then 'cube' 
+             when 1 then 'cylinder' 
+           end, 
+           round ( dbms_random.value ( 2, 10 ) ) 
+    from   rws;
+end ins_rows;
+/","","performance, insert, update, delete",13-FEB-20 03.48.56.642742000 PM,"CHRIS.SAXON@ORACLE.COM",21-JUL-20 03.56.05.111772000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639064319457547531317480075689609909,15,"How to Get and Read Execution Plans: Databases for Developers: Performance #1","Y","Execution plans are one of the key tools to help understand SQL performance. This tutorial shows you how to get a plan with DBMS_XPlan and interpret its output.","create table bricks (
+  colour   varchar2(10),
+  shape    varchar2(10)
+);
+
+create table colours (
+  colour        varchar2(10),
+  rgb_hex_value varchar2(6)
+);
+
+create table cuddly_toys (
+  toy_name varchar2(20),
+  colour   varchar2(10)
+);
+
+create table pens (
+  colour   varchar2(10),
+  pen_type varchar2(10)
+);
+
+
+insert into cuddly_toys values ( 'Miss Snuggles', 'pink' ) ;
+insert into cuddly_toys values ( 'Cuteasaurus', 'blue' ) ;
+insert into cuddly_toys values ( 'Baby Turtle', 'green' ) ;
+insert into cuddly_toys values ( 'Green Rabbit', 'green' ) ;
+insert into cuddly_toys values ( 'White Rabbit', 'white' ) ;
+
+insert into colours values ( 'red' , 'FF0000' ); 
+insert into colours values ( 'blue' , '0000FF' ); 
+insert into colours values ( 'green' , '00FF00' ); 
+
+insert into bricks values ( 'red', 'cylinder' );
+insert into bricks values ( 'blue', 'cube' );
+insert into bricks values ( 'green', 'cube' );
+
+insert into bricks
+  select * from bricks;
+  
+insert into bricks
+  select * from bricks;
+  
+insert into bricks
+  select * from bricks;
+
+insert into pens values ( 'black', 'ball point' );
+insert into pens values ( 'black', 'permanent' );
+insert into pens values ( 'blue', 'ball point' );
+insert into pens values ( 'green', 'permanent' );
+insert into pens values ( 'green', 'dry-wipe' );
+insert into pens values ( 'red', 'permanent' );
+insert into pens values ( 'red', 'dry-wipe' );
+insert into pens values ( 'blue', 'permanent' );
+insert into pens values ( 'blue', 'dry-wipe' );
+
+commit;
+
+exec dbms_stats.gather_table_stats ( null, 'pens' ) ;
+exec dbms_stats.gather_table_stats ( null, 'colours' ) ;
+exec dbms_stats.gather_table_stats ( null, 'bricks' ) ;
+exec dbms_stats.gather_table_stats ( null, 'cuddly_toys' ) ;","","performance, dbms_xplan, execution plan",13-FEB-20 03.29.01.429179000 PM,"CHRIS.SAXON@ORACLE.COM",15-JUL-20 03.26.52.783489000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639064323015416218443333736849885877,15,"How Much Work is a SQL Statement Doing?: Databases for Developers: Performance #3","Y","When figuring out how to make a SQL statement faster, how many rows it processes is only part of the equation. You also need to look at how much resource it uses to read these rows. This tutorial teaches you how to see how much I/O a SQL statement did.","alter session set WORKAREA_SIZE_POLICY = auto;
+
+create table colours as  
+  select 'red' colour from dual 
+  union  all  
+  select 'blue' colour from dual 
+  union  all  
+  select 'green' colour from dual 
+  union  all  
+  select 'orange' colour from dual 
+  union  all  
+  select 'yellow' colour from dual 
+  union  all  
+  select 'purple' colour from dual 
+  union  all  
+  select 'brown' colour from dual 
+  union  all  
+  select 'white' colour from dual 
+  union  all  
+  select 'black' colour from dual;
+
+create table bricks as  
+  select rownum brick_id, colour, sysdate insert_datetime, lpad ( 'x', 100, 'x' ) stuff 
+  from   colours 
+  cross  join (  
+    select * from dual 
+    connect by level <= 250 
+  );
+
+create table pens as  
+  select rownum pen_id, colour, sysdate insert_datetime, lpad ( 'x', 100, 'x' ) stuff 
+  from   colours 
+  cross  join (  
+    select * from dual 
+    connect by level <= 250 
+  );
+
+create table bricks_indexed as  
+  select * from bricks;
+
+create index brick_colour_i on bricks_indexed ( colour );
+alter table bricks_indexed 
+  modify colour not null;
+
+create or replace view complex_query as   
+  select count ( row_id ) row_count from (  
+    select rownum row_id, bricks.*, pens.*   
+    from   colours  
+    join   pens  
+    on     colours.colour = pens.colour  
+    join   bricks  
+    on     colours.colour = bricks.colour  
+    order  by bricks.brick_id  
+  );
+
+select /* init */* from complex_query;
+
+select /* init */count ( colour ) from bricks_indexed;","","performance, execution plan",13-FEB-20 03.46.50.914426000 PM,"CHRIS.SAXON@ORACLE.COM",15-JUL-20 03.54.13.434366000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639064323027505476639480028596947637,15,"When is an Index Useful? Databases for Developers: Performance #5","Y","An overview of when an index finds rows more efficiently than using a full table scan. Introduces the concept of the clustering factor, a key indicator in how effective an index is.","exec dbms_random.seed ( 0 );
+create table bricks ( 
+  brick_id not null constraint bricks_pk primary key,
+  colour   not null,
+  shape    not null,
+  weight   not null,
+  insert_date not null,
+  junk     default lpad ( 'x', 50, 'x' ) not null 
+) as
+  with rws as (
+    select level x from dual
+    connect by level <= 10000
+  )
+    select rownum brick_id, 
+           case ceil ( rownum / 2500 )
+             when 4 then 'red'
+             when 1 then 'blue'
+             when 2 then 'green'
+             when 3 then 'yellow'
+           end colour, 
+           case mod ( rownum, 4 )
+             when 0 then 'cube'
+             when 1 then 'cylinder'
+             when 2 then 'pyramid'
+             when 3 then 'prism'
+           end shape,
+           round ( dbms_random.value ( 1, 1000 ) ),
+           date'2020-01-01' + ( rownum/24 ) + ( mod ( rownum, 24 ) / 36 ) insert_date,
+           lpad ( ascii ( mod ( rownum, 26 ) + 65 ), 50, 'x' )
+    from   rws;
+    
+create global temporary table bricks_temp as
+  select * from bricks
+  where  1 = 0;
+
+create index brick_weight_i on 
+  bricks ( weight );
+  
+create index brick_shape_i on 
+  bricks ( shape );
+
+create index brick_colour_i on 
+  bricks ( colour );
+  
+create index brick_insert_date_i on 
+  bricks ( insert_date );
+  
+exec dbms_stats.gather_table_stats ( null, 'bricks' ) ;","","index, performance, clustering factor",13-FEB-20 03.47.39.212278000 PM,"CHRIS.SAXON@ORACLE.COM",17-JUL-20 04.14.28.665543000 PM,"CHRIS.SAXON@ORACLE.COM",""
+210639064323069817880325992049711663797,15,"How Joins Work: Databases for Developers: Performance #7","Y","An overview of the different join methods in Oracle Database: nested loops, hash joins, and merge joins.","create table card_deck (
+  pk      integer,
+  val     varchar2(10),
+  suit    varchar2(10),
+  damaged varchar2(1),
+  notes   varchar2(200)
+) pctfree 75;
+
+insert into card_deck ( pk, val, suit, damaged, notes )
+  select level,
+         case mod(rownum, 13)+1
+           when 1 then 'Ace'
+           when 11 then 'Jack'
+           when 12 then 'Queen'
+           when 13 then 'King'
+           else to_char(mod(rownum, 13)+1)
+         end case, 
+         case ceil(rownum/13)
+           when 1 then 'spades'
+           when 2 then 'clubs'
+           when 3 then 'hearts'
+           when 4 then 'diamonds'
+         end case, 
+         case
+           when mod ( rownum, 10 ) = 1 then 'Y'
+           else 'N'
+         end damaged, 
+         case
+           when rownum = 1 then 'SQL is awesome!'
+           else dbms_random.string ( 'a', 200 )
+         end notes
+  from   dual
+  connect by level <= 52
+  order  by dbms_random.value;
+
+commit;
+
+select count(*) from card_deck
+where  damaged = 'Y';
+
+exec dbms_stats.gather_table_stats ( null, 'card_deck', options => 'gather auto' ) ;","","performance, join methods",13-FEB-20 03.48.28.150333000 PM,"CHRIS.SAXON@ORACLE.COM",21-JUL-20 03.35.23.725299000 PM,"CHRIS.SAXON@ORACLE.COM",""
+219172783004222394396035270452714317015,92046253613466239499853282050038200150,"Real World Problem Solving with SQL","Y","Examples of how to use SQL to solve real problems, as discussed in the database@home event.
+
+https://asktom.oracle.com/pls/apex/asktom.search?oh=8141","create table fw_store (
+  shopid      varchar2(10) primary key,
+  containers  integer
+)
+/
+
+begin
+   insert into fw_store values ('AALBORG'  , 4);
+   insert into fw_store values ('GLOSTRUP' , 4);
+   insert into fw_store values ('HADERSLEV', 3);
+   commit;
+end;
+/
+
+create table fw_daybudget (
+  shopid      varchar2(10) references fw_store (shopid),
+  budgetdate  date,
+  budgetnem   number
+)
+/
+
+begin
+   insert into fw_daybudget values ('AALBORG'  , date '2011-12-27', 150);
+   insert into fw_daybudget values ('AALBORG'  , date '2011-12-28', 200);
+   insert into fw_daybudget values ('AALBORG'  , date '2011-12-29', 300);
+   insert into fw_daybudget values ('AALBORG'  , date '2011-12-30', 500);
+   insert into fw_daybudget values ('AALBORG'  , date '2011-12-31', 400);
+   insert into fw_daybudget values ('GLOSTRUP' , date '2011-12-27', 150);
+   insert into fw_daybudget values ('GLOSTRUP' , date '2011-12-28', 200);
+   insert into fw_daybudget values ('GLOSTRUP' , date '2011-12-29', 300);
+   insert into fw_daybudget values ('GLOSTRUP' , date '2011-12-30', 500);
+   insert into fw_daybudget values ('GLOSTRUP' , date '2011-12-31', 400);
+   insert into fw_daybudget values ('HADERSLEV', date '2011-12-27', 100);
+   insert into fw_daybudget values ('HADERSLEV', date '2011-12-28', 150);
+   insert into fw_daybudget values ('HADERSLEV', date '2011-12-29', 200);
+   insert into fw_daybudget values ('HADERSLEV', date '2011-12-30', 400);
+   insert into fw_daybudget values ('HADERSLEV', date '2011-12-31', 300);
+   commit;
+end;
+/
+
+create table fw_hourbudget (
+  hour        integer,
+  percent     number
+)
+/
+
+begin
+   insert into fw_hourbudget values ( 9,  4);
+   insert into fw_hourbudget values (10,  8);
+   insert into fw_hourbudget values (11, 10);
+   insert into fw_hourbudget values (12, 12);
+   insert into fw_hourbudget values (13, 12);
+   insert into fw_hourbudget values (14, 12);
+   insert into fw_hourbudget values (15, 14);
+   insert into fw_hourbudget values (16, 14);
+   insert into fw_hourbudget values (17, 10);
+   insert into fw_hourbudget values (18,  4);
+   commit;
+end;
+/
+
+create table fw_sales (
+  shopid      varchar2(10) references fw_store (shopid),
+  saleshour   date,
+  salesnem    number
+)
+/
+
+begin
+   insert into fw_sales
+   select shopid
+        , day + numtodsinterval(hour,'hour') saleshour
+        , salesnem
+   from (
+      select 'AALBORG' shopid, date '2011-12-27' day,  4 h9,  6 h10,  5 h11, 20 h12, 19 h13, 22 h14, 27 h15, 11 h16, 16 h17,  4 h18 from dual union all
+      select 'AALBORG'  , date '2011-12-28',  7, 17, 18, 13, 27, 28, 20, 14, 10, 19 from dual union all
+      select 'AALBORG'  , date '2011-12-29', 10, 14, 20, null, null, null, null, null, null, null from dual union all
+      select 'GLOSTRUP' , date '2011-12-27',  1,  6,  6, 14, 17, 17, 13, 15,  7,  7 from dual union all
+      select 'GLOSTRUP' , date '2011-12-28',  4, 14, 30, 35, 22, 21, 35, 34, 15, 25 from dual union all
+      select 'GLOSTRUP' , date '2011-12-29',  6, 13, 50, null, null, null, null, null, null, null from dual union all
+      select 'HADERSLEV', date '2011-12-27',  4,  7, 13, 15, 17, 13, 18, 19, 10,  3 from dual union all
+      select 'HADERSLEV', date '2011-12-28',  8,  5, 14, 18, 20, 18, 15, 24, 12,  1 from dual union all
+      select 'HADERSLEV', date '2011-12-29',  1, 19, 33, null, null, null, null, null, null, null from dual
+   ) s1
+   unpivot exclude nulls (
+     salesnem for hour in (
+       h9  as  9,
+       h10 as 10,
+       h11 as 11,
+       h12 as 12,
+       h13 as 13,
+       h14 as 14,
+       h15 as 15,
+       h16 as 16,
+       h17 as 17,
+       h18 as 18
+     )
+   );
+   commit;
+end;
+/
+
+
+create table inventory (
+   item  varchar2(10)   -- identification of the item
+ , loc   varchar2(10)   -- identification of the location
+ , qty   number         -- quantity present at that location
+ , purch date           -- date that quantity was purchased
+);
+
+insert into inventory values('Ale' , '1-A-20', 18, DATE '2014-02-01');
+insert into inventory values('Ale' , '1-A-31', 12, DATE '2014-02-05');
+insert into inventory values('Ale' , '1-C-05', 18, DATE '2014-02-03');
+insert into inventory values('Ale' , '2-A-02', 24, DATE '2014-02-02');
+insert into inventory values('Ale' , '2-D-07',  9, DATE '2014-02-04');
+insert into inventory values('Bock', '1-A-02', 18, DATE '2014-02-06');
+insert into inventory values('Bock', '1-B-11',  4, DATE '2014-02-05');
+insert into inventory values('Bock', '1-C-04', 12, DATE '2014-02-03');
+insert into inventory values('Bock', '1-B-15',  2, DATE '2014-02-02');
+insert into inventory values('Bock', '2-D-23',  1, DATE '2014-02-04');
+commit;
+
+create table orderline (
+   ordno number         -- id-number of the order
+ , item  varchar2(10)   -- identification of the item
+ , qty   number         -- quantity ordered
+);
+
+insert into orderline values (42, 'Ale' , 24);
+insert into orderline values (42, 'Bock', 18);
+commit;
+
+create table running_log ( 
+  run_date       date not null,  
+  time_in_s      int  not null, 
+  distance_in_km int  not null 
+)
+;
+
+-- A sample data set of running training logs.
+begin  
+  insert into running_log values (date'2020-04-01', 310, 1);  
+  insert into running_log values (date'2020-04-02', 1600, 5);  
+  insert into running_log values (date'2020-04-03', 3580, 11);  
+  insert into running_log values (date'2020-04-06', 1550, 5);  
+  insert into running_log values (date'2020-04-07', 300, 1);  
+  insert into running_log values (date'2020-04-10', 280, 1);  
+  insert into running_log values (date'2020-04-13', 1530, 5);  
+  insert into running_log values (date'2020-04-14', 295, 1);  
+  insert into running_log values (date'2020-04-15', 292, 1);  
+  commit;  
+end; 
+/
+
+create table emp as 
+  select * from scott.emp;","","match_recognize, sum, analytic functions",05-MAY-20 08.41.24.197983000 AM,"CHRIS.SAXON@ORACLE.COM",06-MAY-20 02.58.27.598086000 PM,"CHRIS.SAXON@ORACLE.COM",""
+184084400229208125137976820412046812596,893254896586036118486907198353590179,"Oracle Text Quickstart","Y","Getting started with Oracle Text","","","Oracle Text, CTX, CONTAINS, CONTEXT",04-JUN-19 09.50.05.494553000 AM,"ROGER.FORD@ORACLE.COM",04-JUN-19 10.11.51.888018000 AM,"ROGER.FORD@ORACLE.COM",""
+192344988227908944268158345689617286517,893254896586036118486907198353590179,"Using Faceted Navigation","Y","Shows how to use the XML-based Result Set Interface to do queries with summary information - or facets - and how to search using those facets.
+
+Applies to Oracle Database 11.2 or later.","","","text facets faceted navigation xml RSI RSD",22-AUG-19 11.52.31.169476000 AM,"ROGER.FORD@ORACLE.COM",22-AUG-19 07.34.37.327496000 PM,"ROGER.FORD@ORACLE.COM",""
+186921076608050787168935825902406386005,893254896586036118486907198353590179,"Adding stopwords to an existing index","Y","This quick tutorial shows you how to add new stopwords to an existing index.","","","oracle text, contains, stopword, stoplist",01-JUL-19 01.57.48.697831000 PM,"ROGER.FORD@ORACLE.COM",01-JUL-19 03.00.04.514239000 PM,"ROGER.FORD@ORACLE.COM",""
+192497261674369450442611783127247019514,13,"SODA for PL/SQL","Y","SODA for PL/SQL is a PL/SQL API that implements Simple Oracle Document Access (SODA). You can use it with PL/SQL to perform create, read (retrieve), update, and delete (CRUD) operations on documents of any kind, and you can use it to query JSON documents.
+
+SODA is a set of NoSQL-style APIs that let you create and store collections of documents in Oracle Database, retrieve them, and query them, without needing to know Structured Query Language (SQL) or how the data in the documents is stored in the database.
+
+Oracle Database supports storing and querying JSON data. To access this functionality, you need structured query language (SQL) with special JSON SQL operators. SODA for PL/SQL hides the complexities of SQL/JSON programming.","","","SODA JSON NOSQL SQL",24-AUG-19 12.09.15.761208000 AM,"SRIKRISHNAN.S.SURESH@ORACLE.COM",10-SEP-19 11.59.55.143660000 AM,"STEVEN.FEUERSTEIN@ORACLE.COM","N"
+188704173216096418598025228629326881042,331612950318691907290794821632381319278,"Introduction to Location-Based Analysis Using Spatial Features of Oracle Database","Y","The tutorial introduces location-based analysis using Oracle Spatial and Graph. Spatial data are loaded, configured, and used for proximity queries.","","","spatial, gis",18-JUL-19 03.35.50.060135000 PM,"DAVID.LAPP@ORACLE.COM",20-APR-20 04.50.53.257222000 PM,"DAVID.LAPP@ORACLE.COM",""
