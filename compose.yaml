@@ -50,28 +50,29 @@ services:
       interval: 30s
       timeout: 10s
       retries: 150
-    # depends_on:
-    #   db23:
-    #     condition: service_healthy
-  # wls:
-  #   hostname: wls
-  #   image: container-registry.oracle.com/middleware/weblogic:14.1.2.0-generic-jdk17-ol8-250424
-  #   depends_on:
-  #     - db23
-  #   entrypoint: ["/bin/sh", "-c", "sleep 60 && /u01/oracle/createAndStartEmptyDomain.sh"]
-  #   volumes:
-  #     - $PWD:/u01/oracle/properties
-  #   ports:
-  #     - "7001:7001"
-  #     - "9002:9002"
-    # depends_on:
-    #   ords-node1:
-    #     condition: service_healthy
+    depends_on:
+      db23:
+        condition: service_healthy
+  wls:
+    hostname: wls
+    image: container-registry.oracle.com/middleware/weblogic:14.1.2.0-generic-jdk17-ol8-250424
+    environment:
+      - PRODUCTION_MODE=prod
+      - ADMINISTRATION_PORT_ENABLED=true
+
+    entrypoint: ["/bin/sh", "-c", "sleep 60 && /u01/oracle/createAndStartEmptyDomain.sh"]
+    volumes:
+      - /Users/choina/podman-dev/:/u01/oracle/properties
+    ports:
+      - "7001:7001"
+      - "9002:9002"
+    depends_on:
+      ords-node1:
+        condition: service_healthy
 volumes:
   ords_config:
   db_files:
   # wls_dom_props:
-
 
   # ords-node1:
   #   image: container-registry.oracle.com/database/ords:latest
