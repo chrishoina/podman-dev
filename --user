@@ -1,0 +1,19 @@
+== Info: URL rejected: Port number was not a decimal number between 0 and 65535
+== Info: Closing connection
+== Info: Host localhost:9002 was resolved.
+== Info: IPv6: ::1
+== Info: IPv4: 127.0.0.1
+== Info:   Trying [::1]:9002...
+== Info: Connected to localhost (::1) port 9002
+=> Send header, 116 bytes (0x74)
+0000: 47 45 54 20 2f 6d 61 6e 61 67 65 6d 65 6e 74 2f GET /management/
+0010: 77 65 62 6c 6f 67 69 63 2f 6c 61 74 65 73 74 2f weblogic/latest/
+0020: 64 6f 6d 61 69 6e 43 6f 6e 66 69 67 20 48 54 54 domainConfig HTT
+0030: 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f 63 P/1.1..Host: loc
+0040: 61 6c 68 6f 73 74 3a 39 30 30 32 0d 0a 55 73 65 alhost:9002..Use
+0050: 72 2d 41 67 65 6e 74 3a 20 63 75 72 6c 2f 38 2e r-Agent: curl/8.
+0060: 37 2e 31 0d 0a 41 63 63 65 70 74 3a 20 2a 2f 2a 7.1..Accept: */*
+0070: 0d 0a 0d 0a                                     ....
+== Info: Request completely sent off
+== Info: Received HTTP/0.9 when not allowed
+== Info: Closing connection
