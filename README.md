@@ -35,7 +35,7 @@ podman-compose --env-file .env up
 
 The `ords.war` contains the following:
 
-```mermaid
+```shell
 .
 ├── META-INF
 │   ├── MANIFEST.MF
@@ -271,5 +271,188 @@ The `ords.war` contains the following:
     ├── web.xml
     └── weblogic.xml
 ```
+
+[!NOTE] A `.war` file is bascially just a `.zip` file, so I'm not disclosing anything new or novel here. Anybody with the abiltity to change the file extension from `.war` to .`zip` can do this, and uncompress the file. 
+
+"WebLogic Server supports deployments that are packaged either as archive files using the jar utility or Ant's jar tool, or as exploded archive directories."[^3] In the above file "tree" you'll see the exploded archive directories and its files.
+
+[^3]: [Packaging Files for Deployment](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/depgd/deployunits.html#GUID-C6C3090D-1010-4224-AB32-2949182AF948) as of WebLogic 14.1.2.
+
+For the purposes of WebLogic, all we care about are the `beans.xml`, `web.xml`, and `weblogic.xml` files. Even still, all you are concerned with is the `web.xml` file. Otherwise known as a "Deployment Descriptor."[^2] Your ORDS installation will also have a `weblogic.xml` file-- another kind of Deployment Descriptor--but you do not need to modify this file. 
+
+[^2]: [Details](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/depgd/understanding.html#GUID-904A48A6-D89A-446D-A8E9-EDE4B44140DB) on the files contained in a `.war` file.
+
+An unmodified version of ORDS will contain a `web.xml` file such as this:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    metadata-complete="true"
+    version="3.1" 
+    id="ORDS"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<display-name>Oracle REST Data Services</display-name>
+
+	<context-param>
+		<param-name>version</param-name>
+		<param-value>25.2.0.r1651520</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
+	</listener>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>HttpEndPoint</display-name>
+		<servlet-name>HttpEndPoint</servlet-name>
+		<servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HttpEndPoint</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>Forbidden</display-name>
+		<servlet-name>Forbidden</servlet-name>
+		<servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Forbidden</servlet-name>
+		<url-pattern>/oracle/dbtools/jarcl</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+  <!-- Disable auto-discovery of servlet 3+ web fragments -->
+  <absolute-ordering /> 
+</web-app>
+```
+
+You must define the location of the ORDS configuration directory by either:
+1. manually adding it as `<context-param>` to this `web.xml` file and re-archiving the exploded archive into a new `ords.war` file (HIGHLY DISCOURAGED)
+2. using the `ords war` command 
+2. Set the `config.url` system property (i.e., the system where Weblogic is deployed, and prior to starting the WebLogic Server) with this command: `export JAVA_OPTIONS="-Dconfig.url=/path/to/ords_config"` 
+
+
+The "ORDS Web Application" doesn't require/use/rely on
+
+1. Copy the ords product folder to your WebLogic server
+2. Create an empty ORDS configuration folder (e.g. `ords_config`)[^4]
+3. Navigate to your ORDS product folder (unzip if not zipped), and navigate to the `/bin` folder
+4. You'll need to temporarily set your $PATH to the ORDS `/bin`, like this:
+
+    ```shell
+    PATH=/path to your ords product folder/bin:$PATH
+    ```
+
+    ```shell
+    export PATH
+    ```
+
+5. Then, `cd` to your `ords_config` folder and execute the following command: 
+
+    ```shell
+    ords war [/path/to/your/existing/ords.war]
+    ```
+
+> [!NOTE] 
+> You can optionally create a new name for the recreated `ords.war` file (so as not to overwrite the original `ords.war` file) like this:
+> 
+> ```shell
+> ords war my_new_file_name.war [/path/to/your/existing/ords.war]
+> ```
+
+6. Your new `ords.war` file will be located in your current directory. You can inspect it's `web.xml` file by issuing the following command: 
+
+    ```shell
+    jar -xf my_new_war_for_wls.war
+    ```
+
+7. Issue the `ls` command and you should see two objects: 
+   - the new `.war` file, and 
+   - a `WEB-INF` directory
+   
+   `cd` into the `WEB-INF` directory. A `web.xml` file will be visible. You can `cat` the file to review its contents. 
+
+8. After issuing the `cat web.xml` command, you'll see something resembling the following sample `web.xml`:
+
+```xml=
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ORDS" metadata-complete="true" version="3.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<display-name>Oracle REST Data Services</display-name>
+
+	<context-param>
+		<param-name>config.url</param-name>
+		<param-value>/Users/choina/temp_config</param-value>
+	</context-param><context-param>
+		<param-name>version</param-name>
+		<param-value>25.2.0.r1651520</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
+	</listener>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>HttpEndPoint</display-name>
+		<servlet-name>HttpEndPoint</servlet-name>
+		<servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HttpEndPoint</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>Forbidden</display-name>
+		<servlet-name>Forbidden</servlet-name>
+		<servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Forbidden</servlet-name>
+		<url-pattern>/oracle/dbtools/jarcl</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+  <!-- Disable auto-discovery of servlet 3+ web fragments -->
+  <absolute-ordering/> 
+</web-app>
+```
+
+
+
+[^4]: You can name this anything, but naming it something that is related to ORDS' configuration makes sense. 
+
+
+
 
 
