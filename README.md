@@ -272,7 +272,8 @@ The `ords.war` contains the following:
     └── weblogic.xml
 ```
 
-[!NOTE] A `.war` file is bascially just a `.zip` file, so I'm not disclosing anything new or novel here. Anybody with the abiltity to change the file extension from `.war` to .`zip` can do this, and uncompress the file. 
+> [!NOTE] 
+> A `.war` file is bascially just a `.zip` file, so I'm not disclosing anything new or novel here. Anybody with the abiltity to change the file extension from `.war` to .`zip` can do this, and uncompress the file. 
 
 "WebLogic Server supports deployments that are packaged either as archive files using the jar utility or Ant's jar tool, or as exploded archive directories."[^3] In the above file "tree" you'll see the exploded archive directories and its files.
 
@@ -355,6 +356,10 @@ The "ORDS Web Application" doesn't require/use/rely on
 1. Copy the ords product folder to your WebLogic server
 2. Create an empty ORDS configuration folder (e.g. `ords_config`)[^4]
 3. Navigate to your ORDS product folder (unzip if not zipped), and navigate to the `/bin` folder
+
+[^4]: You can name this anything, but naming it something that is related to ORDS' configuration makes sense. 
+
+
 4. You'll need to temporarily set your $PATH to the ORDS `/bin`, like this:
 
     ```shell
@@ -392,65 +397,64 @@ The "ORDS Web Application" doesn't require/use/rely on
 
 8. After issuing the `cat web.xml` command, you'll see something resembling the following sample `web.xml`:
 
-```xml=
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ORDS" metadata-complete="true" version="3.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-	<display-name>Oracle REST Data Services</display-name>
+    ```xml=
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?><web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="ORDS" metadata-complete="true" version="3.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+        <display-name>Oracle REST Data Services</display-name>
 
-	<context-param>
-		<param-name>config.url</param-name>
-		<param-value>/Users/choina/temp_config</param-value>
-	</context-param><context-param>
-		<param-name>version</param-name>
-		<param-value>25.2.0.r1651520</param-value>
-	</context-param>
-	
-	<listener>
-		<listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
-	</listener>
+        <context-param>
+            <param-name>config.url</param-name>
+            <param-value>/Users/choina/temp_config</param-value>
+        </context-param><context-param>
+            <param-name>version</param-name>
+            <param-value>25.2.0.r1651520</param-value>
+        </context-param>
+        
+        <listener>
+            <listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
+        </listener>
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>HttpEndPoint</display-name>
-		<servlet-name>HttpEndPoint</servlet-name>
-		<servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
-	</servlet>
+        <servlet>
+            <description>
+            </description>
+            <display-name>HttpEndPoint</display-name>
+            <servlet-name>HttpEndPoint</servlet-name>
+            <servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
+        </servlet>
 
-	<servlet-mapping>
-		<servlet-name>HttpEndPoint</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>HttpEndPoint</servlet-name>
+            <url-pattern>/*</url-pattern>
+        </servlet-mapping>
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>Forbidden</display-name>
-		<servlet-name>Forbidden</servlet-name>
-		<servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
-	</servlet>
+        <servlet>
+            <description>
+            </description>
+            <display-name>Forbidden</display-name>
+            <servlet-name>Forbidden</servlet-name>
+            <servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
+        </servlet>
 
-	<servlet-mapping>
-		<servlet-name>Forbidden</servlet-name>
-		<url-pattern>/oracle/dbtools/jarcl</url-pattern>
-	</servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>Forbidden</servlet-name>
+            <url-pattern>/oracle/dbtools/jarcl</url-pattern>
+        </servlet-mapping>
 
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+        <welcome-file-list>
+            <welcome-file>index.html</welcome-file>
+            <welcome-file>index.htm</welcome-file>
+            <welcome-file>index.jsp</welcome-file>
+            <welcome-file>default.html</welcome-file>
+            <welcome-file>default.htm</welcome-file>
+            <welcome-file>default.jsp</welcome-file>
+        </welcome-file-list>
 
-  <!-- Disable auto-discovery of servlet 3+ web fragments -->
-  <absolute-ordering/> 
-</web-app>
-```
+    <!-- Disable auto-discovery of servlet 3+ web fragments -->
+    <absolute-ordering/> 
+    </web-app>
+    ```
 
 
 
-[^4]: You can name this anything, but naming it something that is related to ORDS' configuration makes sense. 
 
 
 
