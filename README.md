@@ -35,242 +35,242 @@ podman-compose --env-file .env up
 
 The `ords.war` contains the following:
 
-```shell
-.
-├── META-INF
-│   ├── MANIFEST.MF
-│   ├── ORACLE_C.RSA
-│   └── ORACLE_C.SF
-├── oracle
-│   └── dbtools
-│       └── launcher
-│           ├── CommandLineParser.class
-│           ├── executable
-│           │   └── jar
-│           │       ├── Builder.class
-│           │       ├── ExecutableJar.class
-│           │       ├── ExecutableJar$1.class
-│           │       ├── ExecutableJarEntrypoint.class
-│           │       ├── ExtensionLibraryClassLoader.class
-│           │       ├── HandlerFactory.class
-│           │       ├── HasSize.class
-│           │       ├── JarManifest.class
-│           │       ├── JarManifest$Builder.class
-│           │       ├── JarManifest$Section.class
-│           │       ├── JarManifest$Section$Builder.class
-│           │       ├── JarProcessor.class
-│           │       ├── MutatedZip.class
-│           │       ├── NestedJarClassLoader.class
-│           │       ├── NestedJarClassLoader$AlsoClose.class
-│           │       ├── NestedJarClassLoader$Archive.class
-│           │       ├── NestedJarClassLoader$ArchiveConnection.class
-│           │       ├── NestedResourceHandler.class
-│           │       ├── OracleHomeClassLoader.class
-│           │       ├── Resource.class
-│           │       ├── Resource$ContentStream.class
-│           │       ├── ResourceBuilder.class
-│           │       ├── Resources.class
-│           │       └── Resources$Builder.class
-│           ├── Launcher.class
-│           ├── Launcher$Builder.class
-│           ├── Launcher$MainClassNotSpecifiedException.class
-│           └── zip
-│               ├── Bytes.class
-│               ├── Bytes$BytesBuffer.class
-│               ├── Bytes$BytesSubRange.class
-│               ├── Bytes$FileRanges.class
-│               ├── Bytes$HexDump.class
-│               ├── Bytes$MappedBytes.class
-│               ├── Bytes$ScopedSegmentFactory.class
-│               ├── Bytes$ScopedSegmentFactory$ScopedSegment.class
-│               ├── Bytes$SharedBytes.class
-│               ├── Bytes$SubRange.class
-│               ├── BytesRange.class
-│               ├── CompressedStream.class
-│               ├── EZipBuilder.class
-│               ├── EZipBuilder$StorageMethod.class
-│               ├── ZipConstants.class
-│               ├── ZipIndex.class
-│               ├── ZipItem.class
-│               ├── ZipLocation.class
-│               ├── ZipLocations.class
-│               ├── ZipOutputStream.class
-│               ├── ZipOutputStream$XEntry.class
-│               ├── Zips.class
-│               └── ZipUtils.class
-└── WEB-INF
-    ├── beans.xml
-    ├── classes
-    ├── lib
-    │   ├── analysisCore-20.3.1.187.jar
-    │   ├── analysisJdbc-20.3.1.187.jar
-    │   ├── angus-activation-2.0.2.jar
-    │   ├── antlr4-runtime-4.13.2.jar
-    │   ├── aopalliance-repackaged-2.6.1.jar
-    │   ├── autoupgrade-plugin-25.1.0.099.1519.jar
-    │   ├── bson-5.3.1.jar
-    │   ├── caffeine-3.2.0.jar
-    │   ├── commons-codec-1.11.jar
-    │   ├── commons-compress-1.27.1.jar
-    │   ├── commons-fileupload-1.5.jar
-    │   ├── commons-io-2.19.0.jar
-    │   ├── commons-logging-1.2.jar
-    │   ├── dbtools-arbori-25.2.0.157.0951.jar
-    │   ├── dbtools-common-25.2.0.157.0951.jar
-    │   ├── dbtools-core-25.2.0.157.0951.jar
-    │   ├── dbtools-modeler-common-25.2.0.157.0951.jar
-    │   ├── dbtools-oci-25.2.0.157.0951.jar
-    │   ├── dbtools-ucp-25.2.0.157.0951.jar
-    │   ├── georasterapi-repackaged-25.2.jar
-    │   ├── guava-33.4.8-jre.jar
-    │   ├── hk2-api-2.6.1.jar
-    │   ├── hk2-locator-2.6.1.jar
-    │   ├── hk2-utils-2.6.1.jar
-    │   ├── httpclient-4.5.13.jar
-    │   ├── httpcore-4.4.13.jar
-    │   ├── istack-commons-runtime-4.1.2.jar
-    │   ├── jackson-datatype-jsr310-2.17.2.jar
-    │   ├── jackson-module-jaxb-annotations-2.12.2.jar
-    │   ├── jackson-repackaged-2.18.3.jar
-    │   ├── jakarta.activation-api-2.1.3.jar
-    │   ├── jakarta.annotation-api-2.1.1.jar
-    │   ├── jakarta.inject-2.6.1.jar
-    │   ├── jakarta.inject-api-2.0.1.jar
-    │   ├── jakarta.json-api-2.1.1.jar
-    │   ├── jakarta.servlet-api-4.0.4.jar
-    │   ├── jakarta.ws.rs-api-2.1.6.jar
-    │   ├── jakarta.xml.bind-api-4.0.2.jar
-    │   ├── jansi-2.4.1.jar
-    │   ├── javassist-3.25.0-GA.jar
-    │   ├── javax.activation-api-1.2.0.jar
-    │   ├── javax.annotation-api-1.3.2.jar
-    │   ├── jaxb-core-4.0.5.jar
-    │   ├── jaxb-runtime-4.0.5.jar
-    │   ├── jersey-apache-connector-2.35.jar
-    │   ├── jersey-client-2.35.jar
-    │   ├── jersey-common-2.35.jar
-    │   ├── jersey-entity-filtering-2.35.jar
-    │   ├── jersey-hk2-2.35.jar
-    │   ├── jersey-media-json-jackson-2.35.jar
-    │   ├── jetty-alpn-client-12.0.18.jar
-    │   ├── jetty-alpn-server-12.0.18.jar
-    │   ├── jetty-client-12.0.18.jar
-    │   ├── jetty-ee8-nested-12.0.18.jar
-    │   ├── jetty-ee8-security-12.0.18.jar
-    │   ├── jetty-ee8-servlet-12.0.18.jar
-    │   ├── jetty-http-12.0.18.jar
-    │   ├── jetty-http2-client-12.0.18.jar
-    │   ├── jetty-http2-common-12.0.18.jar
-    │   ├── jetty-http2-hpack-12.0.18.jar
-    │   ├── jetty-http2-server-12.0.18.jar
-    │   ├── jetty-io-12.0.18.jar
-    │   ├── jetty-rewrite-12.0.18.jar
-    │   ├── jetty-schemas-4.0.3.jar
-    │   ├── jetty-security-12.0.18.jar
-    │   ├── jetty-server-12.0.18.jar
-    │   ├── jetty-servlet-api-4.0.6.jar
-    │   ├── jetty-session-12.0.18.jar
-    │   ├── jetty-util-12.0.18.jar
-    │   ├── jetty-xml-12.0.18.jar
-    │   ├── mockito-inline-4.9.0.jar
-    │   ├── oci-java-sdk-bastion-3.57.1.jar
-    │   ├── oci-java-sdk-circuitbreaker-3.57.1.jar
-    │   ├── oci-java-sdk-common-3.57.1.jar
-    │   ├── oci-java-sdk-common-httpclient-3.57.1.jar
-    │   ├── oci-java-sdk-common-httpclient-jersey-3.57.1.jar
-    │   ├── oci-java-sdk-database-3.57.1.jar
-    │   ├── oci-java-sdk-databasetools-3.57.1.jar
-    │   ├── oci-java-sdk-identity-3.57.1.jar
-    │   ├── oci-java-sdk-monitoring-3.57.1.jar
-    │   ├── oci-java-sdk-objectstorage-3.57.1.jar
-    │   ├── oci-java-sdk-objectstorage-extensions-3.57.1.jar
-    │   ├── oci-java-sdk-objectstorage-generated-3.57.1.jar
-    │   ├── oci-java-sdk-secrets-3.57.1.jar
-    │   ├── oci-java-sdk-workrequests-3.57.1.jar
-    │   ├── ojdbc11-23.7.0.25.01.jar
-    │   ├── ojmisc-11.2.0.4.0.jar
-    │   ├── ons-23.7.0.25.01.jar
-    │   ├── opentelemetry-api-1.41.0.jar
-    │   ├── opentelemetry-context-1.41.0.jar
-    │   ├── oraclepki-23.7.0.25.01.jar
-    │   ├── orai18n-23.7.0.25.01.jar
-    │   ├── orai18n-mapping-23.3.0.0.0.jar
-    │   ├── orai18n-utility-23.3.0.0.0.jar
-    │   ├── orajsoda-1.1.30.jar
-    │   ├── oraml-core-250609.jar
-    │   ├── oraml-jetty-250609.jar
-    │   ├── orarestsoda-1.1.30.jar
-    │   ├── ords-adp-analytics-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-analytics-server-25.2.0.165.1520.jar
-    │   ├── ords-adp-avd-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-avd-server-25.2.0.165.1520.jar
-    │   ├── ords-adp-di-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-di-server-25.2.0.165.1520.jar
-    │   ├── ords-adp-ins-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-ins-server-25.2.0.165.1520.jar
-    │   ├── ords-adp-lineage-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-lineage-server-25.2.0.165.1520.jar
-    │   ├── ords-adp-odimp-client-25.2.0.165.1520.jar
-    │   ├── ords-adp-odimp-server-25.2.0.165.1520.jar
-    │   ├── ords-apex-support-25.2.0.165.1520.jar
-    │   ├── ords-auth-25.2.0.165.1520.jar
-    │   ├── ords-cache-25.2.0.165.1520.jar
-    │   ├── ords-cmdline-25.2.0.165.1520.jar
-    │   ├── ords-common-25.2.0.165.1520.jar
-    │   ├── ords-common-ui-25.2.0.165.1520.jar
-    │   ├── ords-conf-25.2.0.165.1520.jar
-    │   ├── ords-db-api-25.2.0.165.1520.jar
-    │   ├── ords-db-common-25.2.0.165.1520.jar
-    │   ├── ords-embed-api-25.2.0.165.1520.jar
-    │   ├── ords-entry-point-25.2.0.165.1520.jar
-    │   ├── ords-filtering-25.2.0.165.1520.jar
-    │   ├── ords-graphql-25.2.0.165.1520.jar
-    │   ├── ords-http-25.2.0.165.1520.jar
-    │   ├── ords-icap-25.2.0.165.1520.jar
-    │   ├── ords-injector-25.2.0.165.1520.jar
-    │   ├── ords-installer-25.2.0.165.1520.jar
-    │   ├── ords-instance-api-25.2.0.165.1520.jar
-    │   ├── ords-jdbc-pool-25.2.0.165.1520.jar
-    │   ├── ords-jet-resources-25.2.0.165.1520.jar
-    │   ├── ords-json-25.2.0.165.1520.jar
-    │   ├── ords-landing-page-25.2.0.165.1520.jar
-    │   ├── ords-metrics-25.2.0.165.1520.jar
-    │   ├── ords-oauth-25.2.0.165.1520.jar
-    │   ├── ords-plsql-gateway-25.2.0.165.1520.jar
-    │   ├── ords-plugin-api-25.2.0.165.1520.jar
-    │   ├── ords-plugin-apt-25.2.0.165.1520.jar
-    │   ├── ords-rest-enabled-sql-25.2.0.165.1520.jar
-    │   ├── ords-rest-services-25.2.0.165.1520.jar
-    │   ├── ords-sdw-client-25.2.0.165.1520.jar
-    │   ├── ords-sdw-server-25.2.0.165.1520.jar
-    │   ├── ords-service-console-25.2.0.165.1520.jar
-    │   ├── ords-sign-in-25.2.0.165.1520.jar
-    │   ├── ords-soda-25.2.0.165.1520.jar
-    │   ├── ords-standalone-25.2.0.165.1520.jar
-    │   ├── ords-static-25.2.0.165.1520.jar
-    │   ├── ords-static-shared-libs-25.2.0.165.1520.jar
-    │   ├── ords-url-mapping-25.2.0.165.1520.jar
-    │   ├── ords-web-client-25.2.0.165.1520.jar
-    │   ├── osgi-resource-locator-1.0.3.jar
-    │   ├── parsson-1.1.7.jar
-    │   ├── resilience4j-circuitbreaker-1.7.1.jar
-    │   ├── resilience4j-core-1.7.1.jar
-    │   ├── sdoapi-25.2.jar
-    │   ├── sdodep3prt-25.2.jar
-    │   ├── sdordf-25.1.jar
-    │   ├── sdordf-client-25.1.jar
-    │   ├── sdordf-ords-25.1.jar
-    │   ├── sdoutl-25.2.jar
-    │   ├── slf4j-api-2.0.13.jar
-    │   ├── sshd-osgi-2.13.2.jar
-    │   ├── ucp11-23.7.0.25.01_37536533.jar
-    │   ├── vavr-0.10.2.jar
-    │   ├── vavr-match-0.10.2.jar
-    │   ├── xdb-23.7.0.25.01.jar
-    │   └── xmlparserv2_sans_jaxp_services-23.7.0.25.01.jar
-    ├── web.xml
-    └── weblogic.xml
-```
+    ```shell
+    .
+    ├── META-INF
+    │   ├── MANIFEST.MF
+    │   ├── ORACLE_C.RSA
+    │   └── ORACLE_C.SF
+    ├── oracle
+    │   └── dbtools
+    │       └── launcher
+    │           ├── CommandLineParser.class
+    │           ├── executable
+    │           │   └── jar
+    │           │       ├── Builder.class
+    │           │       ├── ExecutableJar.class
+    │           │       ├── ExecutableJar$1.class
+    │           │       ├── ExecutableJarEntrypoint.class
+    │           │       ├── ExtensionLibraryClassLoader.class
+    │           │       ├── HandlerFactory.class
+    │           │       ├── HasSize.class
+    │           │       ├── JarManifest.class
+    │           │       ├── JarManifest$Builder.class
+    │           │       ├── JarManifest$Section.class
+    │           │       ├── JarManifest$Section$Builder.class
+    │           │       ├── JarProcessor.class
+    │           │       ├── MutatedZip.class
+    │           │       ├── NestedJarClassLoader.class
+    │           │       ├── NestedJarClassLoader$AlsoClose.class
+    │           │       ├── NestedJarClassLoader$Archive.class
+    │           │       ├── NestedJarClassLoader$ArchiveConnection.class
+    │           │       ├── NestedResourceHandler.class
+    │           │       ├── OracleHomeClassLoader.class
+    │           │       ├── Resource.class
+    │           │       ├── Resource$ContentStream.class
+    │           │       ├── ResourceBuilder.class
+    │           │       ├── Resources.class
+    │           │       └── Resources$Builder.class
+    │           ├── Launcher.class
+    │           ├── Launcher$Builder.class
+    │           ├── Launcher$MainClassNotSpecifiedException.class
+    │           └── zip
+    │               ├── Bytes.class
+    │               ├── Bytes$BytesBuffer.class
+    │               ├── Bytes$BytesSubRange.class
+    │               ├── Bytes$FileRanges.class
+    │               ├── Bytes$HexDump.class
+    │               ├── Bytes$MappedBytes.class
+    │               ├── Bytes$ScopedSegmentFactory.class
+    │               ├── Bytes$ScopedSegmentFactory$ScopedSegment.class
+    │               ├── Bytes$SharedBytes.class
+    │               ├── Bytes$SubRange.class
+    │               ├── BytesRange.class
+    │               ├── CompressedStream.class
+    │               ├── EZipBuilder.class
+    │               ├── EZipBuilder$StorageMethod.class
+    │               ├── ZipConstants.class
+    │               ├── ZipIndex.class
+    │               ├── ZipItem.class
+    │               ├── ZipLocation.class
+    │               ├── ZipLocations.class
+    │               ├── ZipOutputStream.class
+    │               ├── ZipOutputStream$XEntry.class
+    │               ├── Zips.class
+    │               └── ZipUtils.class
+    └── WEB-INF
+        ├── beans.xml
+        ├── classes
+        ├── lib
+        │   ├── analysisCore-20.3.1.187.jar
+        │   ├── analysisJdbc-20.3.1.187.jar
+        │   ├── angus-activation-2.0.2.jar
+        │   ├── antlr4-runtime-4.13.2.jar
+        │   ├── aopalliance-repackaged-2.6.1.jar
+        │   ├── autoupgrade-plugin-25.1.0.099.1519.jar
+        │   ├── bson-5.3.1.jar
+        │   ├── caffeine-3.2.0.jar
+        │   ├── commons-codec-1.11.jar
+        │   ├── commons-compress-1.27.1.jar
+        │   ├── commons-fileupload-1.5.jar
+        │   ├── commons-io-2.19.0.jar
+        │   ├── commons-logging-1.2.jar
+        │   ├── dbtools-arbori-25.2.0.157.0951.jar
+        │   ├── dbtools-common-25.2.0.157.0951.jar
+        │   ├── dbtools-core-25.2.0.157.0951.jar
+        │   ├── dbtools-modeler-common-25.2.0.157.0951.jar
+        │   ├── dbtools-oci-25.2.0.157.0951.jar
+        │   ├── dbtools-ucp-25.2.0.157.0951.jar
+        │   ├── georasterapi-repackaged-25.2.jar
+        │   ├── guava-33.4.8-jre.jar
+        │   ├── hk2-api-2.6.1.jar
+        │   ├── hk2-locator-2.6.1.jar
+        │   ├── hk2-utils-2.6.1.jar
+        │   ├── httpclient-4.5.13.jar
+        │   ├── httpcore-4.4.13.jar
+        │   ├── istack-commons-runtime-4.1.2.jar
+        │   ├── jackson-datatype-jsr310-2.17.2.jar
+        │   ├── jackson-module-jaxb-annotations-2.12.2.jar
+        │   ├── jackson-repackaged-2.18.3.jar
+        │   ├── jakarta.activation-api-2.1.3.jar
+        │   ├── jakarta.annotation-api-2.1.1.jar
+        │   ├── jakarta.inject-2.6.1.jar
+        │   ├── jakarta.inject-api-2.0.1.jar
+        │   ├── jakarta.json-api-2.1.1.jar
+        │   ├── jakarta.servlet-api-4.0.4.jar
+        │   ├── jakarta.ws.rs-api-2.1.6.jar
+        │   ├── jakarta.xml.bind-api-4.0.2.jar
+        │   ├── jansi-2.4.1.jar
+        │   ├── javassist-3.25.0-GA.jar
+        │   ├── javax.activation-api-1.2.0.jar
+        │   ├── javax.annotation-api-1.3.2.jar
+        │   ├── jaxb-core-4.0.5.jar
+        │   ├── jaxb-runtime-4.0.5.jar
+        │   ├── jersey-apache-connector-2.35.jar
+        │   ├── jersey-client-2.35.jar
+        │   ├── jersey-common-2.35.jar
+        │   ├── jersey-entity-filtering-2.35.jar
+        │   ├── jersey-hk2-2.35.jar
+        │   ├── jersey-media-json-jackson-2.35.jar
+        │   ├── jetty-alpn-client-12.0.18.jar
+        │   ├── jetty-alpn-server-12.0.18.jar
+        │   ├── jetty-client-12.0.18.jar
+        │   ├── jetty-ee8-nested-12.0.18.jar
+        │   ├── jetty-ee8-security-12.0.18.jar
+        │   ├── jetty-ee8-servlet-12.0.18.jar
+        │   ├── jetty-http-12.0.18.jar
+        │   ├── jetty-http2-client-12.0.18.jar
+        │   ├── jetty-http2-common-12.0.18.jar
+        │   ├── jetty-http2-hpack-12.0.18.jar
+        │   ├── jetty-http2-server-12.0.18.jar
+        │   ├── jetty-io-12.0.18.jar
+        │   ├── jetty-rewrite-12.0.18.jar
+        │   ├── jetty-schemas-4.0.3.jar
+        │   ├── jetty-security-12.0.18.jar
+        │   ├── jetty-server-12.0.18.jar
+        │   ├── jetty-servlet-api-4.0.6.jar
+        │   ├── jetty-session-12.0.18.jar
+        │   ├── jetty-util-12.0.18.jar
+        │   ├── jetty-xml-12.0.18.jar
+        │   ├── mockito-inline-4.9.0.jar
+        │   ├── oci-java-sdk-bastion-3.57.1.jar
+        │   ├── oci-java-sdk-circuitbreaker-3.57.1.jar
+        │   ├── oci-java-sdk-common-3.57.1.jar
+        │   ├── oci-java-sdk-common-httpclient-3.57.1.jar
+        │   ├── oci-java-sdk-common-httpclient-jersey-3.57.1.jar
+        │   ├── oci-java-sdk-database-3.57.1.jar
+        │   ├── oci-java-sdk-databasetools-3.57.1.jar
+        │   ├── oci-java-sdk-identity-3.57.1.jar
+        │   ├── oci-java-sdk-monitoring-3.57.1.jar
+        │   ├── oci-java-sdk-objectstorage-3.57.1.jar
+        │   ├── oci-java-sdk-objectstorage-extensions-3.57.1.jar
+        │   ├── oci-java-sdk-objectstorage-generated-3.57.1.jar
+        │   ├── oci-java-sdk-secrets-3.57.1.jar
+        │   ├── oci-java-sdk-workrequests-3.57.1.jar
+        │   ├── ojdbc11-23.7.0.25.01.jar
+        │   ├── ojmisc-11.2.0.4.0.jar
+        │   ├── ons-23.7.0.25.01.jar
+        │   ├── opentelemetry-api-1.41.0.jar
+        │   ├── opentelemetry-context-1.41.0.jar
+        │   ├── oraclepki-23.7.0.25.01.jar
+        │   ├── orai18n-23.7.0.25.01.jar
+        │   ├── orai18n-mapping-23.3.0.0.0.jar
+        │   ├── orai18n-utility-23.3.0.0.0.jar
+        │   ├── orajsoda-1.1.30.jar
+        │   ├── oraml-core-250609.jar
+        │   ├── oraml-jetty-250609.jar
+        │   ├── orarestsoda-1.1.30.jar
+        │   ├── ords-adp-analytics-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-analytics-server-25.2.0.165.1520.jar
+        │   ├── ords-adp-avd-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-avd-server-25.2.0.165.1520.jar
+        │   ├── ords-adp-di-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-di-server-25.2.0.165.1520.jar
+        │   ├── ords-adp-ins-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-ins-server-25.2.0.165.1520.jar
+        │   ├── ords-adp-lineage-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-lineage-server-25.2.0.165.1520.jar
+        │   ├── ords-adp-odimp-client-25.2.0.165.1520.jar
+        │   ├── ords-adp-odimp-server-25.2.0.165.1520.jar
+        │   ├── ords-apex-support-25.2.0.165.1520.jar
+        │   ├── ords-auth-25.2.0.165.1520.jar
+        │   ├── ords-cache-25.2.0.165.1520.jar
+        │   ├── ords-cmdline-25.2.0.165.1520.jar
+        │   ├── ords-common-25.2.0.165.1520.jar
+        │   ├── ords-common-ui-25.2.0.165.1520.jar
+        │   ├── ords-conf-25.2.0.165.1520.jar
+        │   ├── ords-db-api-25.2.0.165.1520.jar
+        │   ├── ords-db-common-25.2.0.165.1520.jar
+        │   ├── ords-embed-api-25.2.0.165.1520.jar
+        │   ├── ords-entry-point-25.2.0.165.1520.jar
+        │   ├── ords-filtering-25.2.0.165.1520.jar
+        │   ├── ords-graphql-25.2.0.165.1520.jar
+        │   ├── ords-http-25.2.0.165.1520.jar
+        │   ├── ords-icap-25.2.0.165.1520.jar
+        │   ├── ords-injector-25.2.0.165.1520.jar
+        │   ├── ords-installer-25.2.0.165.1520.jar
+        │   ├── ords-instance-api-25.2.0.165.1520.jar
+        │   ├── ords-jdbc-pool-25.2.0.165.1520.jar
+        │   ├── ords-jet-resources-25.2.0.165.1520.jar
+        │   ├── ords-json-25.2.0.165.1520.jar
+        │   ├── ords-landing-page-25.2.0.165.1520.jar
+        │   ├── ords-metrics-25.2.0.165.1520.jar
+        │   ├── ords-oauth-25.2.0.165.1520.jar
+        │   ├── ords-plsql-gateway-25.2.0.165.1520.jar
+        │   ├── ords-plugin-api-25.2.0.165.1520.jar
+        │   ├── ords-plugin-apt-25.2.0.165.1520.jar
+        │   ├── ords-rest-enabled-sql-25.2.0.165.1520.jar
+        │   ├── ords-rest-services-25.2.0.165.1520.jar
+        │   ├── ords-sdw-client-25.2.0.165.1520.jar
+        │   ├── ords-sdw-server-25.2.0.165.1520.jar
+        │   ├── ords-service-console-25.2.0.165.1520.jar
+        │   ├── ords-sign-in-25.2.0.165.1520.jar
+        │   ├── ords-soda-25.2.0.165.1520.jar
+        │   ├── ords-standalone-25.2.0.165.1520.jar
+        │   ├── ords-static-25.2.0.165.1520.jar
+        │   ├── ords-static-shared-libs-25.2.0.165.1520.jar
+        │   ├── ords-url-mapping-25.2.0.165.1520.jar
+        │   ├── ords-web-client-25.2.0.165.1520.jar
+        │   ├── osgi-resource-locator-1.0.3.jar
+        │   ├── parsson-1.1.7.jar
+        │   ├── resilience4j-circuitbreaker-1.7.1.jar
+        │   ├── resilience4j-core-1.7.1.jar
+        │   ├── sdoapi-25.2.jar
+        │   ├── sdodep3prt-25.2.jar
+        │   ├── sdordf-25.1.jar
+        │   ├── sdordf-client-25.1.jar
+        │   ├── sdordf-ords-25.1.jar
+        │   ├── sdoutl-25.2.jar
+        │   ├── slf4j-api-2.0.13.jar
+        │   ├── sshd-osgi-2.13.2.jar
+        │   ├── ucp11-23.7.0.25.01_37536533.jar
+        │   ├── vavr-0.10.2.jar
+        │   ├── vavr-match-0.10.2.jar
+        │   ├── xdb-23.7.0.25.01.jar
+        │   └── xmlparserv2_sans_jaxp_services-23.7.0.25.01.jar
+        ├── web.xml
+        └── weblogic.xml
+    ```
 
 > [!NOTE] 
 > A `.war` file is bascially just a `.zip` file, so I'm not disclosing anything new or novel here. Anybody with the abiltity to change the file extension from `.war` to .`zip` can do this, and uncompress the file. 
@@ -283,6 +283,7 @@ For the purposes of WebLogic, all we care about are the `beans.xml`, `web.xml`, 
 
 [^2]: [Details](https://docs.oracle.com/en/middleware/fusion-middleware/weblogic-server/14.1.2/depgd/understanding.html#GUID-904A48A6-D89A-446D-A8E9-EDE4B44140DB) on the files contained in a `.war` file.
 
+<a id="original_web_xml"></a>
 An unmodified version of ORDS will contain a `web.xml` file such as this:
 
 ```xml
@@ -294,54 +295,54 @@ An unmodified version of ORDS will contain a `web.xml` file such as this:
     xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-	<display-name>Oracle REST Data Services</display-name>
+    <display-name>Oracle REST Data Services</display-name>
 
-	<context-param>
-		<param-name>version</param-name>
-		<param-value>25.2.0.r1651520</param-value>
-	</context-param>
-	
-	<listener>
-		<listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
-	</listener>
+    <context-param>
+        <param-name>version</param-name>
+        <param-value>25.2.0.r1651520</param-value>
+    </context-param>
+    
+    <listener>
+        <listener-class>oracle.dbtools.entrypoint.WebApplicationEntryPoint</listener-class>
+    </listener>
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>HttpEndPoint</display-name>
-		<servlet-name>HttpEndPoint</servlet-name>
-		<servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
-	</servlet>
+    <servlet>
+        <description>
+        </description>
+        <display-name>HttpEndPoint</display-name>
+        <servlet-name>HttpEndPoint</servlet-name>
+        <servlet-class>oracle.dbtools.entrypoint.WebApplicationRequestEntryPoint</servlet-class>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>HttpEndPoint</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HttpEndPoint</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>Forbidden</display-name>
-		<servlet-name>Forbidden</servlet-name>
-		<servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
-	</servlet>
+    <servlet>
+        <description>
+        </description>
+        <display-name>Forbidden</display-name>
+        <servlet-name>Forbidden</servlet-name>
+        <servlet-class>oracle.dbtools.entrypoint.Forbidden</servlet-class>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>Forbidden</servlet-name>
-		<url-pattern>/oracle/dbtools/jarcl</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Forbidden</servlet-name>
+        <url-pattern>/oracle/dbtools/jarcl</url-pattern>
+    </servlet-mapping>
 
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>default.html</welcome-file>
+        <welcome-file>default.htm</welcome-file>
+        <welcome-file>default.jsp</welcome-file>
+    </welcome-file-list>
 
-  <!-- Disable auto-discovery of servlet 3+ web fragments -->
-  <absolute-ordering /> 
+<!-- Disable auto-discovery of servlet 3+ web fragments -->
+<absolute-ordering /> 
 </web-app>
 ```
 
@@ -453,7 +454,7 @@ The "ORDS Web Application" doesn't require/use/rely on
     </web-app>
     ```
 
-
+9. Compare this to the [original `web.xml`](#original-web-xml) file
 
 
 
